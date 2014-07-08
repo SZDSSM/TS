@@ -26,9 +26,10 @@
 {
     [super viewDidLoad];
 
+    NSLog(@"wo men dou shi zhong guo ren!");
     NSLog(@"fox-test in 554");
     NSLog(@"ok!");
-    NSLog(@"ok!12345");
+    NSLog(@"ok!45gai le");
     NSLog(@"ok!");
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
