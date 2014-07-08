@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TSFirstViewController : UIViewController
+@interface TSFirstViewController : UITableViewController
+@property (weak, nonatomic) IBOutlet UIButton *bt1;
 
+@property (weak, nonatomic) IBOutlet UIButton *bt2;
+@property (weak, nonatomic) IBOutlet UIButton *bt3;
+
+@property (weak, nonatomic) IBOutlet UIButton *bt4;
+@property (weak, nonatomic) IBOutlet UIButton *bt5;
+
+@property (weak, nonatomic) IBOutlet UIButton *bt6;
 @end

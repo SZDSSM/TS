@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TSSecondViewController : UIViewController
+@interface TSSecondViewController : UITableViewController
 
 @end

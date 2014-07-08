@@ -1,0 +1,34 @@
+//English
+
+/*TabbarItem: Class = "UITabbarItem"; title = "推荐"; ObjectID = "u1e-5L-l1D"; */
+"u1e-5L-l1D.title" = "Home";
+
+/*TabbarItem: Class = "UITabbarItem"; title = "产品"; ObjectID = "u1e-5L-l1D"; */
+"Z7h-1E-pvt.title" = "Product";
+
+/*TabbarItem: Class = "UITabbarItem"; title = "黄页"; ObjectID = "u1e-5L-l1D"; */
+"v3k-Vb-RIh.title" = "YP";
+
+/*TabbarItem: Class = "UITabbarItem"; title = "资讯"; ObjectID = "u1e-5L-l1D"; */
+"wW3-T7-70h.title" = "News";
+
+/*TabbarItem: Class = "UITabbarItem"; title = "我"; ObjectID = "u1e-5L-l1D"; */
+"ZTj-eM-c3Q.title" = "Me";
+
+/* Class = "IBUILabel"; text = "Second View"; ObjectID = "29h-N2-YGT"; */
+"29h-N2-YGT.text" = "Second View11";
+
+/* Class = "IBUIViewController"; title = "First"; ObjectID = "CZ4-MO-1fc"; */
+"CZ4-MO-1fc.title" = "First11";
+
+/* Class = "IBUITextView"; text = "Loaded by the second view controller — an instance of TSSecondViewController — specified in the app delegate."; ObjectID = "DcM-Fx-MKR"; */
+"DcM-Fx-MKR.text" = "Loaded by the second view controller — an instance of TSSecondViewController — specified in the app delegate.";
+
+/* Class = "IBUIViewController"; title = "Second"; ObjectID = "QUy-BD-bpt"; */
+"QUy-BD-bpt.title" = "Second111";
+
+/* Class = "IBUILabel"; text = "First View"; ObjectID = "Zhg-ve-WU7"; */
+"Zhg-ve-WU7.text" = "First View111";
+
+/* Class = "IBUITextView"; text = "Loaded by the first view controller — an instance of TSFirstViewController — specified in the app delegate."; ObjectID = "tZ3-Hv-Q7E"; */
+"tZ3-Hv-Q7E.text" = "Loaded by the first view controller — an instance of TSFirstViewController — specified in the app delegate.";
