@@ -26,6 +26,9 @@
 {
     [super viewDidLoad];
 
+    NSLog(@"ok!");
+    NSLog(@"ok!");
+    NSLog(@"ok!");
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
