@@ -138,7 +138,7 @@
             </objects>
             <point key="canvasLocation" x="389" y="-1068"/>
         </scene>
-        <!--First View Controller - 推荐-->
+        <!--First View Controller - 推荐-master-->
         <scene sceneID="hhM-OT-t1B">
             <objects>
                 <tableViewController id="ced-3Y-quj" customClass="TSFirstViewController" sceneMemberID="viewController">
@@ -389,7 +389,7 @@
                             <outlet property="delegate" destination="ced-3Y-quj" id="f3a-Hi-V9v"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="推荐" id="UC3-Le-UhI"/>
+                    <navigationItem key="navigationItem" title="推荐-master" id="UC3-Le-UhI"/>
                     <connections>
                         <outlet property="bt1" destination="02j-iY-12b" id="Vof-RK-q2m"/>
                         <outlet property="bt2" destination="qQW-Xf-iGU" id="xQA-u3-7bY"/>
