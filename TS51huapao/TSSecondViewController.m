@@ -33,13 +33,6 @@
 {
     [super viewDidLoad];
     
-    
-
-     NSLog(@"wo men dou shi zhong guo ren!");
-     NSLog(@"fox-test in 554");
-     NSLog(@"ok!");
-     NSLog(@"ok!12345");
-     NSLog(@"ok!45gai le");
  
     //导航条的搜索条
     _searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0.0f,0.0f,200,30)];
