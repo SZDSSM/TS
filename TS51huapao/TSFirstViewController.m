@@ -62,7 +62,7 @@
     
     //[self.tableView headerBeginRefreshing];
     // 2.添加tableFooterView 服务电话
-    UIView *view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 100.0f)];
+    UIView *view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 110.0f)];
     self.tableView.tableFooterView =[view addRecommndFooterView:self];
 }
 
