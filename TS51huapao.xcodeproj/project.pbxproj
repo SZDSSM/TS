@@ -61,6 +61,12 @@
 		64FA010718E41314006E12B2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 64FA010918E41314006E12B2 /* Localizable.strings */; };
 		64FA010F18E41910006E12B2 /* TSThridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64FA010E18E41910006E12B2 /* TSThridViewController.m */; };
 		64FA011318E41CFB006E12B2 /* TSMainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64FA011218E41CFB006E12B2 /* TSMainTabBarController.m */; };
+		EB00B1F2196CF03E00F7388E /* TSForthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB00B1F1196CF03E00F7388E /* TSForthViewController.m */; };
+		EB00B1F5196D923200F7388E /* TSForthViewControllerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB00B1F4196D923200F7388E /* TSForthViewControllerCell.m */; };
+		EB081666196E247F00C03045 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = EB081665196E247F00C03045 /* 1.png */; };
+		EB081668196E281900C03045 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = EB081667196E281900C03045 /* 1.png */; };
+		EB08168D196E858D00C03045 /* detalis_thubmail.png in Resources */ = {isa = PBXBuildFile; fileRef = EB08168C196E858D00C03045 /* detalis_thubmail.png */; };
+		EB086819196F886600EF416B /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB086818196F886600EF416B /* WebViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -174,6 +180,15 @@
 		64FA010E18E41910006E12B2 /* TSThridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSThridViewController.m; sourceTree = "<group>"; };
 		64FA011118E41CFB006E12B2 /* TSMainTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSMainTabBarController.h; sourceTree = "<group>"; };
 		64FA011218E41CFB006E12B2 /* TSMainTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSMainTabBarController.m; sourceTree = "<group>"; };
+		EB00B1F0196CF03E00F7388E /* TSForthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSForthViewController.h; sourceTree = "<group>"; };
+		EB00B1F1196CF03E00F7388E /* TSForthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSForthViewController.m; sourceTree = "<group>"; };
+		EB00B1F3196D923200F7388E /* TSForthViewControllerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSForthViewControllerCell.h; sourceTree = "<group>"; };
+		EB00B1F4196D923200F7388E /* TSForthViewControllerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSForthViewControllerCell.m; sourceTree = "<group>"; };
+		EB081665196E247F00C03045 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
+		EB081667196E281900C03045 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
+		EB08168C196E858D00C03045 /* detalis_thubmail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = detalis_thubmail.png; sourceTree = "<group>"; };
+		EB086817196F886600EF416B /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		EB086818196F886600EF416B /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -368,6 +383,7 @@
 			isa = PBXGroup;
 			children = (
 				64FA00EE18E409A0006E12B2 /* TS51huapaoTests-Info.plist */,
+				EB081665196E247F00C03045 /* 1.png */,
 				64FA00EF18E409A0006E12B2 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
@@ -405,6 +421,14 @@
 		64FA00FF18E40AA9006E12B2 /* ForthView */ = {
 			isa = PBXGroup;
 			children = (
+				EB00B1F0196CF03E00F7388E /* TSForthViewController.h */,
+				EB00B1F1196CF03E00F7388E /* TSForthViewController.m */,
+				EB00B1F3196D923200F7388E /* TSForthViewControllerCell.h */,
+				EB00B1F4196D923200F7388E /* TSForthViewControllerCell.m */,
+				EB086817196F886600EF416B /* WebViewController.h */,
+				EB086818196F886600EF416B /* WebViewController.m */,
+				EB081667196E281900C03045 /* 1.png */,
+				EB08168C196E858D00C03045 /* detalis_thubmail.png */,
 			);
 			name = ForthView;
 			sourceTree = "<group>";
@@ -526,7 +550,9 @@
 				64FA00CF18E409A0006E12B2 /* InfoPlist.strings in Resources */,
 				647F35E919616A240014A64F /* MJRefresh.bundle in Resources */,
 				64FA00D818E409A0006E12B2 /* Main.storyboard in Resources */,
+				EB081668196E281900C03045 /* 1.png in Resources */,
 				64062A1E19581C1200C3FED5 /* appb60554700a.jpg in Resources */,
+				EB08168D196E858D00C03045 /* detalis_thubmail.png in Resources */,
 				64062A1A1958199A00C3FED5 /* appb92081100a.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -536,6 +562,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				64FA00F118E409A0006E12B2 /* InfoPlist.strings in Resources */,
+				EB081666196E247F00C03045 /* 1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -552,9 +579,11 @@
 				647F35EE19616A240014A64F /* UIScrollView+Extension.m in Sources */,
 				64FA00D118E409A0006E12B2 /* main.m in Sources */,
 				643A1505195BB74200854928 /* UIProgressView+AFNetworking.m in Sources */,
+				EB00B1F5196D923200F7388E /* TSForthViewControllerCell.m in Sources */,
 				647F35ED19616A240014A64F /* MJRefreshHeaderView.m in Sources */,
 				643A1502195BB74200854928 /* UIAlertView+AFNetworking.m in Sources */,
 				643A1500195BB74200854928 /* AFNetworkActivityIndicatorManager.m in Sources */,
+				EB086819196F886600EF416B /* WebViewController.m in Sources */,
 				643A14E6195BB72E00854928 /* AFHTTPRequestOperationManager.m in Sources */,
 				643A1503195BB74200854928 /* UIButton+AFNetworking.m in Sources */,
 				643A1501195BB74200854928 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
@@ -573,6 +602,7 @@
 				647F35EF19616A240014A64F /* UIScrollView+MJRefresh.m in Sources */,
 				647F35EB19616A240014A64F /* MJRefreshConst.m in Sources */,
 				6457DE0618E55E49008193BC /* UIImage+UIImageExtras.m in Sources */,
+				EB00B1F2196CF03E00F7388E /* TSForthViewController.m in Sources */,
 				643A14EB195BB72E00854928 /* AFURLRequestSerialization.m in Sources */,
 				643A1506195BB74200854928 /* UIRefreshControl+AFNetworking.m in Sources */,
 				643A1504195BB74200854928 /* UIImageView+AFNetworking.m in Sources */,
