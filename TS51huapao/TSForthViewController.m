@@ -70,7 +70,8 @@ static NSString*const BaseURLString = @"http://51.laimimi.com/zixun/newslist.asp
             [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         else
         [button setTitleColor:[UIColor colorWithRed:179.0/255.0 green:176.0/255.0 blue:172.0/255.0 alpha:1.0] forState:UIControlStateNormal];
-        [button setFont:[UIFont systemFontOfSize:13]];
+//        [button setFont:[UIFont systemFontOfSize:13]];
+        button.titleLabel.font = [UIFont systemFontOfSize:13];
         [button addTarget:self action:@selector(reload:) forControlEvents:UIControlEventTouchUpInside];
         [_topView addSubview:button];
         

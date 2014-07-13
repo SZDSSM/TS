@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "myHttpXieyi.h"
+//#import "myHttpXieyi.h"
 
-@interface TSForthViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,myHttpXieyi>
+@interface TSForthViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 //@property (nonatomic, retain)NSArray* titles;
 @property (nonatomic, retain)UIView * topView;
 @property (nonatomic, retain)UIView * redLine;
