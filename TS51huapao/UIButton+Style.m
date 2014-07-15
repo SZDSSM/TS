@@ -137,10 +137,10 @@
 -(void)mainProductStyle{
     [self bootstrapStyle];
     self.layer.cornerRadius = 3;
-    self.backgroundColor = [UIColor colorWithRed:211/255.0 green:211/255.0 blue:211/255.0 alpha:1];
+    self.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:1.0];
     self.layer.borderColor = [[UIColor colorWithRed:169/255.0 green:169/255.0 blue:169/255.0 alpha:1] CGColor];
-    self.titleLabel.font=[UIFont systemFontOfSize:11];
-    [self setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    self.titleLabel.font=[UIFont systemFontOfSize:13];
+    [self setTitleColor:[UIColor colorWithRed:120.0/255.0 green:120.0/255.0 blue:120.0/255.0 alpha:1.0]forState:UIControlStateNormal];
     [self setBackgroundImage:[self buttonImageFromColor:[UIColor colorWithRed:237/255.0 green:155/255.0 blue:67/255.0 alpha:1]] forState:UIControlStateHighlighted];
     
 }

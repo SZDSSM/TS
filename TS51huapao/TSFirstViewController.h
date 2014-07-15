@@ -7,15 +7,35 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TSRcmd.h"
 
 @interface TSFirstViewController : UITableViewController
-@property (weak, nonatomic) IBOutlet UIButton *bt1;
 
-@property (weak, nonatomic) IBOutlet UIButton *bt2;
-@property (weak, nonatomic) IBOutlet UIButton *bt3;
+@property (copy, nonatomic) TSRcmd * prdctRcmd1;
 
-@property (weak, nonatomic) IBOutlet UIButton *bt4;
-@property (weak, nonatomic) IBOutlet UIButton *bt5;
+@property (copy, nonatomic) TSRcmd * prdctRcmd2;
 
-@property (weak, nonatomic) IBOutlet UIButton *bt6;
+@property (copy, nonatomic) TSRcmd * prdctRcmd3;
+
+@property (copy, nonatomic) TSRcmd * subjctRcmd1;
+
+@property (copy, nonatomic) TSRcmd * subjctRcmd2;
+
+@property (copy, nonatomic) TSRcmd * subjctRcmd3;
+
+
+
+@property (copy, nonatomic) NSMutableArray * imagearray;
+
+@property (copy, nonatomic) NSMutableArray * labelarray;
+
+@property (copy, nonatomic) NSMutableDictionary * getDic;
+
+@property (copy, nonatomic) NSString * telephoneNumeber;
+
+@property (copy, nonatomic) NSMutableDictionary * prdct;
+
+@property (copy, nonatomic) NSMutableDictionary * subjctRcmd;
+
+//+ (NSURLSessionDataTask * )gblock:(void (^)(NSArray * posts, NSError * error))block;
 @end
