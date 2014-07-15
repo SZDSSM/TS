@@ -8,6 +8,8 @@
 
 #import "TSItemDetaillTableViewController.h"
 #import "TSItemDetailPost.h"
+#import "UIImageView+AFNetworking.h"
+
 
 @interface TSItemDetaillTableViewController ()
 
@@ -36,65 +38,75 @@
 //    return self;
 //}
 
+- (void)setPost:(TSItemDetailPost *)post
+{
+    _post = post;
+    NSLog(@"post::%@",_post);
+    self.ItemName.text = _post.ItemName;
+    self.oldPrice.text = [NSString stringWithFormat:@"%@",_post.CostPrice];
+    self.presentPrice.text = [NSString stringWithFormat:@"%@",_post.Price];
+    self.priceNote.text = [NSString stringWithFormat:@"(%@)",_post.U_NEU_PriceNote];
+    self.leftsum.text = [NSString stringWithFormat:@"%@",_post.stocksum];
+    self.cuxiao.text = _post.U_NEU_cuxiao;
+    [self.zhijiang setHidden:![_post.U_NEU_SaleType isEqualToString:@"直销"]];
+    self.guige.text = _post.Spec;
+    self.hanliang.text = [NSString stringWithFormat:@"%@",_post.U_Neu_Content];
+    self.xianggui.text = _post.U_NEU_boxboard;
+    self.maozhong.text = [NSString stringWithFormat:@"%@ 千克",_post.U_NEU_RoughWeight];
+    _labarray = [NSMutableArray arrayWithCapacity:20];
+    if ([_post.IsEnsure isEqualToString:@"Y"])
+        [_labarray addObject:@"保险保障"];
+    //                [(NSMutableArray *)(self.labarray) insertObject:@"1" atIndex:0];
+    
+    if ([_post.IsFreeShip isEqualToString:@"Y"])
+        [self.labarray addObject:@"物流运输"];
+    
+    if ([_post.IsTrade isEqualToString:@"Y"])
+        [self.labarray addObject:@"交易保障"];
+    
+    if ([_post.IsQaTest isEqualToString:@"Y"])
+        [self.labarray addObject:@"质量检查"];
+    
+//    [self addlabel];
+    [self addimage];
+//    [self.tableView reloadData];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    _labarray = [NSMutableArray arrayWithObjects:@"1",@"2", nil];
-//    [_labarray addObject:@"3"];
-//    NSLog(@"nsarray:;;%@",_labarray);
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     NSURLSessionDataTask * task = [TSItemDetailPost globalTimeGetRecommendInfoWithItemcode:self.itemcode Block:^(TSItemDetailPost *post, NSError *error) {
+        NSLog(@"error::%@",error);
         if (!error) {
-            _post = post;
-            NSLog(@"post::%@",_post);
-            self.ItemName.text = _post.ItemName;
-            self.oldPrice.text = [NSString stringWithFormat:@"%@",_post.CostPrice];
-            self.presentPrice.text = [NSString stringWithFormat:@"%@",_post.Price];
-            self.priceNote.text = [NSString stringWithFormat:@"(%@)",_post.U_NEU_PriceNote];
-            self.leftsum.text = [NSString stringWithFormat:@"%@",_post.stocksum];
-            self.cuxiao.text = _post.U_NEU_cuxiao;
-            [self.zhijiang setHidden:![_post.U_NEU_SaleType isEqualToString:@"直销"]];
-            self.guige.text = _post.Spec;
-            self.hanliang.text = [NSString stringWithFormat:@"%@",_post.U_Neu_Content];
-            self.xianggui.text = _post.U_NEU_boxboard;
-            self.maozhong.text = [NSString stringWithFormat:@"%@ 千克",_post.U_NEU_RoughWeight];
-            _labarray = [NSMutableArray arrayWithCapacity:20];
-            if ([_post.IsEnsure isEqualToString:@"Y"])
-                [_labarray addObject:@"保险保障"];
-//                [(NSMutableArray *)(self.labarray) insertObject:@"1" atIndex:0];
+            self.post = post;
             
-            if ([_post.IsFreeShip isEqualToString:@"Y"])
-                [self.labarray addObject:@"物流运输"];
-            
-            if ([_post.IsTrade isEqualToString:@"Y"])
-                [self.labarray addObject:@"交易保障"];
-            
-            if ([_post.IsQaTest isEqualToString:@"Y"])
-                [self.labarray addObject:@"质量检查"];
-            
-            [self addlabel:self.labarray];
             
         }
     }];
 }
 
-- (void)addlabel:(NSArray *)array
+//- (void)viewWillDisappear:(BOOL)animated
+//{
+//    for (UILabel * lb in self.tabarray) {
+//        lb.text = nil;
+//    }
+//}
+
+- (void)addlabel
 {
-    for (int i= 0; i< [array count]; i++) {
-    
-        UILabel * label = [[UILabel alloc]initWithFrame:CGRectMake(25+i%3*(100+ 10), 15, 100, 40)];
-        label.text = [array objectAtIndex:i];
-        label.font = [UIFont systemFontOfSize:14.0];
-        label.textColor = [UIColor colorWithRed:195.0/255.0 green:194.0/255.0 blue:191.0/255.0 alpha:1.0];
-        label.backgroundColor = [UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0];
-        [((UITableViewCell *)[self.view viewWithTag:3046]).contentView addSubview:label];
+    for (UILabel * lb in self.tabarray)
+    {
+       static int i = 0;
+        if (i > [self.labarray count]-1)
+            lb.hidden = YES;
+//        lb.text = [self.labarray objectAtIndex:i];
+        i ++;
     }
-    
+}
+
+- (void)addimage
+{
+    [self.Productimage setImageWithURL:[NSURL URLWithString:_post.U_Photo2] placeholderImage:[UIImage imageNamed:@""]];
 }
 
 - (void)didReceiveMemoryWarning
