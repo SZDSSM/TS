@@ -220,19 +220,19 @@
         _pushItemCode=_prdctRcmd1.itemCode;
         
     }else if (recognizer.view.tag == 102){
-        _pushItemCode=_prdctRcmd1.itemCode;
+        _pushItemCode=_prdctRcmd2.itemCode;
 
     }else if (recognizer.view.tag == 103){
-        _pushItemCode=_prdctRcmd1.itemCode;
+        _pushItemCode=_prdctRcmd3.itemCode;
 
     }else if (recognizer.view.tag == 201){
-        _pushItemCode=_prdctRcmd1.itemCode;
+        _pushItemCode=_subjctRcmd1.itemCode;
 
     }else if (recognizer.view.tag == 202){
-        _pushItemCode=_prdctRcmd1.itemCode;;
+        _pushItemCode=_subjctRcmd2.itemCode;;
 
     }else if (recognizer.view.tag == 203){
-        _pushItemCode=_prdctRcmd1.itemCode;;
+        _pushItemCode=_subjctRcmd3.itemCode;;
 
     }else{
     }
@@ -244,9 +244,6 @@
        for (int i = 0; i < [self.labelarray count]; i ++)
     {
         UIButton * button = [[UIButton alloc]initWithFrame:CGRectMake(16+(i%3)*(87+14), 13+(i/3)*(30+8), 87, 30)];
-//        button.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:1.0];
-//        button.titleLabel.font = [UIFont systemFontOfSize:16];
-//        [button setTitleColor:[UIColor colorWithRed:120.0/255.0 green:120.0/255.0 blue:120.0/255.0 alpha:1.0]forState:UIControlStateNormal];
         [button setTitle:[self.labelarray objectAtIndex:i] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(buttonTap:) forControlEvents:UIControlEventTouchUpInside];
         [button mainProductStyle];

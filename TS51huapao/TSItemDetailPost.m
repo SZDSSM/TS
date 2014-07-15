@@ -36,7 +36,10 @@
     self.U_NEU_PriceNote=[attributes valueForKeyPath:@"U_NEU_PriceNote"];
     self.U_NEU_Rebate=[attributes valueForKeyPath:@"U_NEU_Rebate"];
     self.U_NEU_RoughWeight=[attributes valueForKeyPath:@"U_NEU_RoughWeight"];
-    self.U_NEU_SaleType=[attributes valueForKeyPath:@"U_NEU_SaleType"];
+//    if ([attributes valueForKeyPath:@"U_NEU_SaleType"] != [NSNull null]) {
+//        self.U_NEU_SaleType=[attributes valueForKeyPath:@"U_NEU_SaleType"];
+//    }else
+//    {self.U_NEU_SaleType=@"空";}
     self.U_NEU_boxboard=[attributes valueForKeyPath:@"U_NEU_boxboard"];
     self.U_NEU_cuxiao=[attributes valueForKeyPath:@"U_NEU_cuxiao"];
     self.U_Neu_Content=[attributes valueForKeyPath:@"U_Neu_Content"];

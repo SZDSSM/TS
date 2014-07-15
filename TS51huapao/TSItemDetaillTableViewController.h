@@ -37,7 +37,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *yonghudiqu;
 @property (weak, nonatomic) IBOutlet UILabel *xinde;
 
-
+@property (strong, nonatomic) IBOutletCollection(UILabel) NSArray *tabarray;
 @property (copy, nonatomic) NSString * itemcode;
 @property (copy, nonatomic) NSMutableArray * labarray;
 
