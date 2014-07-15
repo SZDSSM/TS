@@ -233,6 +233,7 @@ static NSString*const BaseURLString = @"http://51.laimimi.com/zixun/newslist.asp
 //    NSLog(@"====%@==",content);
 //    LogsInfoViewController *_logsInfo_vc=[[LogsInfoViewController alloc] init];
     WebViewController *_webVC = [[WebViewController alloc] init];
+    _webVC.hidesBottomBarWhenPushed=YES;
 //    [_logsInfo_vc setInfo:content];
     [_webVC setUrlstr:urlstr];
     [self.navigationController pushViewController:_webVC animated:YES];
