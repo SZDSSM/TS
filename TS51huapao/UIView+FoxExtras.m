@@ -59,6 +59,11 @@
     }
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 30, 0, 24)];
+    
+//    [[NSUserDefaults standardUserDefaults]valueForKey:Tele_Key];
+    if ([[NSUserDefaults standardUserDefaults]valueForKey:Tele_Key])
+    label.text = [NSString stringWithFormat:@"服务电话: %@",[[NSUserDefaults standardUserDefaults]valueForKey:Tele_Key]];
+    else
     label.text = @"服务电话: 40067-51518";
     label.font = [UIFont fontWithName:@"HelveticaNeue" size:16];
     label.backgroundColor = [UIColor clearColor];
