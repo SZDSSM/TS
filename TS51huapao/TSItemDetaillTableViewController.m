@@ -20,14 +20,6 @@
 
 @implementation TSItemDetaillTableViewController
 
-- (id)initWithItemCode:(NSString *)itemcode
-{
-    self = [super init];
-    
-    self.itemcode = itemcode;
-    
-    return self;
-}
 
 //- (id)initWithStyle:(UITableViewStyle)style
 //{
@@ -61,13 +53,13 @@
     if ([_post.IsFreeShip isEqualToString:@"Y"])
         [self.labarray addObject:@"物流运输"];
     
-    if ([_post.IsTrade isEqualToString:@"Y"])
+    if ([_post.IsTrade isEqualToString:@"N"])
         [self.labarray addObject:@"交易保障"];
     
-    if ([_post.IsQaTest isEqualToString:@"Y"])
+    if ([_post.IsQaTest isEqualToString:@"N"])
         [self.labarray addObject:@"质量检查"];
     
-//    [self addlabel];
+    //[self addlabel];
     [self addimage];
 //    [self.tableView reloadData];
 }
@@ -76,11 +68,10 @@
 {
     [super viewDidLoad];
     NSURLSessionDataTask * task = [TSItemDetailPost globalTimeGetRecommendInfoWithItemcode:self.itemcode Block:^(TSItemDetailPost *post, NSError *error) {
-        NSLog(@"error::%@",error);
+        //NSLog(@"error::%@",error);
         if (!error) {
             self.post = post;
-            
-            
+            NSLog(@"post::%@",post.ItemCode);
         }
     }];
 }
@@ -94,12 +85,19 @@
 
 - (void)addlabel
 {
+    int i = 0;
     for (UILabel * lb in self.tabarray)
     {
-       static int i = 0;
+//        int i = 0;
         if (i > [self.labarray count]-1)
+        {
             lb.hidden = YES;
-//        lb.text = [self.labarray objectAtIndex:i];
+//            lb.text = [self.labarray objectAtIndex:i];
+        }
+        else{
+            lb.hidden = NO;
+            lb.text = [self.labarray objectAtIndex:i];
+        }
         i ++;
     }
 }
