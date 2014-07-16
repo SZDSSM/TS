@@ -77,6 +77,7 @@
 		EB081668196E281900C03045 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = EB081667196E281900C03045 /* 1.png */; };
 		EB08168D196E858D00C03045 /* detalis_thubmail.png in Resources */ = {isa = PBXBuildFile; fileRef = EB08168C196E858D00C03045 /* detalis_thubmail.png */; };
 		EB086819196F886600EF416B /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB086818196F886600EF416B /* WebViewController.m */; };
+		EB0AB52E19760EA400FBF1B6 /* TSItemListPost.m in Sources */ = {isa = PBXBuildFile; fileRef = EB0AB52D19760EA400FBF1B6 /* TSItemListPost.m */; };
 		EB5BDBA31972EC7100403299 /* TSAppDoNetAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5BDBA21972EC7100403299 /* TSAppDoNetAPIClient.m */; };
 		EB642BCC197508DC00E4E527 /* TSCommentPost.m in Sources */ = {isa = PBXBuildFile; fileRef = EB642BCB197508DC00E4E527 /* TSCommentPost.m */; };
 		EB81EDD11972397600AAE4DA /* TSItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB81EDCF1972397600AAE4DA /* TSItemTableViewCell.m */; };
@@ -231,6 +232,8 @@
 		EB08168C196E858D00C03045 /* detalis_thubmail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = detalis_thubmail.png; sourceTree = "<group>"; };
 		EB086817196F886600EF416B /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		EB086818196F886600EF416B /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
+		EB0AB52C19760EA400FBF1B6 /* TSItemListPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSItemListPost.h; sourceTree = "<group>"; };
+		EB0AB52D19760EA400FBF1B6 /* TSItemListPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSItemListPost.m; sourceTree = "<group>"; };
 		EB5BDBA11972EC7100403299 /* TSAppDoNetAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSAppDoNetAPIClient.h; sourceTree = "<group>"; };
 		EB5BDBA21972EC7100403299 /* TSAppDoNetAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSAppDoNetAPIClient.m; sourceTree = "<group>"; };
 		EB642BCA197508DC00E4E527 /* TSCommentPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCommentPost.h; sourceTree = "<group>"; };
@@ -564,6 +567,8 @@
 				EB0688AD1973E7A4001AC4C1 /* TSItemDetailPost.m */,
 				EB642BCA197508DC00E4E527 /* TSCommentPost.h */,
 				EB642BCB197508DC00E4E527 /* TSCommentPost.m */,
+				EB0AB52C19760EA400FBF1B6 /* TSItemListPost.h */,
+				EB0AB52D19760EA400FBF1B6 /* TSItemListPost.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -743,6 +748,7 @@
 				64FA00D518E409A0006E12B2 /* TSAppDelegate.m in Sources */,
 				EB06889F1973CA3B001AC4C1 /* FMDatabaseAdditions.m in Sources */,
 				647F35EF19616A240014A64F /* UIScrollView+MJRefresh.m in Sources */,
+				EB0AB52E19760EA400FBF1B6 /* TSItemListPost.m in Sources */,
 				647F35EB19616A240014A64F /* MJRefreshConst.m in Sources */,
 				6457DE0618E55E49008193BC /* UIImage+UIImageExtras.m in Sources */,
 				EB00B1F2196CF03E00F7388E /* TSForthViewController.m in Sources */,

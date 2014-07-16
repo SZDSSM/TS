@@ -30,8 +30,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *xianggui;
 @property (weak, nonatomic) IBOutlet UILabel *maozhong;
 
-
-@property (weak, nonatomic) IBOutlet UIImageView *chanpinxiangqing;
 @property (weak, nonatomic) IBOutlet UILabel *haopindu;
 @property (weak, nonatomic) IBOutlet UIView *star;
 @property (weak, nonatomic) IBOutlet UILabel *yonghudiqu;

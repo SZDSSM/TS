@@ -397,4 +397,22 @@
 }
 
 
+- (IBAction)xiaoshoupaihang:(id)sender {
+    
+    TSItemListTableViewController * xiaoshou = [[TSItemListTableViewController alloc]initWithRankType:@"S"];
+    [self.navigationController pushViewController:xiaoshou animated:YES];
+    
+}
+
+- (IBAction)xinpinpaihang:(id)sender {
+    
+    TSItemListTableViewController * xinpin = [[TSItemListTableViewController alloc]initWithRankType:@"N"];
+    [self.navigationController pushViewController:xinpin animated:YES];
+}
+
+- (IBAction)jiangjiapaihang:(id)sender {
+    
+    TSItemListTableViewController * jiangjia = [[TSItemListTableViewController alloc]initWithRankType:@"J"];
+    [self.navigationController pushViewController:jiangjia animated:YES];
+}
 @end
