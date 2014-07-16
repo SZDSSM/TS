@@ -66,7 +66,7 @@
 
 @property (strong, nonatomic) NSString * cardname;
 
-@property (strong, nonatomic) NSString * photolist;
+@property (strong, nonatomic) NSArray * photolist;
 
 @property (strong, nonatomic) NSString * stocksum;
 

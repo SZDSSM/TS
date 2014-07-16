@@ -7,6 +7,9 @@
 //
 
 #import "TSItemTableViewCell.h"
+#import "TSItemListPost.h"
+#import "UIImageView+AFNetworking.h"
+#import "UIButton+Style.h"
 
 @implementation TSItemTableViewCell
 
@@ -22,4 +25,36 @@
     // Configure the view for the selected state
 }
 
+- (void)setPost:(TSItemListPost *)post
+{
+    _post = post;
+//    [self.guanzhu setTintColor:[UIColor redColor]];
+    [self.guanzhu guzhuqianStyle];
+    
+    self.itemname.text = _post.ItemName;
+    self.Spec.text = _post.Spec;
+    self.Price.text = _post.Price;
+    if (![_post.IsOTO isEqualToString:@"Y"]) {
+        self.zhixiao.hidden = YES;
+    }
+    if (![_post.IsRebate isEqualToString:@"Y"]) {
+        self.fanli.hidden = YES;
+    }
+    if (![_post.IsStroe isEqualToString:@"Y"]) {
+        
+    }
+    [self.itemimage setImageWithURL:[NSURL URLWithString:_post.U_Photo1] placeholderImage:[UIImage imageNamed:@" "]];
+    
+    
+    
+}
+
+- (IBAction)guanzhu:(UIButton *)sender {
+    if ([sender.titleLabel.text isEqualToString:@"☆"]) {
+        [sender guzhuqianStyle];
+    }else{
+        [sender guzhuhouStyle];
+    }
+    
+}
 @end

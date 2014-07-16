@@ -7,8 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class TSItemListPost;
 @interface TSItemTableViewCell : UITableViewCell
+
 @property (weak, nonatomic) IBOutlet UILabel *itemname;
+@property (weak, nonatomic) IBOutlet UIImageView *itemimage;
+@property (weak, nonatomic) IBOutlet UILabel *Spec;
+@property (weak, nonatomic) IBOutlet UILabel *Price;
+@property (weak, nonatomic) IBOutlet UIButton *zhixiao;
+@property (weak, nonatomic) IBOutlet UIButton *fanli;
+@property (weak, nonatomic) IBOutlet UIButton *guanzhu;
+- (IBAction)guanzhu:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *order;
+
+@property (strong, nonatomic) TSItemListPost * post;
 
 @end

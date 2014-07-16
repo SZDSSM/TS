@@ -37,5 +37,12 @@
 
 @property (copy, nonatomic) NSMutableDictionary * subjctRcmd;
 
+- (IBAction)xiaoshoupaihang:(id)sender;
+- (IBAction)xinpinpaihang:(id)sender;
+- (IBAction)jiangjiapaihang:(id)sender;
+
+
+
+
 //+ (NSURLSessionDataTask * )gblock:(void (^)(NSArray * posts, NSError * error))block;
 @end
