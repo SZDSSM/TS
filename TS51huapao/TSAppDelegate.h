@@ -13,5 +13,7 @@
 @interface TSAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+//黄页界面
+//@property (strong, nonatomic) NSDictionary * pushDic;
 
 @end

@@ -8,8 +8,8 @@
 
 #import "TSItemDetaillTableViewController.h"
 #import "TSItemDetailPost.h"
-#import "UIImageView+AFNetworking.h"
-
+//#import "UIImageView+AFNetworking.h"
+#import "UIKit+AFNetworking.h"
 
 @interface TSItemDetaillTableViewController ()
 
@@ -46,13 +46,13 @@
     if ([_post.IsFreeShip isEqualToString:@"Y"])
         [self.labarray addObject:@"物流运输"];
     
-    if ([_post.IsTrade isEqualToString:@"N"])
+    if ([_post.IsTrade isEqualToString:@"Y"])
         [self.labarray addObject:@"交易保障"];
     
-    if ([_post.IsQaTest isEqualToString:@"N"])
+    if ([_post.IsQaTest isEqualToString:@"Y"])
         [self.labarray addObject:@"质量检查"];
     
-    //[self addlabel];
+    [self addlabel];
     [self addimage];
 //    [self.tableView reloadData];
 }
@@ -64,9 +64,9 @@
         //NSLog(@"error::%@",error);
         if (!error) {
             self.post = post;
-            NSLog(@"post::%@",post.ItemCode);
-        }
+            }
     }];
+    [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
 //    self.tableView.dataSource = self;
 //    self.tableView.delegate = self;
     
@@ -74,18 +74,16 @@
 
 - (void)addlabel
 {
-    int i = 0;
+    int i=1;
     for (UILabel * lb in self.tabarray)
     {
-//        int i = 0;
-        if (i > [self.labarray count]-1)
-        {
+        if (i > [self.labarray count]){
             lb.hidden = YES;
 //            lb.text = [self.labarray objectAtIndex:i];
         }
         else{
             lb.hidden = NO;
-            lb.text = [self.labarray objectAtIndex:i];
+            lb.text = [self.labarray objectAtIndex:i-1];
         }
         i ++;
     }
@@ -240,4 +238,12 @@
 //}
 //- (IBAction)guanzhu:(id)sender {
 //}
+
+- (IBAction)guanzhu:(id)sender{
+    
+}
+
+- (IBAction)boFangAnNiu:(id)sender{
+    
+}
 @end

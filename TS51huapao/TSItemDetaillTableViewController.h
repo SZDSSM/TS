@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *cuxiao;
 @property (weak, nonatomic) IBOutlet UIButton *zhijiang;
 @property (weak, nonatomic) IBOutlet UIButton *fanli;
+
 - (IBAction)guanzhu:(id)sender;
 
 

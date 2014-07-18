@@ -41,6 +41,7 @@
 - (IBAction)xinpinpaihang:(id)sender;
 - (IBAction)jiangjiapaihang:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UIView *cotentview;
 
 
 

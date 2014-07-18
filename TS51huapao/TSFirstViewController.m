@@ -167,7 +167,7 @@
 }
 
 #pragma mark 开始进入刷新状态
-- (void)headerRereshing
+- (void)headerRreshing
 {
     
     // 2.2秒后刷新表格UI
@@ -247,8 +247,8 @@
         [button setTitle:[self.labelarray objectAtIndex:i] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(buttonTap:) forControlEvents:UIControlEventTouchUpInside];
         [button mainProductStyle];
-
-        [[self.view viewWithTag:2048]addSubview:button];
+        //UIView *view=self.cotentview;
+        [self.cotentview addSubview:button];
     }
     
 }

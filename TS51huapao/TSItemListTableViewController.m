@@ -9,6 +9,7 @@
 #import "TSItemListTableViewController.h"
 #import "TSItemTableViewCell.h"
 #import "TSItemListPost.h"
+#import "UIKit+AFNetworking.h"
 
 @interface TSItemListTableViewController ()
 
@@ -25,6 +26,7 @@
     
     self.rankType = rankType;
     
+    [self setHidesBottomBarWhenPushed:YES];
     return self;
 }
 
@@ -46,19 +48,21 @@
     self.tableView.rowHeight = 65;
     [self.tableView registerNib:nib forCellReuseIdentifier:@"reuseIdentifier"];
     
-    
    
 }
 
 - (void)getData
 {
     NSURLSessionDataTask * task = [TSItemListPost globalTimeGetRecommendInfoWithRanktype:self.rankType Block:^(NSArray * posts, NSError *error) {
-        NSLog(@"error::%@",error);
+        //NSLog(@"error::%@",error);
         if (!error) {
             self.posts = posts;
             [self.tableView reloadData];
         }
     }];
+    [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
+    
+        //[UIActivityIndicatorView set ]
 }
 
 
@@ -73,14 +77,14 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
+//#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
+//#warning Incomplete method implementation.
     // Return the number of rows in the section.
     return [_posts count];
 }
@@ -109,7 +113,6 @@
         cell.order.textColor = [UIColor grayColor];
         cell.order.font = [UIFont italicSystemFontOfSize:17];
     }
-    
     // Configure the cell...
     //cell.textLabel.text = _itemcode;
     

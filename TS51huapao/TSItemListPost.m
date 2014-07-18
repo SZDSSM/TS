@@ -46,7 +46,7 @@
 
 +(NSURLSessionDataTask *)globalTimeGetRecommendInfoWithRanktype:(NSString *)rankType Block:(void(^)(NSArray * posts,NSError *error))block{
     return [[TSAppDoNetAPIClient sharedClient] GET:@"FoxGetRankingList.ashx" parameters:@{@"rankType":rankType} success:^(NSURLSessionDataTask *task, id responseObject) {
-                NSLog(@"ppppp:%@",responseObject);
+//                NSLog(@"ppppp:%@",responseObject);
         NSArray * postsFromResponse = [responseObject valueForKeyPath:@"TSItemSP"];
         NSMutableArray * mutablePosts = [NSMutableArray arrayWithCapacity:[postsFromResponse count]];
         for (NSDictionary * attributes in postsFromResponse) {
