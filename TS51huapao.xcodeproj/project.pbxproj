@@ -46,7 +46,6 @@
 		64FA00D818E409A0006E12B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64FA00D618E409A0006E12B2 /* Main.storyboard */; };
 		64FA00DB18E409A0006E12B2 /* TSFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64FA00DA18E409A0006E12B2 /* TSFirstViewController.m */; };
 		64FA00DE18E409A0006E12B2 /* TSSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64FA00DD18E409A0006E12B2 /* TSSecondViewController.m */; };
-		64FA00E018E409A0006E12B2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64FA00DF18E409A0006E12B2 /* Images.xcassets */; };
 		64FA00E718E409A0006E12B2 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64FA00E618E409A0006E12B2 /* XCTest.framework */; };
 		64FA00E818E409A0006E12B2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64FA00C418E409A0006E12B2 /* Foundation.framework */; };
 		64FA00E918E409A0006E12B2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64FA00C818E409A0006E12B2 /* UIKit.framework */; };
@@ -170,7 +169,6 @@
 		64FA00DA18E409A0006E12B2 /* TSFirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TSFirstViewController.m; sourceTree = "<group>"; };
 		64FA00DC18E409A0006E12B2 /* TSSecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TSSecondViewController.h; sourceTree = "<group>"; };
 		64FA00DD18E409A0006E12B2 /* TSSecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TSSecondViewController.m; sourceTree = "<group>"; };
-		64FA00DF18E409A0006E12B2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = TS51huapao/Images.xcassets; sourceTree = "<group>"; };
 		64FA00E518E409A0006E12B2 /* TS51huapaoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TS51huapaoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		64FA00E618E409A0006E12B2 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		64FA00EE18E409A0006E12B2 /* TS51huapaoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TS51huapaoTests-Info.plist"; sourceTree = "<group>"; };
@@ -363,7 +361,6 @@
 		64FA00B818E409A0006E12B2 = {
 			isa = PBXGroup;
 			children = (
-				64FA00DF18E409A0006E12B2 /* Images.xcassets */,
 				64FA00CA18E409A0006E12B2 /* TS51huapao */,
 				64FA00EC18E409A0006E12B2 /* TS51huapaoTests */,
 				64FA00C318E409A0006E12B2 /* Frameworks */,
@@ -639,7 +636,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				64FA00E018E409A0006E12B2 /* Images.xcassets in Resources */,
 				EBC2526E1972D565006835A6 /* TSItemListTableViewController.xib in Resources */,
 				64FA010718E41314006E12B2 /* Localizable.strings in Resources */,
 				64FA00CF18E409A0006E12B2 /* InfoPlist.strings in Resources */,
