@@ -27,6 +27,12 @@
 		643A1505195BB74200854928 /* UIProgressView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 643A14FB195BB74200854928 /* UIProgressView+AFNetworking.m */; };
 		643A1506195BB74200854928 /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 643A14FD195BB74200854928 /* UIRefreshControl+AFNetworking.m */; };
 		643A1507195BB74200854928 /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 643A14FF195BB74200854928 /* UIWebView+AFNetworking.m */; };
+		64474CC5197A42CD000C1C7D /* TSMakeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64474CBA197A42CD000C1C7D /* TSMakeViewController.m */; };
+		64474CC6197A42CD000C1C7D /* TSResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64474CBC197A42CD000C1C7D /* TSResultViewController.m */; };
+		64474CC7197A42CD000C1C7D /* TSfactoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64474CBE197A42CD000C1C7D /* TSfactoryTableViewController.m */; };
+		64474CC8197A42CD000C1C7D /* TSCoLtdpost.m in Sources */ = {isa = PBXBuildFile; fileRef = 64474CC0197A42CD000C1C7D /* TSCoLtdpost.m */; };
+		64474CC9197A42CD000C1C7D /* TSFactorypost.m in Sources */ = {isa = PBXBuildFile; fileRef = 64474CC2197A42CD000C1C7D /* TSFactorypost.m */; };
+		64474CCA197A42CD000C1C7D /* TSThridNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64474CC4197A42CD000C1C7D /* TSThridNavigationController.m */; };
 		6457DE0618E55E49008193BC /* UIImage+UIImageExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 6457DE0518E55E49008193BC /* UIImage+UIImageExtras.m */; };
 		647F35E919616A240014A64F /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 647F35D919616A240014A64F /* MJRefresh.bundle */; };
 		647F35EA19616A240014A64F /* MJRefreshBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 647F35DC19616A240014A64F /* MJRefreshBaseView.m */; };
@@ -135,6 +141,18 @@
 		643A14FD195BB74200854928 /* UIRefreshControl+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIRefreshControl+AFNetworking.m"; sourceTree = "<group>"; };
 		643A14FE195BB74200854928 /* UIWebView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+AFNetworking.h"; sourceTree = "<group>"; };
 		643A14FF195BB74200854928 /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
+		64474CB9197A42CD000C1C7D /* TSMakeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSMakeViewController.h; sourceTree = "<group>"; };
+		64474CBA197A42CD000C1C7D /* TSMakeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSMakeViewController.m; sourceTree = "<group>"; };
+		64474CBB197A42CD000C1C7D /* TSResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSResultViewController.h; sourceTree = "<group>"; };
+		64474CBC197A42CD000C1C7D /* TSResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSResultViewController.m; sourceTree = "<group>"; };
+		64474CBD197A42CD000C1C7D /* TSfactoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSfactoryTableViewController.h; sourceTree = "<group>"; };
+		64474CBE197A42CD000C1C7D /* TSfactoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSfactoryTableViewController.m; sourceTree = "<group>"; };
+		64474CBF197A42CD000C1C7D /* TSCoLtdpost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCoLtdpost.h; sourceTree = "<group>"; };
+		64474CC0197A42CD000C1C7D /* TSCoLtdpost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCoLtdpost.m; sourceTree = "<group>"; };
+		64474CC1197A42CD000C1C7D /* TSFactorypost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSFactorypost.h; sourceTree = "<group>"; };
+		64474CC2197A42CD000C1C7D /* TSFactorypost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSFactorypost.m; sourceTree = "<group>"; };
+		64474CC3197A42CD000C1C7D /* TSThridNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSThridNavigationController.h; sourceTree = "<group>"; };
+		64474CC4197A42CD000C1C7D /* TSThridNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSThridNavigationController.m; sourceTree = "<group>"; };
 		6457DE0418E55E49008193BC /* UIImage+UIImageExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+UIImageExtras.h"; sourceTree = "<group>"; };
 		6457DE0518E55E49008193BC /* UIImage+UIImageExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+UIImageExtras.m"; sourceTree = "<group>"; };
 		647F35D919616A240014A64F /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJRefresh.bundle; sourceTree = "<group>"; };
@@ -468,6 +486,18 @@
 			children = (
 				64FA010D18E41910006E12B2 /* TSThridViewController.h */,
 				64FA010E18E41910006E12B2 /* TSThridViewController.m */,
+				64474CB9197A42CD000C1C7D /* TSMakeViewController.h */,
+				64474CBA197A42CD000C1C7D /* TSMakeViewController.m */,
+				64474CBB197A42CD000C1C7D /* TSResultViewController.h */,
+				64474CBC197A42CD000C1C7D /* TSResultViewController.m */,
+				64474CBD197A42CD000C1C7D /* TSfactoryTableViewController.h */,
+				64474CBE197A42CD000C1C7D /* TSfactoryTableViewController.m */,
+				64474CBF197A42CD000C1C7D /* TSCoLtdpost.h */,
+				64474CC0197A42CD000C1C7D /* TSCoLtdpost.m */,
+				64474CC1197A42CD000C1C7D /* TSFactorypost.h */,
+				64474CC2197A42CD000C1C7D /* TSFactorypost.m */,
+				64474CC3197A42CD000C1C7D /* TSThridNavigationController.h */,
+				64474CC4197A42CD000C1C7D /* TSThridNavigationController.m */,
 			);
 			name = ThridView;
 			sourceTree = "<group>";
@@ -670,6 +700,7 @@
 				EB81EDDD19727E4900AAE4DA /* TSRcmd.m in Sources */,
 				643A14EA195BB72E00854928 /* AFURLConnectionOperation.m in Sources */,
 				64062A261958248E00C3FED5 /* NSString+FontAwesome.m in Sources */,
+				64474CC9197A42CD000C1C7D /* TSFactorypost.m in Sources */,
 				EB06889E1973CA3B001AC4C1 /* FMDatabase.m in Sources */,
 				643A14E9195BB72E00854928 /* AFSecurityPolicy.m in Sources */,
 				EBC2525E1972CD00006835A6 /* NSString+URLEncoding.m in Sources */,
@@ -677,6 +708,7 @@
 				64FA00D118E409A0006E12B2 /* main.m in Sources */,
 				EB0688AE1973E7A4001AC4C1 /* TSItemDetailPost.m in Sources */,
 				643A1505195BB74200854928 /* UIProgressView+AFNetworking.m in Sources */,
+				64474CC7197A42CD000C1C7D /* TSfactoryTableViewController.m in Sources */,
 				EB0688B119740E77001AC4C1 /* TSItemDetaillTableViewController.m in Sources */,
 				EB00B1F5196D923200F7388E /* TSForthViewControllerCell.m in Sources */,
 				647F35ED19616A240014A64F /* MJRefreshHeaderView.m in Sources */,
@@ -691,6 +723,7 @@
 				643A14E6195BB72E00854928 /* AFHTTPRequestOperationManager.m in Sources */,
 				643A1503195BB74200854928 /* UIButton+AFNetworking.m in Sources */,
 				643A1501195BB74200854928 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
+				64474CC5197A42CD000C1C7D /* TSMakeViewController.m in Sources */,
 				647F35EA19616A240014A64F /* MJRefreshBaseView.m in Sources */,
 				64FA011318E41CFB006E12B2 /* TSMainTabBarController.m in Sources */,
 				647F35EC19616A240014A64F /* MJRefreshFooterView.m in Sources */,
@@ -698,14 +731,17 @@
 				64FA00DE18E409A0006E12B2 /* TSSecondViewController.m in Sources */,
 				642D8C4F18E52F2D0014FCFC /* TSFirstNavigation.m in Sources */,
 				64FA010F18E41910006E12B2 /* TSThridViewController.m in Sources */,
+				64474CCA197A42CD000C1C7D /* TSThridNavigationController.m in Sources */,
 				EB81EDD11972397600AAE4DA /* TSItemTableViewCell.m in Sources */,
 				EBC2526D1972D565006835A6 /* TSItemListTableViewController.m in Sources */,
 				64062A231958241A00C3FED5 /* UIButton+Style.m in Sources */,
 				EB0688A21973CA3B001AC4C1 /* FMResultSet.m in Sources */,
 				643A14ED195BB72E00854928 /* AFURLSessionManager.m in Sources */,
 				643A14EC195BB72E00854928 /* AFURLResponseSerialization.m in Sources */,
+				64474CC8197A42CD000C1C7D /* TSCoLtdpost.m in Sources */,
 				647F35F019616A240014A64F /* UIView+Extension.m in Sources */,
 				64FA00D518E409A0006E12B2 /* TSAppDelegate.m in Sources */,
+				64474CC6197A42CD000C1C7D /* TSResultViewController.m in Sources */,
 				EB06889F1973CA3B001AC4C1 /* FMDatabaseAdditions.m in Sources */,
 				647F35EF19616A240014A64F /* UIScrollView+MJRefresh.m in Sources */,
 				EB0AB52E19760EA400FBF1B6 /* TSItemListPost.m in Sources */,
