@@ -177,21 +177,8 @@
         // (最好在刷新表格后调用)调用endRefreshing可以结束刷新状态
         [self.tableView headerEndRefreshing];
     });
-//    NSURLSessionDataTask *task=[TSrecommendPost globalTimeGetRecommendInfoWithBlock:^(TSrecommendPost *post, NSError *error) {
-//        if (!error) {
-//            self.labelarray=post.labelarray;
-//        }
-//        [self.tableView headerEndRefreshing];
-//    }];
+
 }
-//+ (NSURLSessionDataTask * )gblock:(void (^)(NSArray * posts, NSError * error))block
-//{
-//    return [[TSAppDoNetAPIClient sharedClient] GET:@"FoxGetAnItemData.ashx" parameters:@{@"itemcode":@"91781117"} success:^(NSURLSessionDataTask *task, id responseObject) {
-//        NSLog(@"ppppp:%@",responseObject);
-//    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-//        NSLog(@"pppp:%@",error);
-//    }];
-//}
 
 - (void)imageview:(UIImageView *)imageView setImageWithURL:(NSString * )url
 {
