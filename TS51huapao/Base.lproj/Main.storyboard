@@ -749,10 +749,10 @@
             </objects>
             <point key="canvasLocation" x="409" y="-270"/>
         </scene>
-        <!--Navigation Controller - 黄页-->
+        <!--Thrid Navigation Controller - 黄页-->
         <scene sceneID="zaU-mG-tEr">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4Nk-cY-KqE" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4Nk-cY-KqE" customClass="TSThridNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="黄页" image="hy" id="v3k-Vb-RIh"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ERh-km-HEk">

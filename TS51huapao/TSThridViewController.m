@@ -13,14 +13,14 @@
 #define saparator @"-------------------------------------------------------------------------------------------------------"
 
 
-@interface TSThirdViewController ()
+@interface TSThridViewController ()
 
 @property (strong, nonatomic)  UISearchBar *searchBar;
 @property (strong, nonatomic) NSArray * array;
 
 @end
 
-@implementation TSThirdViewController
+@implementation TSThridViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {

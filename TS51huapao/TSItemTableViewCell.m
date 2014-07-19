@@ -29,7 +29,7 @@
     self.shadowView.layer.shadowOpacity = 0.5;
     self.shadowView.layer.shadowRadius = 1.0f;
     [self.shadowView layer].borderColor = [[UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:240.0/255.0] CGColor];
-    [self.shadowView layer].borderWidth = 1.0f;
+    [self.shadowView layer].borderWidth = 0.2;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
