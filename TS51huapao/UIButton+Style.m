@@ -19,6 +19,7 @@
 }
 
 -(void)guzhuqianStyle{
+    
     self.layer.borderWidth = 0.5;
     self.layer.cornerRadius = 2.0;
     self.layer.masksToBounds = YES;
@@ -55,6 +56,7 @@
     [self bootstrapStyle];
     [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
+    
     self.backgroundColor = [UIColor whiteColor];
     self.layer.borderColor = [[UIColor colorWithRed:204/255.0 green:204/255.0 blue:204/255.0 alpha:1] CGColor];
     [self setBackgroundImage:[self buttonImageFromColor:[UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1]] forState:UIControlStateHighlighted];

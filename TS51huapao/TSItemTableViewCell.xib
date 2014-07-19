@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -13,8 +13,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="89"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ahc-IJ-hxk">
-                        <rect key="frame" x="19" y="1" width="84" height="90"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ahc-IJ-hxk">
+                        <rect key="frame" x="20" y="4" width="82" height="82"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </imageView>
@@ -60,23 +60,23 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="glO-jy-zNI">
-                        <rect key="frame" x="225" y="7" width="35" height="35"/>
+                        <rect key="frame" x="227" y="10" width="30" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <state key="normal" backgroundImage="ic_bofanganniu.png">
+                        <state key="normal" backgroundImage="ic_bofanganniu">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Ry-Gh-23h">
                         <rect key="frame" x="283" y="7" width="35" height="35"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <state key="normal" backgroundImage="ic_fanlianniu.png">
+                        <state key="normal" backgroundImage="ic_fanlianniu">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vx5-Ew-XR2">
                         <rect key="frame" x="254" y="7" width="35" height="35"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <state key="normal" backgroundImage="ic_zhijianganniu.png">
+                        <state key="normal" backgroundImage="ic_zhijianganniu">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
@@ -115,14 +115,15 @@
                 <outlet property="guanzhu" destination="c3z-8e-Lqf" id="UEd-ew-WvQ"/>
                 <outlet property="itemimage" destination="Ahc-IJ-hxk" id="uKQ-l2-Z9M"/>
                 <outlet property="itemname" destination="4bF-OI-JP2" id="3l6-t0-oPr"/>
+                <outlet property="mtv" destination="glO-jy-zNI" id="ntH-qM-9Og"/>
                 <outlet property="order" destination="aGJ-ug-g2a" id="nT6-M1-Ikf"/>
                 <outlet property="zhixiao" destination="Vx5-Ew-XR2" id="E7I-Qm-KZK"/>
             </connections>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="ic_bofanganniu.png" width="72" height="71"/>
-        <image name="ic_fanlianniu.png" width="72" height="71"/>
-        <image name="ic_zhijianganniu.png" width="72" height="71"/>
+        <image name="ic_bofanganniu" width="72" height="71"/>
+        <image name="ic_fanlianniu" width="72" height="71"/>
+        <image name="ic_zhijianganniu" width="72" height="71"/>
     </resources>
 </document>

@@ -21,5 +21,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *order;
 
 @property (strong, nonatomic) TSItemListPost * post;
+@property (weak, nonatomic) IBOutlet UIButton *mtv;
 
 @end

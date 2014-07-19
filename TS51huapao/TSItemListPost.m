@@ -17,7 +17,7 @@
     if(!self){
         return nil;
     };
-    self.itemCode = [self changeString:[attributes valueForKey:@"itemCode"]];
+    self.itemCode = [self changeString:[attributes valueForKey:@"ItemCode"]];
     self.ItemName = [self changeString:[attributes valueForKey:@"ItemName"]];
     self.Spec = [self changeString:[attributes valueForKey:@"Spec"]];
     self.SalesVolume = [self changeString:[attributes valueForKey:@"SalesVolume"]];
@@ -46,7 +46,7 @@
 
 +(NSURLSessionDataTask *)globalTimeGetRecommendInfoWithRanktype:(NSString *)rankType Block:(void(^)(NSArray * posts,NSError *error))block{
     return [[TSAppDoNetAPIClient sharedClient] GET:@"FoxGetRankingList.ashx" parameters:@{@"rankType":rankType} success:^(NSURLSessionDataTask *task, id responseObject) {
-                NSLog(@"ppppp:%@",responseObject);
+//                NSLog(@"ppppp:%@",responseObject);
         NSArray * postsFromResponse = [responseObject valueForKeyPath:@"TSItemSP"];
         NSMutableArray * mutablePosts = [NSMutableArray arrayWithCapacity:[postsFromResponse count]];
         for (NSDictionary * attributes in postsFromResponse) {

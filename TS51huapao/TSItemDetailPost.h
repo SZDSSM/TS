@@ -44,7 +44,8 @@
 
 @property (strong, nonatomic) NSString * U_NEU_PriceNote;
 
-@property (strong, nonatomic) NSString * U_NEU_Rebate;
+@property (strong, nonatomic) NSNumber * U_NEU_Rebate;
+
 
 @property (strong, nonatomic) NSString * U_NEU_RoughWeight;
 

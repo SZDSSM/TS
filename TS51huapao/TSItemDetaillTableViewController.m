@@ -5,11 +5,12 @@
 //  Created by 张明生 on 14-7-14.
 //  Copyright (c) 2014年 Teesson Fireworks. All rights reserved.
 //
+#import "WebViewController.h"
 
 #import "TSItemDetaillTableViewController.h"
 #import "TSItemDetailPost.h"
-#import "UIImageView+AFNetworking.h"
-
+//#import "UIImageView+AFNetworking.h"
+#import "UIKit+AFNetworking.h"
 
 @interface TSItemDetaillTableViewController ()
 
@@ -28,13 +29,27 @@
     self.ItemName.text = [NSString stringWithFormat:@"%@",_post.ItemName];
     self.oldPrice.text = [NSString stringWithFormat:@"%@",_post.CostPrice];
     self.presentPrice.text = [NSString stringWithFormat:@"%@",_post.Price];
-    self.priceNote.text = [NSString stringWithFormat:@"(%@)",_post.U_NEU_PriceNote];
+    if ([_post.U_NEU_PriceNote isEqualToString:@""]) {
+        self.priceNote.text = @"";
+    }else{
+        self.priceNote.text = [NSString stringWithFormat:@"(%@)",_post.U_NEU_PriceNote];
+    }
     self.leftsum.text = [NSString stringWithFormat:@"%@",_post.stocksum];
     self.cuxiao.text = [NSString stringWithFormat:@"%@",_post.U_NEU_cuxiao];
-    if (![_post.U_NEU_SaleType isKindOfClass:[NSNull class]] && _post.U_NEU_SaleType > 0)
-    [self.zhijiang setHidden:![_post.U_NEU_SaleType isEqualToString:@"直销"]];
-    else
+    
+    if ([_post.U_NEU_Rebate floatValue]>0){
+        [self.fanli setHidden:NO];
+    }else{
+        [self.fanli setHidden:YES];
+    }
+    
+    if ([_post.U_NEU_SaleType isEqualToString:@"直销"]){
+        [self.zhijiang setHidden:NO];
+    }else{
         [self.zhijiang setHidden:YES];
+    }
+    
+    
     self.guige.text = [NSString stringWithFormat:@"%@",_post.Spec];
     self.hanliang.text = [NSString stringWithFormat:@"%@",_post.U_Neu_Content];
     self.xianggui.text = [NSString stringWithFormat:@"%@",_post.U_NEU_boxboard];
@@ -46,13 +61,19 @@
     if ([_post.IsFreeShip isEqualToString:@"Y"])
         [self.labarray addObject:@"物流运输"];
     
-    if ([_post.IsTrade isEqualToString:@"N"])
+    if ([_post.IsTrade isEqualToString:@"Y"])
         [self.labarray addObject:@"交易保障"];
     
-    if ([_post.IsQaTest isEqualToString:@"N"])
+    if ([_post.IsQaTest isEqualToString:@"Y"])
         [self.labarray addObject:@"质量检查"];
     
-    //[self addlabel];
+    if (![_post.UMTVURL hasPrefix:@"http"]) {
+        _mtvButton.hidden=YES;
+    }else{
+        _mtvButton.hidden=NO;
+    }
+    
+    [self addlabel];
     [self addimage];
 //    [self.tableView reloadData];
 }
@@ -64,9 +85,9 @@
         //NSLog(@"error::%@",error);
         if (!error) {
             self.post = post;
-            NSLog(@"post::%@",post.ItemCode);
-        }
+            }
     }];
+    [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
 //    self.tableView.dataSource = self;
 //    self.tableView.delegate = self;
     
@@ -74,18 +95,20 @@
 
 - (void)addlabel
 {
-    int i = 0;
+    int i=1;
     for (UILabel * lb in self.tabarray)
     {
-//        int i = 0;
-        if (i > [self.labarray count]-1)
-        {
+        if (i > [self.labarray count]){
             lb.hidden = YES;
 //            lb.text = [self.labarray objectAtIndex:i];
         }
         else{
             lb.hidden = NO;
-            lb.text = [self.labarray objectAtIndex:i];
+            lb.text = [self.labarray objectAtIndex:i-1];
+            lb.layer.borderWidth = 1;
+            lb.layer.masksToBounds = YES;
+            lb.layer.borderColor = [[UIColor colorWithRed:200/255.0 green:200/255.0 blue:200/255.0 alpha:1] CGColor];
+            
         }
         i ++;
     }
@@ -240,4 +263,17 @@
 //}
 //- (IBAction)guanzhu:(id)sender {
 //}
+
+- (IBAction)guanzhu:(id)sender{
+    
+}
+
+- (IBAction)boFangAnNiu:(id)sender{
+    
+    WebViewController *_webVC = [[WebViewController alloc] init];
+    _webVC.hidesBottomBarWhenPushed = YES;
+    //    [_logsInfo_vc setInfo:content];
+    [_webVC setUrlstr:_post.UMTVURL];
+    [self.navigationController pushViewController:_webVC animated:YES];
+}
 @end

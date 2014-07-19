@@ -30,7 +30,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *subject2;
 @property (weak, nonatomic) IBOutlet UIImageView *subject3;
 
-@property(copy,nonatomic) NSString *pushItemCode;
 @end
 
 @implementation TSFirstViewController
@@ -57,6 +56,14 @@
     [self imageview:self.product1 setImageWithURL:self.prdctRcmd1.imageURL];
     [self imageview:self.product2 setImageWithURL:self.prdctRcmd2.imageURL];
     [self imageview:self.product3 setImageWithURL:self.prdctRcmd3.imageURL];
+    
+    //[_product1 setImageWithURL:[NSURL URLWithString: _prdctRcmd1.imageURL] placeholderImage:nil];
+    //[_product2 setImageWithURL:[NSURL URLWithString: _prdctRcmd2.imageURL] placeholderImage:nil];
+    //[_product3 setImageWithURL:[NSURL URLWithString: _prdctRcmd3.imageURL] placeholderImage:nil];
+    
+    //[self.subject1 setImageWithURL:[NSURL URLWithString: self.subjctRcmd1.imageURL] placeholderImage:nil];
+
+    //[self.subject1 setImageWithURL:[NSURL URLWithString:self.prdctRcmd1.imageURL] placeholderImage:[UIImage imageNamed:@""]];
     [self imageview:self.subject1 setImageWithURL:self.subjctRcmd1.imageURL];
     [self imageview:self.subject2 setImageWithURL:self.subjctRcmd2.imageURL];
     [self imageview:self.subject3 setImageWithURL:self.subjctRcmd3.imageURL];
@@ -217,26 +224,25 @@
 - (void)imageViewTap:(UITapGestureRecognizer *)recognizer
 {
     if (recognizer.view.tag == 101) {
-        _pushItemCode=_prdctRcmd1.itemCode;
+        [self performSegueWithIdentifier:@"imageViewToItemDetail" sender:_prdctRcmd1.itemCode];
         
     }else if (recognizer.view.tag == 102){
-        _pushItemCode=_prdctRcmd2.itemCode;
+        [self performSegueWithIdentifier:@"imageViewToItemDetail" sender:_prdctRcmd2.itemCode];
 
     }else if (recognizer.view.tag == 103){
-        _pushItemCode=_prdctRcmd3.itemCode;
+        [self performSegueWithIdentifier:@"imageViewToItemDetail" sender:_prdctRcmd3.itemCode];
 
     }else if (recognizer.view.tag == 201){
-        _pushItemCode=_subjctRcmd1.itemCode;
+        [self performSegueWithIdentifier:@"imageViewToItemDetail" sender:_subjctRcmd1.itemCode];
 
     }else if (recognizer.view.tag == 202){
-        _pushItemCode=_subjctRcmd2.itemCode;;
+        [self performSegueWithIdentifier:@"imageViewToItemDetail" sender:_subjctRcmd2.itemCode];
 
     }else if (recognizer.view.tag == 203){
-        _pushItemCode=_subjctRcmd3.itemCode;;
+        [self performSegueWithIdentifier:@"imageViewToItemDetail" sender:_subjctRcmd3.itemCode];
 
     }else{
     }
-    [self performSegueWithIdentifier:@"imageViewToItemDetail" sender:self];
 }
 
 - (void)addLableButton
@@ -247,8 +253,8 @@
         [button setTitle:[self.labelarray objectAtIndex:i] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(buttonTap:) forControlEvents:UIControlEventTouchUpInside];
         [button mainProductStyle];
-
-        [[self.view viewWithTag:2048]addSubview:button];
+        //UIView *view=self.cotentview;
+        [self.cotentview addSubview:button];
     }
     
 }
@@ -322,7 +328,11 @@
             return 1;
             break;
         case 8:
-            return ([self.labelarray count]/3+1)*45;
+            if ([self.labelarray count]%3==0) {
+                return ([self.labelarray count]/3)*45;
+            }else{
+                return ([self.labelarray count]/3+1)*45;
+            }
             break;
         case 9:
             return 1;
@@ -392,7 +402,7 @@
  // Pass the selected object to the new view controller.
      if ([segue.identifier isEqualToString:@"imageViewToItemDetail"]) {
          TSItemDetaillTableViewController * tsitemde = segue.destinationViewController;
-         tsitemde.itemcode =_pushItemCode;
+         tsitemde.itemcode =sender;
      }
 }
 
