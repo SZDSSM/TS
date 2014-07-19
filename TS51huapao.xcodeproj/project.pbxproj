@@ -37,6 +37,7 @@
 		647F35EF19616A240014A64F /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 647F35E619616A240014A64F /* UIScrollView+MJRefresh.m */; };
 		647F35F019616A240014A64F /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 647F35E819616A240014A64F /* UIView+Extension.m */; };
 		647F35F319625A840014A64F /* UIView+FoxExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 647F35F219625A840014A64F /* UIView+FoxExtras.m */; };
+		649E303E197A4030002E22DD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 649E303D197A4030002E22DD /* Images.xcassets */; };
 		64FA00C518E409A0006E12B2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64FA00C418E409A0006E12B2 /* Foundation.framework */; };
 		64FA00C718E409A0006E12B2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64FA00C618E409A0006E12B2 /* CoreGraphics.framework */; };
 		64FA00C918E409A0006E12B2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64FA00C818E409A0006E12B2 /* UIKit.framework */; };
@@ -154,6 +155,7 @@
 		647F35E819616A240014A64F /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
 		647F35F119625A840014A64F /* UIView+FoxExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+FoxExtras.h"; sourceTree = "<group>"; };
 		647F35F219625A840014A64F /* UIView+FoxExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+FoxExtras.m"; sourceTree = "<group>"; };
+		649E303D197A4030002E22DD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		64FA00C118E409A0006E12B2 /* TS51huapao.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TS51huapao.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		64FA00C418E409A0006E12B2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		64FA00C618E409A0006E12B2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -361,6 +363,7 @@
 		64FA00B818E409A0006E12B2 = {
 			isa = PBXGroup;
 			children = (
+				649E303D197A4030002E22DD /* Images.xcassets */,
 				64FA00CA18E409A0006E12B2 /* TS51huapao */,
 				64FA00EC18E409A0006E12B2 /* TS51huapaoTests */,
 				64FA00C318E409A0006E12B2 /* Frameworks */,
@@ -636,6 +639,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				649E303E197A4030002E22DD /* Images.xcassets in Resources */,
 				EBC2526E1972D565006835A6 /* TSItemListTableViewController.xib in Resources */,
 				64FA010718E41314006E12B2 /* Localizable.strings in Resources */,
 				64FA00CF18E409A0006E12B2 /* InfoPlist.strings in Resources */,
