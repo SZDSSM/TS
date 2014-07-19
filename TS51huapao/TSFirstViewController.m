@@ -92,7 +92,7 @@
     
 
     
-    [self gettouch];
+//    [self gettouch];
 //    [self imageSet];
     
     //1.初始化刷新
@@ -146,12 +146,14 @@
             }else if(nil == resData){
                 UIAlertView *AlertView1=[[UIAlertView alloc]initWithTitle:@"提示" message:@"未获取到数据" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil];
                 [AlertView1 show];
+                [self.tableView headerEndRefreshing];
             }
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"Failure: %@", error);
             UIAlertView *AlertView1=[[UIAlertView alloc]initWithTitle:@"提示" message:@"未获取到数据" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil];
             [AlertView1 show];
+            [self.tableView headerEndRefreshing];
         }];
         [operation start];
 //        NSLog(@"%lu",(unsigned long)[self.array count]);
@@ -167,7 +169,7 @@
     // 1.添加下拉花炮云商标语
     [self.tableView addHeaderWithTarget:self action:@selector(headerRereshing)];
     
-    //[self.tableView headerBeginRefreshing];
+    [self.tableView headerBeginRefreshing];
     // 2.添加tableFooterView 服务电话
     UIView *view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 110.0f)];
     self.tableView.tableFooterView =[view addRecommndFooterView:self];
@@ -176,15 +178,7 @@
 #pragma mark 开始进入刷新状态
 - (void)headerRereshing
 {
-    
-    // 2.2秒后刷新表格UI
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        // 刷新表格
-        [self gettouch];
-        // (最好在刷新表格后调用)调用endRefreshing可以结束刷新状态
-        [self.tableView headerEndRefreshing];
-    });
-
+    [self gettouch];
 }
 
 - (void)imageview:(UIImageView *)imageView setImageWithURL:(NSString * )url
