@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 @class TSItemListPost;
+@class TSFactorypost;
 @interface TSItemTableViewCell : UITableViewCell
+
+@property (weak, nonatomic) IBOutlet UIImageView *shadowView;
 
 @property (weak, nonatomic) IBOutlet UILabel *itemname;
 @property (weak, nonatomic) IBOutlet UIImageView *itemimage;
@@ -21,6 +24,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *order;
 
 @property (strong, nonatomic) TSItemListPost * post;
+@property (strong, nonatomic) TSFactorypost * thirdPageFacPost;
+
 @property (weak, nonatomic) IBOutlet UIButton *mtv;
 
 @end
