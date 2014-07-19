@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *cuxiao;
 @property (weak, nonatomic) IBOutlet UIButton *zhijiang;
 @property (weak, nonatomic) IBOutlet UIButton *fanli;
+
 - (IBAction)guanzhu:(id)sender;
 
 
@@ -30,16 +31,15 @@
 @property (weak, nonatomic) IBOutlet UILabel *xianggui;
 @property (weak, nonatomic) IBOutlet UILabel *maozhong;
 
-
-@property (weak, nonatomic) IBOutlet UIImageView *chanpinxiangqing;
 @property (weak, nonatomic) IBOutlet UILabel *haopindu;
 @property (weak, nonatomic) IBOutlet UIView *star;
 @property (weak, nonatomic) IBOutlet UILabel *yonghudiqu;
 @property (weak, nonatomic) IBOutlet UILabel *xinde;
 
-
+@property (strong, nonatomic) IBOutletCollection(UILabel) NSArray *tabarray;
 @property (copy, nonatomic) NSString * itemcode;
 @property (copy, nonatomic) NSMutableArray * labarray;
+@property (weak, nonatomic) IBOutlet UIButton *mtvButton;
 
 
 - (IBAction)boFangAnNiu:(id)sender;

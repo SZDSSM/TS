@@ -44,7 +44,8 @@
 
 @property (strong, nonatomic) NSString * U_NEU_PriceNote;
 
-@property (strong, nonatomic) NSString * U_NEU_Rebate;
+@property (strong, nonatomic) NSNumber * U_NEU_Rebate;
+
 
 @property (strong, nonatomic) NSString * U_NEU_RoughWeight;
 
@@ -66,7 +67,7 @@
 
 @property (strong, nonatomic) NSString * cardname;
 
-@property (strong, nonatomic) NSString * photolist;
+@property (strong, nonatomic) NSArray * photolist;
 
 @property (strong, nonatomic) NSString * stocksum;
 

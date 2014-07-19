@@ -7,6 +7,15 @@
 //
 
 #import "TSItemTableViewCell.h"
+#import "TSItemListPost.h"
+#import "UIImageView+AFNetworking.h"
+#import "UIButton+Style.h"
+
+@interface TSItemTableViewCell ()
+
+@property(nonatomic,assign) NSInteger iconNumbers;
+@property(nonatomic,assign) CGRect nextRect;
+@end
 
 @implementation TSItemTableViewCell
 
@@ -22,4 +31,59 @@
     // Configure the view for the selected state
 }
 
+- (void)setPost:(TSItemListPost *)post
+{
+    _post = post;
+    
+    _iconNumbers=0;
+//    [self.guanzhu setTintColor:[UIColor redColor]];
+    [self.guanzhu guzhuqianStyle];
+    
+    self.itemname.text = _post.ItemName;
+    self.Spec.text = _post.Spec;
+    self.Price.text = _post.Price;
+    
+    
+
+    if (![_post.IsRebate isEqualToString:@"Y"]) {
+        self.fanli.hidden = YES;
+        //[_fanli setBackgroundImage:nil];
+    }else{
+        self.fanli.hidden = NO;
+        //[_fanli setBackgroundImage:[UIImage imageNamed:@"ic_fanlianniu"] forState:UIControlStateNormal];
+        _iconNumbers++;
+    }
+    
+    if (![_post.IsOTO isEqualToString:@"Y"]) {
+        self.zhixiao.hidden = YES;
+    }else{
+        self.zhixiao.hidden = NO;
+        _iconNumbers++;
+    }
+    
+    
+    if (![post.UMTVURL hasPrefix:@"http"]) {
+        _mtv.hidden=YES;
+    }else{
+        _mtv.hidden=NO;
+    }
+    
+    if (![_post.IsStroe isEqualToString:@"Y"]) {
+        
+    }
+    [self.itemimage setImageWithURL:[NSURL URLWithString:_post.U_Photo1] placeholderImage:[UIImage imageNamed:@"noImage"]];
+    
+    [self setSelectionStyle:UITableViewCellSelectionStyleNone];
+    
+    
+}
+
+- (IBAction)guanzhu:(UIButton *)sender {
+    if ([sender.titleLabel.text isEqualToString:@"☆"]) {
+        [sender guzhuqianStyle];
+    }else{
+        [sender guzhuhouStyle];
+    }
+    
+}
 @end

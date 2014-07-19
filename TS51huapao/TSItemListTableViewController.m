@@ -8,38 +8,65 @@
 
 #import "TSItemListTableViewController.h"
 #import "TSItemTableViewCell.h"
+#import "TSItemListPost.h"
+#import "UIKit+AFNetworking.h"
+#import "TSItemDetaillTableViewController.h"
 
 @interface TSItemListTableViewController ()
 
-@property (strong, nonatomic) NSString * itemcode;
+@property (strong, nonatomic) NSString * rankType;
+@property (strong, nonatomic) NSArray * posts;
 
 @end
 
 @implementation TSItemListTableViewController
 
-- (id)initWithItemCode:(NSString *)itemcode
+- (id)initWithRankType:(NSString *)rankType
 {
     self = [super init];
     
-    self.itemcode = itemcode;
+    self.rankType = rankType;
     
+    [self setHidesBottomBarWhenPushed:YES];
     return self;
 }
 
 - (void)viewDidLoad
 {
+    if ([self.rankType isEqualToString:@"S"]) {
+        self.title = @"销售排行";
+
+    }else if ([self.rankType isEqualToString:@"N"]) {
+        self.title = @"新品排行";
+        
+    }else if ([self.rankType isEqualToString:@"J"]) {
+        self.title = @"降价排行";
+        
+    }
     [super viewDidLoad];
+    [self getData];
     UINib * nib = [UINib nibWithNibName:@"TSItemTableViewCell" bundle:nil];
     self.tableView.rowHeight = 65;
     [self.tableView registerNib:nib forCellReuseIdentifier:@"reuseIdentifier"];
     
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+   
 }
+
+- (void)getData
+{
+    NSURLSessionDataTask * task = [TSItemListPost globalTimeGetRecommendInfoWithRanktype:self.rankType Block:^(NSArray * posts, NSError *error) {
+        //NSLog(@"error::%@",error);
+        if (!error) {
+            self.posts = posts;
+            [self.tableView reloadData];
+        }
+    }];
+    [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
+    
+        //[UIActivityIndicatorView set ]
+}
+
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -51,16 +78,16 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
+//#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
+//#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 1;
+    return [_posts count];
 }
 
 
@@ -70,12 +97,33 @@
     if (nil == cell) {
         cell = [[TSItemTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"reuseIdentifier"];
     }
-    cell.itemname.text = _itemcode;
-    
+    cell.post = [self.posts objectAtIndex:indexPath.row];
+//    cell.order.text =   [NSString stringWithFormat:@"%@",[indexPath.row]];
+    cell.order.text = [NSString stringWithFormat:@"%d",indexPath.row+1];
+    if (indexPath.row == 0) {
+        cell.order.textColor = [UIColor redColor];
+        cell.order.font = [UIFont italicSystemFontOfSize:35];
+
+    }else if(indexPath.row == 1){
+        cell.order.textColor = [UIColor redColor];
+        cell.order.font = [UIFont italicSystemFontOfSize:30];
+    }else if (indexPath.row == 2){
+        cell.order.textColor = [UIColor redColor];
+        cell.order.font = [UIFont italicSystemFontOfSize:25];
+    }else{
+        cell.order.textColor = [UIColor grayColor];
+        cell.order.font = [UIFont italicSystemFontOfSize:17];
+    }
     // Configure the cell...
     //cell.textLabel.text = _itemcode;
-    
+    //[cell.zhixiao setCenter:CGPointMake(200, 40)];
+    //[self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 90;
 }
 
 
@@ -117,7 +165,7 @@
 }
 */
 
-/*
+
 #pragma mark - Table view delegate
 
 // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
@@ -125,13 +173,31 @@
 {
     // Navigation logic may go here, for example:
     // Create the next view controller.
-    <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:<#@"Nib name"#> bundle:nil];
+//    <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:<#@"Nib name"#> bundle:nil];
     
     // Pass the selected object to the new view controller.
     
     // Push the view controller.
-    [self.navigationController pushViewController:detailViewController animated:YES];
+    //[self.navigationController pushViewController:detailViewController animated:YES];
+    TSItemListPost *item=[_posts objectAtIndex:indexPath.row];
+    //[self performSegueWithIdentifier:@"imageViewToItemDetail" sender:item.itemCode];
+    UIStoryboard *board=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    TSItemDetaillTableViewController *itemdetail = [board instantiateViewControllerWithIdentifier:@"itemdetail"];
+    itemdetail.itemcode=item.itemCode;
+    [self.navigationController pushViewController:itemdetail animated:YES];
 }
-*/
+//
+//#pragma mark - Navigation
+//
+//// In a storyboard-based application, you will often want to do a little preparation before navigation
+//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+//{
+//    // Get the new view controller using [segue destinationViewController].
+//    // Pass the selected object to the new view controller.
+//    if ([segue.identifier isEqualToString:@"imageViewToItemDetail"]) {
+//        TSItemDetaillTableViewController * tsitemde = segue.destinationViewController;
+//        tsitemde.itemcode =sender;
+//    }
+//}
 
 @end

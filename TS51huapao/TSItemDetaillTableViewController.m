@@ -5,9 +5,12 @@
 //  Created by 张明生 on 14-7-14.
 //  Copyright (c) 2014年 Teesson Fireworks. All rights reserved.
 //
+#import "WebViewController.h"
 
 #import "TSItemDetaillTableViewController.h"
 #import "TSItemDetailPost.h"
+//#import "UIImageView+AFNetworking.h"
+#import "UIKit+AFNetworking.h"
 
 @interface TSItemDetaillTableViewController ()
 
@@ -18,83 +21,102 @@
 
 @implementation TSItemDetaillTableViewController
 
-- (id)initWithItemCode:(NSString *)itemcode
-{
-    self = [super init];
-    
-    self.itemcode = itemcode;
-    
-    return self;
-}
 
-//- (id)initWithStyle:(UITableViewStyle)style
-//{
-//    self = [super initWithStyle:style];
-//    if (self) {
-//        // Custom initialization
-//    }
-//    return self;
-//}
+- (void)setPost:(TSItemDetailPost *)post
+{
+    _post = post;
+    NSLog(@"post::%@",_post);
+    self.ItemName.text = [NSString stringWithFormat:@"%@",_post.ItemName];
+    self.oldPrice.text = [NSString stringWithFormat:@"%@",_post.CostPrice];
+    self.presentPrice.text = [NSString stringWithFormat:@"%@",_post.Price];
+    if ([_post.U_NEU_PriceNote isEqualToString:@""]) {
+        self.priceNote.text = @"";
+    }else{
+        self.priceNote.text = [NSString stringWithFormat:@"(%@)",_post.U_NEU_PriceNote];
+    }
+    self.leftsum.text = [NSString stringWithFormat:@"%@",_post.stocksum];
+    self.cuxiao.text = [NSString stringWithFormat:@"%@",_post.U_NEU_cuxiao];
+    
+    if ([_post.U_NEU_Rebate floatValue]>0){
+        [self.fanli setHidden:NO];
+    }else{
+        [self.fanli setHidden:YES];
+    }
+    
+    if ([_post.U_NEU_SaleType isEqualToString:@"直销"]){
+        [self.zhijiang setHidden:NO];
+    }else{
+        [self.zhijiang setHidden:YES];
+    }
+    
+    
+    self.guige.text = [NSString stringWithFormat:@"%@",_post.Spec];
+    self.hanliang.text = [NSString stringWithFormat:@"%@",_post.U_Neu_Content];
+    self.xianggui.text = [NSString stringWithFormat:@"%@",_post.U_NEU_boxboard];
+    self.maozhong.text = [NSString stringWithFormat:@"%@ 千克",_post.U_NEU_RoughWeight];
+    _labarray = [NSMutableArray arrayWithCapacity:20];
+    if ([_post.IsEnsure isEqualToString:@"Y"])
+        [_labarray addObject:@"保险保障"];
+    
+    if ([_post.IsFreeShip isEqualToString:@"Y"])
+        [self.labarray addObject:@"物流运输"];
+    
+    if ([_post.IsTrade isEqualToString:@"Y"])
+        [self.labarray addObject:@"交易保障"];
+    
+    if ([_post.IsQaTest isEqualToString:@"Y"])
+        [self.labarray addObject:@"质量检查"];
+    
+    if (![_post.UMTVURL hasPrefix:@"http"]) {
+        _mtvButton.hidden=YES;
+    }else{
+        _mtvButton.hidden=NO;
+    }
+    
+    [self addlabel];
+    [self addimage];
+//    [self.tableView reloadData];
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    _labarray = [NSMutableArray arrayWithObjects:@"1",@"2", nil];
-//    [_labarray addObject:@"3"];
-//    NSLog(@"nsarray:;;%@",_labarray);
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     NSURLSessionDataTask * task = [TSItemDetailPost globalTimeGetRecommendInfoWithItemcode:self.itemcode Block:^(TSItemDetailPost *post, NSError *error) {
+        //NSLog(@"error::%@",error);
         if (!error) {
-            _post = post;
-            NSLog(@"post::%@",_post);
-            self.ItemName.text = _post.ItemName;
-            self.oldPrice.text = [NSString stringWithFormat:@"%@",_post.CostPrice];
-            self.presentPrice.text = [NSString stringWithFormat:@"%@",_post.Price];
-            self.priceNote.text = [NSString stringWithFormat:@"(%@)",_post.U_NEU_PriceNote];
-            self.leftsum.text = [NSString stringWithFormat:@"%@",_post.stocksum];
-            self.cuxiao.text = _post.U_NEU_cuxiao;
-            [self.zhijiang setHidden:![_post.U_NEU_SaleType isEqualToString:@"直销"]];
-            self.guige.text = _post.Spec;
-            self.hanliang.text = [NSString stringWithFormat:@"%@",_post.U_Neu_Content];
-            self.xianggui.text = _post.U_NEU_boxboard;
-            self.maozhong.text = [NSString stringWithFormat:@"%@ 千克",_post.U_NEU_RoughWeight];
-            _labarray = [NSMutableArray arrayWithCapacity:20];
-            if ([_post.IsEnsure isEqualToString:@"Y"])
-                [_labarray addObject:@"保险保障"];
-//                [(NSMutableArray *)(self.labarray) insertObject:@"1" atIndex:0];
-            
-            if ([_post.IsFreeShip isEqualToString:@"Y"])
-                [self.labarray addObject:@"物流运输"];
-            
-            if ([_post.IsTrade isEqualToString:@"Y"])
-                [self.labarray addObject:@"交易保障"];
-            
-            if ([_post.IsQaTest isEqualToString:@"Y"])
-                [self.labarray addObject:@"质量检查"];
-            
-            [self addlabel:self.labarray];
-            
-        }
+            self.post = post;
+            }
     }];
+    [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
+//    self.tableView.dataSource = self;
+//    self.tableView.delegate = self;
+    
 }
 
-- (void)addlabel:(NSArray *)array
+- (void)addlabel
 {
-    for (int i= 0; i< [array count]; i++) {
-    
-        UILabel * label = [[UILabel alloc]initWithFrame:CGRectMake(25+i%3*(100+ 10), 15, 100, 40)];
-        label.text = [array objectAtIndex:i];
-        label.font = [UIFont systemFontOfSize:14.0];
-        label.textColor = [UIColor colorWithRed:195.0/255.0 green:194.0/255.0 blue:191.0/255.0 alpha:1.0];
-        label.backgroundColor = [UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0];
-        [((UITableViewCell *)[self.view viewWithTag:3046]).contentView addSubview:label];
+    int i=1;
+    for (UILabel * lb in self.tabarray)
+    {
+        if (i > [self.labarray count]){
+            lb.hidden = YES;
+//            lb.text = [self.labarray objectAtIndex:i];
+        }
+        else{
+            lb.hidden = NO;
+            lb.text = [self.labarray objectAtIndex:i-1];
+            lb.layer.borderWidth = 1;
+            lb.layer.masksToBounds = YES;
+            lb.layer.borderColor = [[UIColor colorWithRed:200/255.0 green:200/255.0 blue:200/255.0 alpha:1] CGColor];
+            
+        }
+        i ++;
     }
-    
+}
+
+- (void)addimage
+{
+    [self.Productimage setImageWithURL:[NSURL URLWithString:_post.U_Photo2] placeholderImage:[UIImage imageNamed:@""]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -107,15 +129,85 @@
 
 
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+
+/*- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    NSString * identify = [[NSString alloc]init];
+    switch (indexPath.section) {
+        case 0:
+            switch (indexPath.row) {
+                case 0:
+                    identify = @"FirstCell";
+                    break;
+                case 1:
+                    identify = @"SecondCell";
+                    break;
+                case 2:
+                case 4:
+                case 6:
+                    identify = @"DividCell";
+                    break;
+                case 3:
+                    identify = @"ForthCell";
+                    break;
+                case 5:
+                    identify = @"SixthCell";
+                    break;
+                case 7:
+                    identify = @"eighthCell";
+                    break;                    
+                default:
+                    break;
+            }
+            break;
+        case 1:
+            switch (indexPath.row) {
+                case 0:
+                    identify = @"NinthCell";
+                    break;
+                case 1:
+                    identify = @"TenthCell";
+                    break;
+                case 2:
+                    identify = @"DividCell";
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case 2:
+            switch (indexPath.row) {
+                case 0:
+                    identify = @"TwelvethCell";
+                    break;
+                case 1:
+                    identify = @"ThirteenthCell";
+                    break;
+                    
+                default:
+                    break;
+            }
+            break;
+            
+        default:
+            break;
+    }
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identify forIndexPath:indexPath];
+    if (nil == cell) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identify];
+    }
     
     // Configure the cell...
     
     return cell;
 }
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 3;
+}
+
+
 */
 
 /*
@@ -167,8 +259,21 @@
 }
 */
 
-- (IBAction)boFangAnNiu:(id)sender {
+//- (IBAction)boFangAnNiu:(id)sender {
+//}
+//- (IBAction)guanzhu:(id)sender {
+//}
+
+- (IBAction)guanzhu:(id)sender{
+    
 }
-- (IBAction)guanzhu:(id)sender {
+
+- (IBAction)boFangAnNiu:(id)sender{
+    
+    WebViewController *_webVC = [[WebViewController alloc] init];
+    _webVC.hidesBottomBarWhenPushed = YES;
+    //    [_logsInfo_vc setInfo:content];
+    [_webVC setUrlstr:_post.UMTVURL];
+    [self.navigationController pushViewController:_webVC animated:YES];
 }
 @end

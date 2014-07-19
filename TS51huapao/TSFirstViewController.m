@@ -30,7 +30,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *subject2;
 @property (weak, nonatomic) IBOutlet UIImageView *subject3;
 
-@property(copy,nonatomic) NSString *pushItemCode;
 @end
 
 @implementation TSFirstViewController
@@ -57,6 +56,14 @@
     [self imageview:self.product1 setImageWithURL:self.prdctRcmd1.imageURL];
     [self imageview:self.product2 setImageWithURL:self.prdctRcmd2.imageURL];
     [self imageview:self.product3 setImageWithURL:self.prdctRcmd3.imageURL];
+    
+    //[_product1 setImageWithURL:[NSURL URLWithString: _prdctRcmd1.imageURL] placeholderImage:nil];
+    //[_product2 setImageWithURL:[NSURL URLWithString: _prdctRcmd2.imageURL] placeholderImage:nil];
+    //[_product3 setImageWithURL:[NSURL URLWithString: _prdctRcmd3.imageURL] placeholderImage:nil];
+    
+    //[self.subject1 setImageWithURL:[NSURL URLWithString: self.subjctRcmd1.imageURL] placeholderImage:nil];
+
+    //[self.subject1 setImageWithURL:[NSURL URLWithString:self.prdctRcmd1.imageURL] placeholderImage:[UIImage imageNamed:@""]];
     [self imageview:self.subject1 setImageWithURL:self.subjctRcmd1.imageURL];
     [self imageview:self.subject2 setImageWithURL:self.subjctRcmd2.imageURL];
     [self imageview:self.subject3 setImageWithURL:self.subjctRcmd3.imageURL];
@@ -204,26 +211,25 @@
 - (void)imageViewTap:(UITapGestureRecognizer *)recognizer
 {
     if (recognizer.view.tag == 101) {
-        _pushItemCode=_prdctRcmd1.itemCode;
+        [self performSegueWithIdentifier:@"imageViewToItemDetail" sender:_prdctRcmd1.itemCode];
         
     }else if (recognizer.view.tag == 102){
-        _pushItemCode=_prdctRcmd1.itemCode;
+        [self performSegueWithIdentifier:@"imageViewToItemDetail" sender:_prdctRcmd2.itemCode];
 
     }else if (recognizer.view.tag == 103){
-        _pushItemCode=_prdctRcmd1.itemCode;
+        [self performSegueWithIdentifier:@"imageViewToItemDetail" sender:_prdctRcmd3.itemCode];
 
     }else if (recognizer.view.tag == 201){
-        _pushItemCode=_prdctRcmd1.itemCode;
+        [self performSegueWithIdentifier:@"imageViewToItemDetail" sender:_subjctRcmd1.itemCode];
 
     }else if (recognizer.view.tag == 202){
-        _pushItemCode=_prdctRcmd1.itemCode;;
+        [self performSegueWithIdentifier:@"imageViewToItemDetail" sender:_subjctRcmd2.itemCode];
 
     }else if (recognizer.view.tag == 203){
-        _pushItemCode=_prdctRcmd1.itemCode;;
+        [self performSegueWithIdentifier:@"imageViewToItemDetail" sender:_subjctRcmd3.itemCode];
 
     }else{
     }
-    [self performSegueWithIdentifier:@"imageViewToItemDetail" sender:self];
 }
 
 - (void)addLableButton
@@ -231,14 +237,11 @@
        for (int i = 0; i < [self.labelarray count]; i ++)
     {
         UIButton * button = [[UIButton alloc]initWithFrame:CGRectMake(16+(i%3)*(87+14), 13+(i/3)*(30+8), 87, 30)];
-//        button.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:1.0];
-//        button.titleLabel.font = [UIFont systemFontOfSize:16];
-//        [button setTitleColor:[UIColor colorWithRed:120.0/255.0 green:120.0/255.0 blue:120.0/255.0 alpha:1.0]forState:UIControlStateNormal];
         [button setTitle:[self.labelarray objectAtIndex:i] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(buttonTap:) forControlEvents:UIControlEventTouchUpInside];
         [button mainProductStyle];
-
-        [[self.view viewWithTag:2048]addSubview:button];
+        //UIView *view=self.cotentview;
+        [self.cotentview addSubview:button];
     }
     
 }
@@ -312,7 +315,11 @@
             return 1;
             break;
         case 8:
-            return ([self.labelarray count]/3+1)*45;
+            if ([self.labelarray count]%3==0) {
+                return ([self.labelarray count]/3)*45;
+            }else{
+                return ([self.labelarray count]/3+1)*45;
+            }
             break;
         case 9:
             return 1;
@@ -382,9 +389,27 @@
  // Pass the selected object to the new view controller.
      if ([segue.identifier isEqualToString:@"imageViewToItemDetail"]) {
          TSItemDetaillTableViewController * tsitemde = segue.destinationViewController;
-         tsitemde.itemcode =_pushItemCode;
+         tsitemde.itemcode =sender;
      }
 }
 
 
+- (IBAction)xiaoshoupaihang:(id)sender {
+    
+    TSItemListTableViewController * xiaoshou = [[TSItemListTableViewController alloc]initWithRankType:@"S"];
+    [self.navigationController pushViewController:xiaoshou animated:YES];
+    
+}
+
+- (IBAction)xinpinpaihang:(id)sender {
+    
+    TSItemListTableViewController * xinpin = [[TSItemListTableViewController alloc]initWithRankType:@"N"];
+    [self.navigationController pushViewController:xinpin animated:YES];
+}
+
+- (IBAction)jiangjiapaihang:(id)sender {
+    
+    TSItemListTableViewController * jiangjia = [[TSItemListTableViewController alloc]initWithRankType:@"J"];
+    [self.navigationController pushViewController:jiangjia animated:YES];
+}
 @end

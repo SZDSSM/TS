@@ -12,8 +12,8 @@
 
 - (void)setRcmd:(NSDictionary *)dic withKey:(NSString *)str
 {
-    self.imageURL = [[dic objectForKey:str]objectForKey:@"imageurl"];
-    self.itemCode = [[dic objectForKey:str]objectForKey:@"itemcode"];
+    _imageURL = [[dic objectForKey:str]objectForKey:@"imageurl"];
+    _itemCode = [[dic objectForKey:str]objectForKey:@"itemcode"];
 }
 
 @end

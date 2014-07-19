@@ -9,12 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface TSItemListTableViewController : UITableViewController
-{
-//    NSString * itemcode;
-}
-- (id)initWithItemCode:(NSString *)itemcode;
 
-//@property (strong, nonatomic)NSMutableString * Itemcode;
-
+- (id)initWithRankType:(NSString *)rankType;
 
 @end

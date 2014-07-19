@@ -15,13 +15,48 @@
     self.layer.masksToBounds = YES;
     [self setAdjustsImageWhenHighlighted:NO];
     [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.titleLabel setFont:[UIFont fontWithName:@"FontAwesome" size:self.titleLabel.font.pointSize]];
+    //[self.titleLabel setFont:[UIFont fontWithName:@"FontAwesome" size:self.titleLabel.font.pointSize]];
+}
+
+-(void)guzhuqianStyle{
+    
+    self.layer.borderWidth = 0.5;
+    self.layer.cornerRadius = 2.0;
+    self.layer.masksToBounds = YES;
+    [self setAdjustsImageWhenHighlighted:NO];
+    [self setTitleColor:[UIColor colorWithRed:204/255.0 green:204/255.0 blue:204/255.0 alpha:1] forState:UIControlStateNormal];
+    [self setTitleColor:[UIColor colorWithRed:255.0/255.0 green:215.0/255.0 blue:0.0/255.0 alpha:1] forState:UIControlStateHighlighted];
+    [self.titleLabel setFont:[UIFont systemFontOfSize:25]];
+    //[self.titleLabel setTextColor:[UIColor grayColor]];
+    [self setTitle:@"☆" forState:UIControlStateNormal];
+    [self setTitle:@"★" forState:UIControlStateHighlighted];
+    self.backgroundColor = [UIColor whiteColor];
+    self.layer.borderColor = [[UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1] CGColor];
+    //[self setBackgroundImage:[self buttonImageFromColor:[UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1]] forState:UIControlStateHighlighted];
+}
+
+-(void)guzhuhouStyle{
+    self.layer.borderWidth = 1;
+    self.layer.cornerRadius = 2.0;
+    self.layer.masksToBounds = YES;
+    [self setAdjustsImageWhenHighlighted:NO];
+    [self setTitleColor:[UIColor colorWithRed:255.0/255.0 green:215.0/255.0 blue:0.0/255.0 alpha:1] forState:UIControlStateNormal];
+    [self setTitleColor:[UIColor colorWithRed:204/255.0 green:204/255.0 blue:204/255.0 alpha:1] forState:UIControlStateHighlighted];
+    [self.titleLabel setFont:[UIFont systemFontOfSize:25]];
+    //[self.titleLabel setTextColor:[UIColor grayColor]];
+    [self setTitle:@"☆" forState:UIControlStateHighlighted];
+    [self setTitle:@"★" forState:UIControlStateNormal];
+
+    self.backgroundColor = [UIColor whiteColor];
+    self.layer.borderColor = [[UIColor colorWithRed:211/255.0 green:211/255.0 blue:211/255.0 alpha:1] CGColor];
+    //[self setBackgroundImage:[self buttonImageFromColor:[UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1]] forState:UIControlStateHighlighted];
 }
 
 -(void)defaultStyle{
     [self bootstrapStyle];
     [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
+    
     self.backgroundColor = [UIColor whiteColor];
     self.layer.borderColor = [[UIColor colorWithRed:204/255.0 green:204/255.0 blue:204/255.0 alpha:1] CGColor];
     [self setBackgroundImage:[self buttonImageFromColor:[UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1]] forState:UIControlStateHighlighted];

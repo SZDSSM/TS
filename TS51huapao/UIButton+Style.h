@@ -22,6 +22,8 @@
 -(void)submitStyle;
 -(void)cancelAttentionStyle;
 -(void)clearSearchReacodStyle;
+-(void)guzhuqianStyle;
+-(void)guzhuhouStyle;
 
 //主流产品
 -(void)mainProductStyle;
