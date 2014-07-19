@@ -10,12 +10,16 @@
 #import "TSResultViewController.h"
 #import "AFNetworking.h"
 
+#import "SearchThridTableViewController.h"
 
 #define saparator @"-------------------------------------------------------------------------------------------------------"
 
 @interface TSMakeViewController ()
 
-@property (strong, nonatomic) UISearchBar *searchBar;
+//searchbar 相关
+
+@property (strong, nonatomic) SearchThridTableViewController *SearchThridTableViewController;
+
 @property (strong, nonatomic) NSMutableArray * array;
 @property (strong, nonatomic) NSDictionary * DataDic;
 
@@ -30,6 +34,20 @@
         // Custom initialization
     }
     return self;
+}
+
+- (void)initSearchbar
+{
+    _SearchThridTableViewController=[[SearchThridTableViewController alloc]initWithSearchTxt:nil target:self action:@selector(SearchButtonClicked:)];
+}
+//TsSearchbarProtocol
+-(void)SearchButtonClicked:(NSString *)searchBartxt
+{
+    TSResultViewController * viewController = [[TSResultViewController alloc]init];
+    viewController.searchtxt = searchBartxt;
+    viewController.danweitype=_danweitype;
+    //[viewController setHidesBottomBarWhenPushed:YES];
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 - (void)_initData
@@ -74,29 +92,29 @@
         [operation start];
 }
 
+-(void)dealloc
+{
+    if ([_SearchThridTableViewController.tableView.superview isEqual:[UIApplication sharedApplication].keyWindow] ) {
+        [_SearchThridTableViewController.tableView removeFromSuperview];
+    }
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self _init];
+    self.tableView.rowHeight = 60;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    //[self.navigationItem.leftBarButtonItem setTitle:@"a"];
     
 }
 
 - (void)_init
 {
     [self _initData];
-    _searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0.0f,0.0f,200,30)];
     
-    [_searchBar setBarTintColor:[UIColor groupTableViewBackgroundColor]];
-    //    [_searchBar setBarStyle:UIBarStyleBlack];
-    [_searchBar setSearchBarStyle:UISearchBarStyleMinimal];
-    [_searchBar setPlaceholder:@"请输入产品名称"];
+    [self initSearchbar];
     
-    self.searchBar.delegate = self;
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:[[UIView alloc]initWithFrame:CGRectMake(280.0f, 0.0f, 30, 30)]];
-    
-    self.navigationItem.titleView = _searchBar;
     self.tableView.rowHeight = 55;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
@@ -107,17 +125,10 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark---------------searchBar delegate-----------
 
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
-{
-    [self.searchBar resignFirstResponder];
-    TSResultViewController * viewController = [[TSResultViewController alloc]init];
-    viewController.searchtxt = self.searchBar.text;
-    viewController.danweitype=_danweitype;
-    //[viewController setHidesBottomBarWhenPushed:YES];
-    [self.navigationController pushViewController:viewController animated:YES];
-}
+
+
+
 
 #pragma mark - Table view data source
 
@@ -129,13 +140,11 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
     return [self.array count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"firstid"];
     
     if (nil == cell) {
@@ -158,11 +167,11 @@
     Separatorlabel1.text = saparator;
     Separatorlabel1.textColor = [UIColor lightGrayColor];
     
-//    [cell.contentView addSubview:Separatorlabel];
+    //    [cell.contentView addSubview:Separatorlabel];
     [cell.contentView addSubview:Separatorlabel1];
     
-    
     return cell;
+
 }
 
 
@@ -188,8 +197,6 @@
     linelable.frame = CGRectMake(0, 38, ScreenWidth, 2);
     linelable.backgroundColor = [UIColor colorWithRed:200.0/255.0 green:200.0/255.0 blue:200.0/255.0 alpha:1];
     
-    
-    
     // Create header view and add label as a subview
     UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 60)];
     [sectionView setBackgroundColor:[UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:235.0/255.0]];
@@ -201,12 +208,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    NSUInteger row = indexPath.row;
+    //    NSUInteger row = indexPath.row;
     
     TSResultViewController *viewController = [[TSResultViewController alloc]init];
     viewController.section = [self.array objectAtIndex:[indexPath row]];
     viewController.danweitype = self.danweitype;
     [self.navigationController pushViewController:viewController animated:YES];
+    
+
 }
 
 @end

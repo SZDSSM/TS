@@ -10,13 +10,20 @@
 #import "TSMakeViewController.h"
 #import "TSResultViewController.h"
 
-#define saparator @"-------------------------------------------------------------------------------------------------------"
+#import "SearchThridTableViewController.h"
 
+
+
+#define saparator @"-------------------------------------------------------------------------------------------------------"
 
 @interface TSThridViewController ()
 
-@property (strong, nonatomic)  UISearchBar *searchBar;
+
 @property (strong, nonatomic) NSArray * array;
+
+@property (strong, nonatomic) SearchThridTableViewController *SearchThridTableViewController;
+
+
 
 @end
 
@@ -31,51 +38,38 @@
     return self;
 }
 
-- (void)_initData
-{
-    self.array = @[@"生产厂家",@"经销商",@"原辅材料",@"政府部门"];
-    _searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(40.0f,0.0f,160,30)];
-    
-    [_searchBar setBarTintColor:[UIColor groupTableViewBackgroundColor]];
-    [_searchBar setBarStyle:UIBarStyleDefault];
-    [_searchBar setPlaceholder:@"请输入产品名称"];
-    [_searchBar setSearchBarStyle:UISearchBarStyleMinimal];
-    self.searchBar.delegate = self;
-    //    CGRect rect = _searchBar.frame;
-    //    rect.origin.x = 40;
-    //    _searchBar.frame = rect;
-    
-    
-    self.navigationItem.titleView = _searchBar;
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:[[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 30, 30)]];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:[[UIView alloc]initWithFrame:CGRectMake(280.0f, 0.0f, 30, 30)]];
-    self.tableView.rowHeight = 60;
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.tableView.scrollEnabled = NO;
-}
-
-#pragma mark---------------searchBar delegate-----------
-
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
-{
-    [self.searchBar resignFirstResponder];
-    TSResultViewController * viewController = [[TSResultViewController alloc]init];
-    //[viewController setHidesBottomBarWhenPushed:YES];
-    viewController.searchtxt = self.searchBar.text;
-    [self.navigationController pushViewController:viewController animated:YES];
-}
-
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     //获取数据
-    [self _initData];
     
+    self.array = @[@"生产厂家",@"经销商",@"原辅材料",@"政府部门"];
+    self.tableView.rowHeight = 60;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    [self initSearchbar];
     
     
     
 }
+
+- (void)initSearchbar
+{
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:[[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 22, 30)]];
+    
+    _SearchThridTableViewController=[[SearchThridTableViewController alloc]initWithSearchTxt:nil target:self action:@selector(SearchButtonClicked:)];
+}
+//TsSearchbarProtocol
+-(void)SearchButtonClicked:(NSString *)searchBartxt
+{
+    TSResultViewController * viewController = [[TSResultViewController alloc]init];
+    //[viewController setHidesBottomBarWhenPushed:YES];
+    viewController.searchtxt = searchBartxt;
+    [self.navigationController pushViewController:viewController animated:YES];
+}
+
+
+
 
 
 - (void)didReceiveMemoryWarning
@@ -94,7 +88,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
     return [self.array count];
 }
 
@@ -131,6 +124,7 @@
     
     
     return cell;
+
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -147,15 +141,25 @@
             viewController.sectionViewTitle = @"根据区域选择经销商";
             viewController.danweitype = @"经销商";
         }
+        //        UIBarButtonItem *backItem=[[UIBarButtonItem alloc]init];
+        //        backItem.title=@"后退";
+        //        backItem.tintColor=[UIColor colorWithRed:129/255.0 green:129/255.0  blue:129/255.0 alpha:1.0];
+        //        viewController.navigationItem.leftBarButtonItem=backItem;
         [self.navigationController pushViewController:viewController animated:YES];
     }
+    
+    
     
 }
 
 #pragma mark ---------------------自定义section--------------------
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 40;
+    if ([tableView isEqual:self.tableView]) {
+        return 40;
+    }else{
+        return 0;
+    }
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -176,6 +180,8 @@
     linelable.frame = CGRectMake(0, 38, ScreenWidth, 2);
     linelable.backgroundColor = [UIColor colorWithRed:200.0/255.0 green:200.0/255.0 blue:200.0/255.0 alpha:1];
     
+    //    UIImageView * imageV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"51huapao"]];
+    //    imageV.frame = CGRectMake(40, 40, 100, 100);
     
     
     // Create header view and add label as a subview
@@ -183,57 +189,12 @@
     [sectionView setBackgroundColor:[UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:235.0/255.0]];
     [sectionView addSubview:label];
     [sectionView addSubview:linelable];
+    
+    //    [sectionView addSubview:imageV];
     return sectionView;
 }
 
 
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
 
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
- {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- } else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end

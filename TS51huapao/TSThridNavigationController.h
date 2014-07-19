@@ -10,6 +10,11 @@
 
 @interface TSThridNavigationController : UINavigationController
 
-@property (nonatomic, strong)NSMutableDictionary * pushDic;
+
+@property (nonatomic) NSArray *recentSearches;
+@property (nonatomic) NSArray *displayedSearches;
+
+
+- (void)addToRecentSearches:(NSString *)searchString;
 
 @end

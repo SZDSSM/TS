@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SearchThridTableViewController.h"
+
 @class TSCoLtdpost;
 
-@interface TSResultViewController : UITableViewController<UISearchBarDelegate>
+@interface TSResultViewController : UITableViewController<UISearchBarDelegate,TsSearchbarProtocol>
 
 @property (nonatomic, strong)NSArray * array;
 @property (nonatomic)NSUInteger page;

@@ -33,6 +33,7 @@
 		64474CC8197A42CD000C1C7D /* TSCoLtdpost.m in Sources */ = {isa = PBXBuildFile; fileRef = 64474CC0197A42CD000C1C7D /* TSCoLtdpost.m */; };
 		64474CC9197A42CD000C1C7D /* TSFactorypost.m in Sources */ = {isa = PBXBuildFile; fileRef = 64474CC2197A42CD000C1C7D /* TSFactorypost.m */; };
 		64474CCA197A42CD000C1C7D /* TSThridNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64474CC4197A42CD000C1C7D /* TSThridNavigationController.m */; };
+		64474CCD197AADBF000C1C7D /* SearchThridTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64474CCC197AADBF000C1C7D /* SearchThridTableViewController.m */; };
 		6457DE0618E55E49008193BC /* UIImage+UIImageExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 6457DE0518E55E49008193BC /* UIImage+UIImageExtras.m */; };
 		647F35E919616A240014A64F /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 647F35D919616A240014A64F /* MJRefresh.bundle */; };
 		647F35EA19616A240014A64F /* MJRefreshBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 647F35DC19616A240014A64F /* MJRefreshBaseView.m */; };
@@ -153,6 +154,8 @@
 		64474CC2197A42CD000C1C7D /* TSFactorypost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSFactorypost.m; sourceTree = "<group>"; };
 		64474CC3197A42CD000C1C7D /* TSThridNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSThridNavigationController.h; sourceTree = "<group>"; };
 		64474CC4197A42CD000C1C7D /* TSThridNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSThridNavigationController.m; sourceTree = "<group>"; };
+		64474CCB197AADBF000C1C7D /* SearchThridTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchThridTableViewController.h; sourceTree = "<group>"; };
+		64474CCC197AADBF000C1C7D /* SearchThridTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchThridTableViewController.m; sourceTree = "<group>"; };
 		6457DE0418E55E49008193BC /* UIImage+UIImageExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+UIImageExtras.h"; sourceTree = "<group>"; };
 		6457DE0518E55E49008193BC /* UIImage+UIImageExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+UIImageExtras.m"; sourceTree = "<group>"; };
 		647F35D919616A240014A64F /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJRefresh.bundle; sourceTree = "<group>"; };
@@ -498,6 +501,8 @@
 				64474CC2197A42CD000C1C7D /* TSFactorypost.m */,
 				64474CC3197A42CD000C1C7D /* TSThridNavigationController.h */,
 				64474CC4197A42CD000C1C7D /* TSThridNavigationController.m */,
+				64474CCB197AADBF000C1C7D /* SearchThridTableViewController.h */,
+				64474CCC197AADBF000C1C7D /* SearchThridTableViewController.m */,
 			);
 			name = ThridView;
 			sourceTree = "<group>";
@@ -727,6 +732,7 @@
 				647F35EA19616A240014A64F /* MJRefreshBaseView.m in Sources */,
 				64FA011318E41CFB006E12B2 /* TSMainTabBarController.m in Sources */,
 				647F35EC19616A240014A64F /* MJRefreshFooterView.m in Sources */,
+				64474CCD197AADBF000C1C7D /* SearchThridTableViewController.m in Sources */,
 				643A1507195BB74200854928 /* UIWebView+AFNetworking.m in Sources */,
 				64FA00DE18E409A0006E12B2 /* TSSecondViewController.m in Sources */,
 				642D8C4F18E52F2D0014FCFC /* TSFirstNavigation.m in Sources */,

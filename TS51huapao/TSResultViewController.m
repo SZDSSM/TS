@@ -13,10 +13,12 @@
 #import "UIScrollView+MJRefresh.h"
 #import "TSfactoryTableViewController.h"
 
+
+
 @interface TSResultViewController ()
 
-@property (strong, nonatomic) UISearchBar *searchBar;
 
+@property (strong, nonatomic) SearchThridTableViewController *SearchThridTableViewController;
 
 
 @end
@@ -31,6 +33,20 @@
     }
     return self;
 }
+
+- (void)initSearchbar
+{
+     _SearchThridTableViewController=[[SearchThridTableViewController alloc]initWithSearchTxt:_searchtxt target:self action:@selector(SearchButtonClicked:)];
+   // _SearchThridTableViewController.delegate=self;
+    
+}
+//TsSearchbarProtocol
+-(void)SearchButtonClicked:(NSString *)searchBartxt
+{
+    _searchtxt = searchBartxt;
+    [self getData];
+}
+
 
 - (void)getData
 {
@@ -64,14 +80,7 @@
     //[UIActivityIndicatorView set ]
 }
 
-#pragma mark-------------------searchbar delegate------------------
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar;
-{
-    [self.searchBar resignFirstResponder];
-    _searchtxt = self.searchBar.text;
-    [self getData];
-    
-}
+
 
 
 - (NSString *)makeDisplyString:(NSString *)peopleName telephoneNumber:(NSString *)telephoneNumber homeNumber:(NSString *)homeNumber address:(NSString *)address cardtype:(NSString *)cardtype
@@ -104,36 +113,19 @@
     
 }
 
+-(void)dealloc
+{
+    if ([_SearchThridTableViewController.tableView.superview isEqual:[UIApplication sharedApplication].keyWindow] ) {
+        [_SearchThridTableViewController.tableView removeFromSuperview];
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //[self getData];
-//    self.tableView.rowHeight = 200;
-    [self setupRefresh];
-    [self.tableView headerBeginRefreshing];
-    
-    [self _init];
-    
-    
-}
-
--(void)_init
-{
     self.page = 1;
-
-    _searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0.0f,0.0f,200,30)];
-    
-    [_searchBar setBarTintColor:[UIColor groupTableViewBackgroundColor]];
-    [_searchBar setSearchBarStyle:UISearchBarStyleMinimal];
-    [_searchBar setPlaceholder:@"请输入产品名称"];
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:[[UIView alloc]initWithFrame:CGRectMake(280.0f, 0.0f, 30, 30)]];
-    self.searchBar.delegate = self;
-    if (_searchtxt.length>0) {
-        _searchBar.text=_searchtxt;
-    }
-    self.navigationItem.titleView = _searchBar;
-//    self.tableView.rowHeight = 55;
+    [self initSearchbar];
+    [self setupRefresh];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
 }
 
@@ -145,11 +137,19 @@
     // 1.添加下拉花炮云商标语
     [self.tableView addHeaderWithTarget:self action:@selector(headerRereshing)];
     
-    //[self.tableView headerBeginRefreshing];
+    [self.tableView headerBeginRefreshing];
     // 2.添加上拉刷新
     [self.tableView addFooterWithTarget:self action:@selector(footerRereshing)];
 }
 
+// -------------------------------------------------------------------------------
+//	scrollViewDidEndDecelerating:
+// -------------------------------------------------------------------------------
+
+
+
+
+//////////////////////search bar//////////////////////////////////////////////////////////////////
 #pragma mark 开始进入刷新状态
 - (void)headerRereshing
 {
@@ -173,6 +173,7 @@
     }
 }
 
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -189,7 +190,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
     return _posts.count;
 }
 
