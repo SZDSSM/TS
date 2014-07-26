@@ -13,6 +13,7 @@
 #import "UIScrollView+MJRefresh.h"
 #import "TSItemTableViewCell.h"
 #import "TSCoLtdpost.h"
+#import "ItemDetailTableViewController.h"
 
 
 @interface TSfactoryTableViewController ()
@@ -173,7 +174,7 @@
     if ( _CardCode!=nil) {
         [dic setObject:_CardCode forKey:@"CardCode"];
     }
-    [dic setObject:[NSString stringWithFormat:@"%u",_page] forKey:@"pageindex"];
+    [dic setObject:[NSString stringWithFormat:@"%lu",(unsigned long)_page] forKey:@"pageindex"];
     
     NSURLSessionDataTask * task = [TSFactorypost globalTimeGetRecommendInfoWithDictionary:dic Block:^(NSArray *posts,NSUInteger maxcount, NSError *error) {
         if (!error) {
@@ -184,9 +185,9 @@
                 _posts = posts;
             }
             [self.tableView reloadData];
-            [self.tableView headerEndRefreshing];
-            [self.tableView footerEndRefreshing];
         }
+        [self.tableView headerEndRefreshing];
+        [self.tableView footerEndRefreshing];
     }];
     [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
     
@@ -259,44 +260,27 @@
         cell = [[TSItemTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"reuseIdentifier"];
     }
     
-    // Configure the cell...
     cell.thirdPageFacPost = [self.posts objectAtIndex:indexPath.row];
+    cell.sender=self;
     cell.order.hidden = YES;
     
-//    cell.itemimage.layer.shadowColor = [UIColor blackColor].CGColor;
-//    cell.itemimage.layer.shadowOffset = CGSizeMake(7, 7);
-//    cell.itemimage.layer.shadowOpacity = 0.5;
-//    cell.itemimage.layer.shadowRadius = 0.6f;
-//    [cell.itemimage layer].borderColor = [[UIColor blackColor] CGColor];
-//    [cell.itemimage layer].borderWidth = 5.0f;
+
     
     return cell;
 }
 
+-(void)dealloc
+{
+    NSLog(@"deallpc::");
+}
+#pragma mark - Table view delegate
 
-#pragma mark-------------------scroll delegate----------------
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-//    //Selected index's color changed.
-//    static float newy = 0;
-//    static float oldy = 0;
-//    newy= scrollView.contentOffset.y ;
-//    if (newy != oldy ) {
-//        //Left-YES,Right-NO
-//        if (newy > oldy+10) {
-//            self.scrollupordown = NO;
-//            if (_heartisview) {
-//                //[self.tableView reloadData];
-//                [_heartview setFrame:CGRectMake(0, 0, 0, 0)];
-//            }
-//        }else if(newy+10 < oldy){
-//            self.scrollupordown = YES;
-//            if (!_heartisview) {
-//                //[self.tableView reloadData];
-//                [_heartview setFrame:CGRectMake(0, 0, 320, 150)];
-//            }
-//        }
-//        oldy = newy;
-//    }
-//}
+// In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    TSItemTableViewCell *cell=(TSItemTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    [cell pushtoItemDetailView];
+    
+}
 
 @end

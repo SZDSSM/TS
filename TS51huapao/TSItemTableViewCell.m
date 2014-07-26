@@ -8,9 +8,11 @@
 
 #import "TSItemTableViewCell.h"
 #import "TSItemListPost.h"
+
 #import "UIImageView+AFNetworking.h"
 #import "UIButton+Style.h"
 #import "TSFactorypost.h"
+#import "ItemDetailTableViewController.h"
 
 @interface TSItemTableViewCell ()
 
@@ -54,27 +56,65 @@
     
 
     if (![_post.IsRebate isEqualToString:@"Y"]) {
-        self.fanli.hidden = YES;
-        //[_fanli setBackgroundImage:nil];
+        if (![_post.IsOTO isEqualToString:@"Y"]) {
+            if (![_post.UMTVURL hasPrefix:@"http"]) {
+                _image1.hidden=YES;
+                _image2.hidden=YES;
+                _image3.hidden=YES;
+            }else{
+                [_image1 setImage:[UIImage imageNamed:@"ic_bofanganniu"]];
+                _image1.hidden=NO;
+                _image2.hidden=YES;
+                _image3.hidden=YES;
+            }
+        }else{
+            if (![_post.UMTVURL hasPrefix:@"http"]) {
+                [_image1 setImage:[UIImage imageNamed:@"ic_zhijianganniu"]];
+                _image1.hidden=NO;
+                _image2.hidden=YES;
+                _image3.hidden=YES;
+            }else{
+                [_image1 setImage:[UIImage imageNamed:@"ic_zhijianganniu"]];
+                [_image2 setImage:[UIImage imageNamed:@"ic_bofanganniu"]];
+                _image1.hidden=NO;
+                _image2.hidden=NO;
+                _image3.hidden=YES;
+            }
+        }
     }else{
-        self.fanli.hidden = NO;
-        //[_fanli setBackgroundImage:[UIImage imageNamed:@"ic_fanlianniu"] forState:UIControlStateNormal];
-        _iconNumbers++;
+        if (![_post.IsOTO isEqualToString:@"Y"]) {
+            if (![_post.UMTVURL hasPrefix:@"http"]) {
+                [_image1 setImage:[UIImage imageNamed:@"ic_fanlianniu"]];
+                _image1.hidden=NO;
+                _image2.hidden=YES;
+                _image3.hidden=YES;
+            }else{
+                [_image1 setImage:[UIImage imageNamed:@"ic_fanlianniu"]];
+                [_image2 setImage:[UIImage imageNamed:@"ic_bofanganniu"]];
+                _image1.hidden=NO;
+                _image2.hidden=NO;
+                _image3.hidden=YES;
+            }
+        }else{
+            if (![_post.UMTVURL hasPrefix:@"http"]) {
+                [_image1 setImage:[UIImage imageNamed:@"ic_fanlianniu"]];
+                [_image2 setImage:[UIImage imageNamed:@"ic_zhijianganniu"]];
+                _image1.hidden=NO;
+                _image2.hidden=NO;
+                _image3.hidden=YES;
+            }else{
+                [_image1 setImage:[UIImage imageNamed:@"ic_fanlianniu"]];
+                [_image2 setImage:[UIImage imageNamed:@"ic_zhijianganniu"]];
+                [_image3 setImage:[UIImage imageNamed:@"ic_bofanganniu"]];
+                _image1.hidden=NO;
+                _image2.hidden=NO;
+                _image3.hidden=NO;
+            }
+        }
     }
     
-    if (![_post.IsOTO isEqualToString:@"Y"]) {
-        self.zhixiao.hidden = YES;
-    }else{
-        self.zhixiao.hidden = NO;
-        _iconNumbers++;
-    }
     
     
-    if (![post.UMTVURL hasPrefix:@"http"]) {
-        _mtv.hidden=YES;
-    }else{
-        _mtv.hidden=NO;
-    }
     
     if (![_post.IsStroe isEqualToString:@"Y"]) {
         
@@ -85,7 +125,85 @@
     
     
 }
-
+- (void)setGetItemPost:(TSGetItemListPost *)getItemPost
+{
+    _getItemPost = getItemPost;
+    _iconNumbers=0;
+    //    [self.guanzhu setTintColor:[UIColor redColor]];
+    [self.guanzhu guzhuqianStyle];
+    
+    self.itemname.text = _getItemPost.ItemName;
+    self.Spec.text = _getItemPost.Spec;
+    self.Price.text = _getItemPost.Price;
+    
+    
+    
+    if (![_getItemPost.IsRebate isEqualToString:@"Y"]) {
+        if (![_getItemPost.IsOTO isEqualToString:@"Y"]) {
+            if (![_getItemPost.UMTVURL hasPrefix:@"http"]) {
+                _image1.hidden=YES;
+                _image2.hidden=YES;
+                _image3.hidden=YES;
+            }else{
+                [_image1 setImage:[UIImage imageNamed:@"ic_bofanganniu"]];
+                _image1.hidden=NO;
+                _image2.hidden=YES;
+                _image3.hidden=YES;
+            }
+        }else{
+            if (![_getItemPost.UMTVURL hasPrefix:@"http"]) {
+                [_image1 setImage:[UIImage imageNamed:@"ic_zhijianganniu"]];
+                _image1.hidden=NO;
+                _image2.hidden=YES;
+                _image3.hidden=YES;
+            }else{
+                [_image1 setImage:[UIImage imageNamed:@"ic_zhijianganniu"]];
+                [_image2 setImage:[UIImage imageNamed:@"ic_bofanganniu"]];
+                _image1.hidden=NO;
+                _image2.hidden=NO;
+                _image3.hidden=YES;
+            }
+        }
+    }else{
+        if (![_getItemPost.IsOTO isEqualToString:@"Y"]) {
+            if (![_getItemPost.UMTVURL hasPrefix:@"http"]) {
+                [_image1 setImage:[UIImage imageNamed:@"ic_fanlianniu"]];
+                _image1.hidden=NO;
+                _image2.hidden=YES;
+                _image3.hidden=YES;
+            }else{
+                [_image1 setImage:[UIImage imageNamed:@"ic_fanlianniu"]];
+                [_image2 setImage:[UIImage imageNamed:@"ic_bofanganniu"]];
+                _image1.hidden=NO;
+                _image2.hidden=NO;
+                _image3.hidden=YES;
+            }
+        }else{
+            if (![_getItemPost.UMTVURL hasPrefix:@"http"]) {
+                [_image1 setImage:[UIImage imageNamed:@"ic_fanlianniu"]];
+                [_image2 setImage:[UIImage imageNamed:@"ic_zhijianganniu"]];
+                _image1.hidden=NO;
+                _image2.hidden=NO;
+                _image3.hidden=YES;
+            }else{
+                [_image1 setImage:[UIImage imageNamed:@"ic_fanlianniu"]];
+                [_image2 setImage:[UIImage imageNamed:@"ic_zhijianganniu"]];
+                [_image3 setImage:[UIImage imageNamed:@"ic_bofanganniu"]];
+                _image1.hidden=NO;
+                _image2.hidden=NO;
+                _image3.hidden=NO;
+            }
+        }
+    }
+    
+    if (![_getItemPost.IsStroe isEqualToString:@"Y"]) {
+        
+    }
+    [self.itemimage setImageWithURL:[NSURL URLWithString:_getItemPost.U_Photo1] placeholderImage:[UIImage imageNamed:@"noImage"]];
+    
+    [self setSelectionStyle:UITableViewCellSelectionStyleNone];
+    
+}
 - (void)setThirdPageFacPost:(TSFactorypost *)thirdPageFacPost
 {
     _thirdPageFacPost = thirdPageFacPost;
@@ -101,25 +219,61 @@
     
     
     if (![_thirdPageFacPost.IsRebate isEqualToString:@"Y"]) {
-        self.fanli.hidden = YES;
-        //[_fanli setBackgroundImage:nil];
+        if (![_thirdPageFacPost.IsOTO isEqualToString:@"Y"]) {
+            if (![_thirdPageFacPost.UMTVURL hasPrefix:@"http"]) {
+                _image1.hidden=YES;
+                _image2.hidden=YES;
+                _image3.hidden=YES;
+            }else{
+                [_image1 setImage:[UIImage imageNamed:@"ic_bofanganniu"]];
+                _image1.hidden=NO;
+                _image2.hidden=YES;
+                _image3.hidden=YES;
+            }
+        }else{
+            if (![_thirdPageFacPost.UMTVURL hasPrefix:@"http"]) {
+                [_image1 setImage:[UIImage imageNamed:@"ic_zhijianganniu"]];
+                _image1.hidden=NO;
+                _image2.hidden=YES;
+                _image3.hidden=YES;
+            }else{
+                [_image1 setImage:[UIImage imageNamed:@"ic_zhijianganniu"]];
+                [_image2 setImage:[UIImage imageNamed:@"ic_bofanganniu"]];
+                _image1.hidden=NO;
+                _image2.hidden=NO;
+                _image3.hidden=YES;
+            }
+        }
     }else{
-        self.fanli.hidden = NO;
-        //[_fanli setBackgroundImage:[UIImage imageNamed:@"ic_fanlianniu"] forState:UIControlStateNormal];
-        _iconNumbers++;
-    }
-    
-    if (![_thirdPageFacPost.IsOTO isEqualToString:@"Y"]) {
-        self.zhixiao.hidden = YES;
-    }else{
-        self.zhixiao.hidden = NO;
-        _iconNumbers++;
-    }
-    
-    if (![thirdPageFacPost.UMTVURL hasPrefix:@"http"]) {
-        _mtv.hidden=YES;
-    }else{
-        _mtv.hidden=NO;
+        if (![_thirdPageFacPost.IsOTO isEqualToString:@"Y"]) {
+            if (![_thirdPageFacPost.UMTVURL hasPrefix:@"http"]) {
+                [_image1 setImage:[UIImage imageNamed:@"ic_fanlianniu"]];
+                _image1.hidden=NO;
+                _image2.hidden=YES;
+                _image3.hidden=YES;
+            }else{
+                [_image1 setImage:[UIImage imageNamed:@"ic_fanlianniu"]];
+                [_image2 setImage:[UIImage imageNamed:@"ic_bofanganniu"]];
+                _image1.hidden=NO;
+                _image2.hidden=NO;
+                _image3.hidden=YES;
+            }
+        }else{
+            if (![_thirdPageFacPost.UMTVURL hasPrefix:@"http"]) {
+                [_image1 setImage:[UIImage imageNamed:@"ic_fanlianniu"]];
+                [_image2 setImage:[UIImage imageNamed:@"ic_zhijianganniu"]];
+                _image1.hidden=NO;
+                _image2.hidden=NO;
+                _image3.hidden=YES;
+            }else{
+                [_image1 setImage:[UIImage imageNamed:@"ic_fanlianniu"]];
+                [_image2 setImage:[UIImage imageNamed:@"ic_zhijianganniu"]];
+                [_image3 setImage:[UIImage imageNamed:@"ic_bofanganniu"]];
+                _image1.hidden=NO;
+                _image2.hidden=NO;
+                _image3.hidden=NO;
+            }
+        }
     }
     
     if (![_thirdPageFacPost.IsStroe isEqualToString:@"Y"]) {
@@ -140,5 +294,20 @@
         [sender guzhuhouStyle];
     }
     
+}
+
+-(void)pushtoItemDetailView
+{
+    UIStoryboard *board=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    ItemDetailTableViewController *itemdetail = [board instantiateViewControllerWithIdentifier:@"tsItemdetail"];
+    if (_post.itemCode!=nil) {
+        itemdetail.itemcode=_post.itemCode;
+    }else if(_thirdPageFacPost!=nil)
+    {
+        itemdetail.itemcode=_thirdPageFacPost.ItemCode;
+    }else if (_getItemPost!=nil){
+        itemdetail.itemcode=_getItemPost.itemCode;
+    }
+    [_sender.navigationController pushViewController:itemdetail animated:YES];
 }
 @end

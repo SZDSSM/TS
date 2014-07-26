@@ -71,6 +71,10 @@
 
 @property (strong, nonatomic) NSString * stocksum;
 
+@property (strong, nonatomic) NSString * miaoshu;
+
+@property (strong, nonatomic) NSString * shuoming;
+
 +(NSURLSessionDataTask *)globalTimeGetRecommendInfoWithItemcode:(NSString *)itemcode Block:(void(^)(TSItemDetailPost *post,NSError *error))block;
 
 

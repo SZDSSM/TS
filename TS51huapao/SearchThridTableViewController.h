@@ -22,18 +22,40 @@
 @interface SearchThridTableViewController : UITableViewController<UISearchBarDelegate>
 
 
-
-//@property (weak, nonatomic) UINavigationController *ThridNavgCtrl;
-
-
+@property (copy, nonatomic)  NSString *rightbuttonTitle;
+@property (strong, nonatomic)  UISearchBar *searchBar;
 /**
- Creates and runs an request.
+ Creates and return an searchtableviewcontroller.
  
- @param The SearchBar's text.
+ @param Use for get init nsarry with [[NSUserDefaults standardUserDefaults] objectForKey:SearchesKey].
+ @param The searchbar's placeholder
  @param The object that receives the action message.
  @param The action to send to target when this item is selected.
- @see -dataTaskWithRequest:completionHandler:
+ @see - (id)initWithSearchesKey:SearchPlaceholder:searchtext:target:action:.
  */
-- (id)initWithSearchTxt:(NSString *)searchTxt target:(UIViewController *)viewController action:(SEL)action;
+- (id)initWithSearchesKey:(NSString *)SearchesKey
+        SearchPlaceholder:(NSString *)Placeholder
+                   target:(UIViewController *)viewController
+                   action:(SEL)action;
+
+/**
+ Creates and return an searchtableviewcontroller.
+ 
+ @param Use for get init nsarry with [[NSUserDefaults standardUserDefaults] objectForKey:SearchesKey].
+ @param The searchbar's placeholder
+ @param TThe SearchBar's init searchtext.
+ @param TThe rightButton's title in no search.
+ @param The object that receives the action message.
+ @param The action to send to target when this item is selected.
+
+ */
+- (id)initWithSearchesKey:(NSString *)SearchesKey
+        SearchPlaceholder:(NSString *)Placeholder
+               searchtext:(NSString *)searchTxt
+         rightButtonTitle:(NSString *)rightButtonTitle
+                   target:(UIViewController *)viewController
+                   action:(SEL)action;
+
+-(void)shuaixuanAtTarget:(UIViewController *)target action:(SEL)action;
 
 @end

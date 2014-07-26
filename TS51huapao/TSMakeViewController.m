@@ -38,7 +38,7 @@
 
 - (void)initSearchbar
 {
-    _SearchThridTableViewController=[[SearchThridTableViewController alloc]initWithSearchTxt:nil target:self action:@selector(SearchButtonClicked:)];
+    _SearchThridTableViewController=[[SearchThridTableViewController alloc]initWithSearchesKey:@"CardSearchesKey" SearchPlaceholder:NSLocalizedString(@"cardsearchplaceholder", @"") target:self action:@selector(SearchButtonClicked:)];
 }
 //TsSearchbarProtocol
 -(void)SearchButtonClicked:(NSString *)searchBartxt
@@ -58,7 +58,7 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString: touchurl]];
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        //            NSLog(@"Success: %@", operation.responseString);
+
         NSString *requestTmp = [NSString stringWithString:operation.responseString];
         requestTmp = [requestTmp stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
         
@@ -66,7 +66,7 @@
         
         requestTmp = [requestTmp stringByReplacingOccurrencesOfString:@"\t" withString:@""];
         NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-        //        NSLog(@"data:::::::%@",resData);
+
         //系统自带JSON解析
         if (resData != nil) {
             //将获取到的数据JSON解析到数组中
@@ -85,35 +85,39 @@
             }
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Failure: %@", error);
+//            NSLog(@"Failure: %@", error);
             UIAlertView *AlertView1=[[UIAlertView alloc]initWithTitle:@"提示" message:@"未获取到数据" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil];
             [AlertView1 show];
         }];
         [operation start];
 }
 
--(void)dealloc
-{
-    if ([_SearchThridTableViewController.tableView.superview isEqual:[UIApplication sharedApplication].keyWindow] ) {
-        [_SearchThridTableViewController.tableView removeFromSuperview];
-    }
-}
+//-(void)dealloc
+//{
+//    if ([_SearchThridTableViewController.tableView.superview isEqual:[UIApplication sharedApplication].keyWindow] ) {
+//        [_SearchThridTableViewController.tableView removeFromSuperview];
+//    }
+//}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     [self _init];
     self.tableView.rowHeight = 60;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     //[self.navigationItem.leftBarButtonItem setTitle:@"a"];
+}
+-(void)backbutton
+{
     
 }
-
 - (void)_init
 {
     [self _initData];
     
     [self initSearchbar];
+    
     
     self.tableView.rowHeight = 55;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -194,12 +198,12 @@
     label.text=sectionTitle;
     
     UILabel * linelable = [[UILabel alloc] init];
-    linelable.frame = CGRectMake(0, 38, ScreenWidth, 2);
+    linelable.frame = CGRectMake(0, 39, ScreenWidth, 1);
     linelable.backgroundColor = [UIColor colorWithRed:200.0/255.0 green:200.0/255.0 blue:200.0/255.0 alpha:1];
     
     // Create header view and add label as a subview
     UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 60)];
-    [sectionView setBackgroundColor:[UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:235.0/255.0]];
+    [sectionView setBackgroundColor:[UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0]];
     [sectionView addSubview:label];
     [sectionView addSubview:linelable];
     return sectionView;
@@ -207,6 +211,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     //    NSUInteger row = indexPath.row;
     

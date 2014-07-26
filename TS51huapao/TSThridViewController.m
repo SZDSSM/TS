@@ -10,8 +10,8 @@
 #import "TSMakeViewController.h"
 #import "TSResultViewController.h"
 
-#import "SearchThridTableViewController.h"
-
+//#import "SearchThridTableViewController.h"
+#import "FristSearchTableViewController.h"
 
 
 #define saparator @"-------------------------------------------------------------------------------------------------------"
@@ -21,8 +21,8 @@
 
 @property (strong, nonatomic) NSArray * array;
 
-@property (strong, nonatomic) SearchThridTableViewController *SearchThridTableViewController;
-
+//@property (strong, nonatomic) SearchThridTableViewController *SearchThridTableViewController;
+@property (strong, nonatomic) FristSearchTableViewController *SearchViewController;
 
 
 @end
@@ -49,15 +49,21 @@
     
     [self initSearchbar];
     
-    
+//    UIBarButtonItem *backbut=[[UIBarButtonItem alloc] initWithTitle:@"返回123"
+//                                                              style:UIBarButtonItemStyleBordered
+//                                                             target:self
+//                                                             action:@selector(backButton)];
+//    [backbut setTintColor:[UIColor lightGrayColor]];
+//    self.navigationItem.backBarButtonItem =backbut;
     
 }
 
+
 - (void)initSearchbar
 {
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:[[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 22, 30)]];
-    
-    _SearchThridTableViewController=[[SearchThridTableViewController alloc]initWithSearchTxt:nil target:self action:@selector(SearchButtonClicked:)];
+    _SearchViewController=[[FristSearchTableViewController alloc]initWithSearchesKey:@"CardSearchesKey"SearchPlaceholder:NSLocalizedString(@"cardsearchplaceholder", @"")  target:self action:@selector(SearchButtonClicked:)];
+//    _SearchThridTableViewController=[[SearchThridTableViewController alloc]initWithSearchesKey:@"CardSearchesKey" SearchPlaceholder:NSLocalizedString(@"cardsearchplaceholder", @"") target:self action:@selector(SearchButtonClicked:)];
+
 }
 //TsSearchbarProtocol
 -(void)SearchButtonClicked:(NSString *)searchBartxt
@@ -135,16 +141,13 @@
     if (row == 0||row == 1) {
         TSMakeViewController *viewController = [[TSMakeViewController alloc]init];
         if (row == 0) {
-            viewController.sectionViewTitle = @"根据定点备案区域选择生产厂家";
+            viewController.sectionViewTitle = @"根据区域选择生产厂家";
             viewController.danweitype = @"生产厂家";
         }else{
             viewController.sectionViewTitle = @"根据区域选择经销商";
             viewController.danweitype = @"经销商";
         }
-        //        UIBarButtonItem *backItem=[[UIBarButtonItem alloc]init];
-        //        backItem.title=@"后退";
-        //        backItem.tintColor=[UIColor colorWithRed:129/255.0 green:129/255.0  blue:129/255.0 alpha:1.0];
-        //        viewController.navigationItem.leftBarButtonItem=backItem;
+        
         [self.navigationController pushViewController:viewController animated:YES];
     }
     
@@ -177,7 +180,7 @@
     label.text=sectionTitle;
     
     UILabel * linelable = [[UILabel alloc] init];
-    linelable.frame = CGRectMake(0, 38, ScreenWidth, 2);
+    linelable.frame = CGRectMake(0, 39, ScreenWidth, 1);
     linelable.backgroundColor = [UIColor colorWithRed:200.0/255.0 green:200.0/255.0 blue:200.0/255.0 alpha:1];
     
     //    UIImageView * imageV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"51huapao"]];
@@ -186,7 +189,7 @@
     
     // Create header view and add label as a subview
     UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 60)];
-    [sectionView setBackgroundColor:[UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:235.0/255.0]];
+    [sectionView setBackgroundColor:[UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1]];
     [sectionView addSubview:label];
     [sectionView addSubview:linelable];
     

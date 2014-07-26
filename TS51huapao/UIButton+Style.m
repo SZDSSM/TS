@@ -56,10 +56,30 @@
     [self bootstrapStyle];
     [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
+
+    self.backgroundColor = [UIColor whiteColor];
+    self.layer.borderColor = [[UIColor colorWithRed:204/255.0 green:204/255.0 blue:204/255.0 alpha:1] CGColor];
+    [self setBackgroundImage:[self buttonImageFromColor:[UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1]] forState:UIControlStateHighlighted];
+}
+
+-(void)kanyangStyle{
+    [self bootstrapStyle];
+    [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
     
     self.backgroundColor = [UIColor whiteColor];
     self.layer.borderColor = [[UIColor colorWithRed:204/255.0 green:204/255.0 blue:204/255.0 alpha:1] CGColor];
     [self setBackgroundImage:[self buttonImageFromColor:[UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1]] forState:UIControlStateHighlighted];
+}
+
+- (void)backStyle{
+    
+    self.layer.cornerRadius = 20.0;
+    self.layer.masksToBounds = YES;
+    [self setFrame:CGRectMake(15, 40, 40, 40)];
+    self.backgroundColor = [UIColor colorWithWhite:0.2 alpha:0.5];
+    [self setTitle:@"∟" forState:UIControlStateNormal];
+    self.transform = CGAffineTransformMakeRotation(M_PI/4);
 }
 
 -(void)primaryStyle{

@@ -20,6 +20,7 @@
 
 @property (strong, nonatomic) SearchThridTableViewController *SearchThridTableViewController;
 
+@property(nonatomic,weak)UISearchBar *SearchBar;
 
 @end
 
@@ -36,8 +37,8 @@
 
 - (void)initSearchbar
 {
-     _SearchThridTableViewController=[[SearchThridTableViewController alloc]initWithSearchTxt:_searchtxt target:self action:@selector(SearchButtonClicked:)];
-   // _SearchThridTableViewController.delegate=self;
+    _SearchThridTableViewController=[[SearchThridTableViewController alloc]initWithSearchesKey:@"CardSearchesKey" SearchPlaceholder:NSLocalizedString(@"cardsearchplaceholder", @"") searchtext:_searchtxt rightButtonTitle:@"筛选" target:self action:@selector(SearchButtonClicked:)];
+    _SearchBar=_SearchThridTableViewController.searchBar;
     
 }
 //TsSearchbarProtocol
@@ -54,13 +55,13 @@
     if ( _danweitype!=nil) {
         [dic setObject:_danweitype forKey:@"CardType"];
     }
-    if (_section !=nil) {
+    if (_section !=nil && ![_section isEqualToString:@"全部"]) {
         [dic setObject:_section forKey:@"CardAear"];
     }
     if (_searchtxt != nil) {
         [dic setObject:_searchtxt forKey:@"queryname"];
     }
-    [dic setObject:[NSString stringWithFormat:@"%u",_page] forKey:@"pageindex"];
+    [dic setObject:[NSString stringWithFormat:@"%lu",(unsigned long)_page] forKey:@"pageindex"];
     
     NSURLSessionDataTask * task = [TSCoLtdpost globalTimeGetRecommendInfoWithDictionary:dic Block:^(NSArray *posts,NSUInteger maxcount, NSError *error) {
         if (!error) {
@@ -71,9 +72,9 @@
                 _posts = posts;
             }
             [self.tableView reloadData];
-            [self.tableView headerEndRefreshing];
-            [self.tableView footerEndRefreshing];
-    }
+        }
+        [self.tableView headerEndRefreshing];
+        [self.tableView footerEndRefreshing];
     }];
     [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
     
@@ -96,12 +97,12 @@
         }
         if (![telephoneNumber isKindOfClass:[NSNull class]] && telephoneNumber.length > 0) {
             
-            [displayStr appendFormat:@"\n电话号码: %@",telephoneNumber];
+            [displayStr appendFormat:@"\n电话号码: %@",homeNumber];
             
         }
         if (![homeNumber isKindOfClass:[NSNull class]] && homeNumber.length > 0) {
             
-            [displayStr appendFormat:@"\n手       机: %@",homeNumber];
+            [displayStr appendFormat:@"\n手       机: %@",telephoneNumber];
             
         }
     }
@@ -113,12 +114,10 @@
     
 }
 
--(void)dealloc
-{
-    if ([_SearchThridTableViewController.tableView.superview isEqual:[UIApplication sharedApplication].keyWindow] ) {
-        [_SearchThridTableViewController.tableView removeFromSuperview];
-    }
-}
+//-(void)dealloc
+//{
+//    NSLog(@"dealloc::::TSResultViewController");
+//}
 
 - (void)viewDidLoad
 {
@@ -154,6 +153,7 @@
 - (void)headerRereshing
 {
     _page=1;
+    _searchtxt=_SearchBar.text;
     [self getData];
 }
 

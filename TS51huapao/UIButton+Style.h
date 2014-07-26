@@ -24,7 +24,7 @@
 -(void)clearSearchReacodStyle;
 -(void)guzhuqianStyle;
 -(void)guzhuhouStyle;
-
+-(void)backStyle;
 //主流产品
 -(void)mainProductStyle;
 @end

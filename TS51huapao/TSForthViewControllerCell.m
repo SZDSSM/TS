@@ -47,7 +47,7 @@
         [self addSubview:_imageBackgroundView];
         [self addSubview:_title];
         [self addSubview:_content];
-
+        
     }
     return self;
 }
@@ -60,7 +60,7 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
 

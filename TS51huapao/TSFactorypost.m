@@ -53,7 +53,7 @@
 
 +(NSURLSessionDataTask *)globalTimeGetRecommendInfoWithDictionary:(NSDictionary*)parameters Block:(void(^)(NSArray *post,NSUInteger maxcount,NSError *error))block{
     return [[TSAppDoNetAPIClient sharedClient] GET:@"FoxGetCardsItemList.ashx" parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"ppppp:%@",responseObject);
+//        NSLog(@"ppppp:%@",responseObject);
 //        id i=[responseObject valueForKeyPath:@"maxcount"];
         NSNumber *max = [responseObject valueForKeyPath:@"maxcount"];
         NSArray * postsFromResponse = [responseObject valueForKeyPath:@"TSCardItemSP"];

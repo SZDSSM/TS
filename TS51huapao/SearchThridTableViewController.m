@@ -12,13 +12,20 @@
 
 @interface SearchThridTableViewController ()
 
-@property (weak, nonatomic) id callbackObject;
-
+//searchbar click search
+@property (weak, nonatomic) UIViewController *callbackObject;
 @property (nonatomic) SEL func_selector;
 
-@property (weak, nonatomic) UIBarButtonItem *rightButton;
+//shuaixuan button click search
+@property (weak, nonatomic) UIViewController *shuaiXuancallbackObject;
+@property (nonatomic) SEL func_shuaiXuan;
 
-@property (strong, nonatomic)  UISearchBar *searchBar;
+@property (weak, nonatomic) UIBarButtonItem *rightButton;
+@property (weak, nonatomic) UIBarButtonItem *leftButton;
+
+
+
+@property (copy, nonatomic)  NSString *RecentSearchesKey;
 
 @property (nonatomic) NSArray *recentSearches;
 @property (nonatomic) NSArray *displayedSearches;
@@ -34,7 +41,7 @@
 
 -(void)readRecentSearch
 {
-    NSArray *recents = [[NSUserDefaults standardUserDefaults] objectForKey:@"RecentSearchesKey"];
+    NSArray *recents = [[NSUserDefaults standardUserDefaults] objectForKey:_RecentSearchesKey];
     if (recents) {
         self.recentSearches = recents;
     }
@@ -44,24 +51,48 @@
         self.recentSearches = [NSArray array];
     }
 }
-- (id)initWithSearchTxt:(NSString *)searchTxt target:(UIViewController *)viewController action:(SEL)action
+
+
+-(void)shuaixuanAtTarget:(UIViewController *)target action:(SEL)action
+{
+    _shuaiXuancallbackObject=target;
+    _func_shuaiXuan=action;
+}
+
+
+#pragma mark -view
+- (id)initWithSearchesKey:(NSString *)SearchesKey
+        SearchPlaceholder:(NSString *)Placeholder
+                   target:(UIViewController *)viewController
+                   action:(SEL)action
+{
+    return [self initWithSearchesKey:SearchesKey SearchPlaceholder:Placeholder searchtext:nil rightButtonTitle:nil target:viewController action:action];
+}
+#pragma mark -view
+- (id)initWithSearchesKey:(NSString *)SearchesKey
+        SearchPlaceholder:(NSString *)Placeholder
+               searchtext:(NSString *)searchTxt
+         rightButtonTitle:(NSString *)rightButtonTitle
+                   target:(UIViewController *)viewController
+                   action:(SEL)action
 {
     self = [super initWithStyle:UITableViewStylePlain];
     if (self) {
+        ////////////////////////////init _RecentSearchesKey
+        _RecentSearchesKey=SearchesKey;
         ////////////////////////////init sel
         _callbackObject=viewController;
         _func_selector=action;
         
         
         ////////////////////////////init searchbar
-        self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0.0f,0.0f,200,30)];
+        self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0.0f,0.0f,100,30)];
         
         [self.searchBar setBarTintColor:[UIColor groupTableViewBackgroundColor]];
         [self.searchBar setSearchBarStyle:UISearchBarStyleMinimal];
-        [self.searchBar setPlaceholder:@"请输入产品名称"];
+        [self.searchBar setPlaceholder:Placeholder];
         
-        
-        
+        ////////////////////////////init searchTxt
         if (searchTxt.length>0) {
             self.searchBar.text=searchTxt;
         }
@@ -71,8 +102,27 @@
         
         [self readRecentSearch];
         
+        
+        
+        //////////////////////////////init leftbuttton
+        if (_callbackObject.navigationController.viewControllers.count>1) {
+            UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle: @"く返回" style:UIBarButtonItemStylePlain target:self action:@selector(backbutton)];
+            [backItem setTintColor:[UIColor lightGrayColor]];
+            
+            viewController.navigationItem.leftBarButtonItem = backItem;
+        }else{
+            viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:[[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 42, 30)]];
+        }
+
+
         //////////////////////////////init rightbuttton
-        viewController.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Search", @"") style:UIBarButtonItemStyleBordered target:self action:@selector(searchbuton)];
+        
+        if (rightButtonTitle !=nil) {
+            _rightbuttonTitle=rightButtonTitle;
+        }else{
+            _rightbuttonTitle=@"";//NSLocalizedString(@"Search", @"");
+        }
+        viewController.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:_rightbuttonTitle style:UIBarButtonItemStyleBordered target:self action:@selector(cancelbuton)];
         self.rightButton=viewController.navigationItem.rightBarButtonItem;
         [self.rightButton setTintColor:[UIColor lightGrayColor]];
         // Set up the recent searches list, from user defaults or using an empty array.
@@ -90,11 +140,9 @@
         self.tableView.tableFooterView = ({
             UILabel * Separatorlabel = [[UILabel alloc]init];
             Separatorlabel.frame = CGRectMake(15, 0, ScreenWidth, 1);
-            Separatorlabel.backgroundColor = [UIColor whiteColor];
-            Separatorlabel.text = @"-------------------------------------------------------------------------------------------------------";
-            Separatorlabel.textColor = [UIColor lightGrayColor];
+            Separatorlabel.backgroundColor = [UIColor colorWithRed:204/255.0 green:204/255.0 blue:204/255.0 alpha:1];
             
-            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 250.0f)];
+            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 120.0f)];
             view.backgroundColor=[UIColor clearColor];
             UIButton * _clearButton=[UIButton buttonWithType:UIButtonTypeRoundedRect];
             _clearButton.frame=CGRectMake(10, 10, 300, 38);
@@ -106,23 +154,42 @@
             [view addSubview:_clearButton];
             view;
         });
-
+        
     }
     return self;
 }
-#pragma mark -view
+
+
+-(void)backbutton
+{
+    if ([_searchBar isFirstResponder]) {
+        [_searchBar resignFirstResponder];
+    }
+    if ([self.tableView.superview isEqual:[UIApplication sharedApplication].keyWindow] ) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.tableView removeFromSuperview];
+        });
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)( 0.4* NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [_callbackObject.navigationController popViewControllerAnimated:YES];
+        });
+    }else{
+        [_callbackObject.navigationController popViewControllerAnimated:YES];
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
 }
 
--(void)dealloc
-{
-    if ([self.tableView.superview isEqual:[UIApplication sharedApplication].keyWindow] ) {
-        [self.tableView removeFromSuperview];
-    }
-}
+
+//-(void)dealloc
+//{
+//    if ([self.tableView.superview isEqual:[UIApplication sharedApplication].keyWindow] ) {
+//        [self.tableView removeFromSuperview];
+//    }
+//}
 
 - (void)addToRecentSearches:(NSString *)searchString {
     
@@ -136,14 +203,14 @@
     NSMutableArray *mutableRecents = [self.recentSearches mutableCopy];
     [mutableRecents removeObject:searchString];
     
-    if (mutableRecents.count>9) {
+    if (mutableRecents.count>14) {
         [mutableRecents removeLastObject];
     }
     // Add the new string at the top of the list.
     [mutableRecents insertObject:searchString atIndex:0];
     
     // Update user defaults.
-    [[NSUserDefaults standardUserDefaults] setObject:mutableRecents forKey:@"RecentSearchesKey"];
+    [[NSUserDefaults standardUserDefaults] setObject:mutableRecents forKey:_RecentSearchesKey];
     
     // Set self's recent searches to the new recents array, and reload the table view.
     self.recentSearches = mutableRecents;
@@ -166,25 +233,39 @@
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     if ([scrollView isEqual:self.tableView]) {
+        if ([_searchBar isFirstResponder]) {
+            [_searchBar resignFirstResponder];
+        }
     }
 }
 -(void)clearButClik
 {
-    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"RecentSearchesKey"];
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:_RecentSearchesKey];
     _recentSearches = [NSArray array];
     _displayedSearches = [NSArray array];
     [self.tableView reloadData];
 }
 
--(void)searchbuton
+-(void)cancelbuton
 {
     [_searchBar resignFirstResponder];
     if ([_rightButton.title isEqualToString:NSLocalizedString(@"Cancel", @"")]) {
-        [_rightButton setTitle:NSLocalizedString(@"Search", @"")];
+        [_rightButton setTitle:_rightbuttonTitle];
         if ([self.tableView.superview isEqual:[UIApplication sharedApplication].keyWindow] ) {
             [self.tableView removeFromSuperview];
             //pppppp[self.tableView setScrollEnabled:YES];
         }
+    }else if ([_rightButton.title isEqualToString:@"筛选"]) {
+        #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        if( [_shuaiXuancallbackObject respondsToSelector:_func_shuaiXuan])
+        {
+            //objc_msgSend(_callbackObject,_func_selector,searchBar.text);
+            [_shuaiXuancallbackObject performSelector:_func_shuaiXuan];
+        }
+    }
+    
+    if (![_rightbuttonTitle isEqualToString:@"筛选"]){
+        [_searchBar setText:@""];
     }
 }
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
@@ -199,11 +280,10 @@
     
     if (![self.tableView.superview isEqual:[UIApplication sharedApplication].keyWindow]) {
         
-        
         [[UIApplication sharedApplication].keyWindow addSubview: self.tableView];
         [self readRecentSearch];
         _displayedSearches=_recentSearches;
-        [self.tableView scrollRectToVisible:CGRectMake(0, 0, 320, 20) animated:NO];
+        [self.tableView scrollRectToVisible:CGRectMake(0, 0, ScreenWidth, 20) animated:NO];
         [self.tableView reloadData];
     }
     if (![_rightButton.title isEqualToString:NSLocalizedString(@"Cancel", @"")]) {
@@ -214,7 +294,6 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    [self searchbuton];
     
     [self addToRecentSearches:self.searchBar.text];
     //objc_msgSend
@@ -224,10 +303,10 @@
         //objc_msgSend(_callbackObject,_func_selector,searchBar.text);
         [_callbackObject performSelector:_func_selector withObject:searchBar.text];
     }
-    
-    if ([_delegate respondsToSelector:@selector(SearchButtonClicked:)]) {
-        [_delegate SearchButtonClicked:searchBar.text];
-    }
+    [self cancelbuton];
+//    if ([_delegate respondsToSelector:@selector(SearchButtonClicked:)]) {
+//        [_delegate SearchButtonClicked:searchBar.text];
+//    }
     
     
 }

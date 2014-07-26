@@ -25,5 +25,5 @@
 @property (strong, nonatomic) NSString * UMTVURL;
 
 +(NSURLSessionDataTask *)globalTimeGetRecommendInfoWithRanktype:(NSString *)rankType Block:(void(^)(NSArray *posts,NSError *error))block;
-
++(NSURLSessionDataTask *)globalTimeGetRecommendInfoWithDictionary:(NSDictionary*)parameters Block:(void(^)(NSArray *post,NSUInteger maxcount,NSError *error))block;
 @end

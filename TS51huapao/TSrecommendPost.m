@@ -23,7 +23,7 @@
 
 +(NSURLSessionDataTask *)globalTimeGetRecommendInfoWithBlock:(void(^)(TSrecommendPost *post,NSError *error))block{
     return [[TSAppDoNetAPIClient sharedClient] GET:@"FoxGetAnItemData.ashx" parameters:@{@"itemcode":@"91781117"} success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"ppppp:%@",responseObject);
+//        NSLog(@"ppppp:%@",responseObject);
         TSrecommendPost *post=[[TSrecommendPost alloc] initWithAttributes:(NSDictionary *)responseObject];
         if(block){
             block(post,nil);

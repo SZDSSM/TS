@@ -45,6 +45,11 @@
     self.U_clicksum=[self changeString:[attributes valueForKeyPath:@"U_clicksum"]];
     self.cardcode=[self changeString:[attributes valueForKeyPath:@"cardcode"]];
     self.cardname=[self changeString:[attributes valueForKeyPath:@"cardname"]];
+    
+    
+    self.miaoshu=[self changeString:[attributes valueForKeyPath:@"miaoshu"]];
+    self.shuoming=[self changeString:[attributes valueForKeyPath:@"shuoming"]];
+    
     self.photolist=[attributes valueForKeyPath:@"photolist"];
     self.stocksum=[self changeString:[attributes valueForKeyPath:@"stocksum"]];//库存
    
@@ -68,7 +73,7 @@
 
 +(NSURLSessionDataTask *)globalTimeGetRecommendInfoWithItemcode:(NSString *)itemcode Block:(void(^)(TSItemDetailPost *post,NSError *error))block{
     return [[TSAppDoNetAPIClient sharedClient] GET:@"FoxGetAnItemData.ashx" parameters:@{@"itemcode":itemcode} success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"ppppp:%@",responseObject);
+//        NSLog(@"ppppp:%@",responseObject);
         TSItemDetailPost *post=[[TSItemDetailPost alloc] initWithAttributes:(NSDictionary *)responseObject];
         if(block){
             block(post,nil);

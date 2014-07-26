@@ -17,7 +17,8 @@
 #import "TSItemListTableViewController.h"
 #import "TSAppDoNetAPIClient.h"
 #import "TSrecommendPost.h"
-#import "TSItemDetaillTableViewController.h"
+#import "ItemDetailTableViewController.h"
+#import "FristSearchTableViewController.h"
 
 //static NSString *  const touchurl = @"http://124.232.163.242/com.ds.ws/FOXHttpHandler/FoxGetRecommendList.ashx";
 
@@ -29,6 +30,9 @@
 @property (weak, nonatomic) IBOutlet UIImageView *subject1;
 @property (weak, nonatomic) IBOutlet UIImageView *subject2;
 @property (weak, nonatomic) IBOutlet UIImageView *subject3;
+
+//searchbar
+@property(strong,nonatomic) FristSearchTableViewController *searchbarControl;
 
 @end
 
@@ -97,6 +101,12 @@
     
     //1.初始化刷新
     [self setupRefresh];
+    //2.初始化搜索框
+    _searchbarControl=[[FristSearchTableViewController alloc]initWithSearchesKey:@"ItemSearchesKey" SearchPlaceholder:NSLocalizedString(@"itemsearchplaceholder", @"") target:self action:@selector(searchButtonClick:)];
+}
+-(void)searchButtonClick:(NSString *)searchText
+{
+    NSLog(@"search:::%@",searchText);
 }
 
 - (void)gettouch
@@ -151,7 +161,7 @@
             
             [self.tableView headerEndRefreshing];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Failure: %@", error);
+//            NSLog(@"Failure: %@", error);
             UIAlertView *AlertView1=[[UIAlertView alloc]initWithTitle:@"提示" message:@"未获取到数据" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil];
             [AlertView1 show];
             [self.tableView headerEndRefreshing];
@@ -206,22 +216,22 @@
 - (void)imageViewTap:(UITapGestureRecognizer *)recognizer
 {
     if (recognizer.view.tag == 101) {
-        [self performSegueWithIdentifier:@"imageViewToItemDetail" sender:_prdctRcmd1.itemCode];
+        [self pushtoItemDetailView:_prdctRcmd1.itemCode];
         
     }else if (recognizer.view.tag == 102){
-        [self performSegueWithIdentifier:@"imageViewToItemDetail" sender:_prdctRcmd2.itemCode];
+        [self pushtoItemDetailView:_prdctRcmd2.itemCode];
 
     }else if (recognizer.view.tag == 103){
-        [self performSegueWithIdentifier:@"imageViewToItemDetail" sender:_prdctRcmd3.itemCode];
+        [self pushtoItemDetailView:_prdctRcmd3.itemCode];
 
     }else if (recognizer.view.tag == 201){
-        [self performSegueWithIdentifier:@"imageViewToItemDetail" sender:_subjctRcmd1.itemCode];
+//        [self performSegueWithIdentifier:@"imageViewToItemDetail" sender:_subjctRcmd1.itemCode];
 
     }else if (recognizer.view.tag == 202){
-        [self performSegueWithIdentifier:@"imageViewToItemDetail" sender:_subjctRcmd2.itemCode];
+//        [self performSegueWithIdentifier:@"imageViewToItemDetail" sender:_subjctRcmd2.itemCode];
 
     }else if (recognizer.view.tag == 203){
-        [self performSegueWithIdentifier:@"imageViewToItemDetail" sender:_subjctRcmd3.itemCode];
+//        [self performSegueWithIdentifier:@"imageViewToItemDetail" sender:_subjctRcmd3.itemCode];
 
     }else{
     }
@@ -243,7 +253,7 @@
 
 - (void)buttonTap:(UIButton *)button
 {
-    NSLog(@"buttontap");
+    NSLog(@"%@",button.titleLabel.text);
 //    [button.superview.frame.size
 }
 
@@ -325,70 +335,29 @@
             break;
     }
 }
-/*
- - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
- {
- UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
- 
- // Configure the cell...
- 
- return cell;
- }
- */
 
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
- {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- } else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
 
 
  #pragma mark - Navigation
  
  // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
-     if ([segue.identifier isEqualToString:@"imageViewToItemDetail"]) {
-         TSItemDetaillTableViewController * tsitemde = segue.destinationViewController;
-         tsitemde.itemcode =sender;
-     }
+// - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+// {
+// // Get the new view controller using [segue destinationViewController].
+// // Pass the selected object to the new view controller.
+//     if ([segue.identifier isEqualToString:@"imageViewToItemDetail"]) {
+//         TSItemDetaillTableViewController * tsitemde = segue.destinationViewController;
+//         tsitemde.itemcode =sender;
+//     }
+//}
+
+-(void)pushtoItemDetailView:(NSString *)itemcode
+{
+    UIStoryboard *board=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    ItemDetailTableViewController *itemdetail = [board instantiateViewControllerWithIdentifier:@"tsItemdetail"];
+    itemdetail.itemcode=itemcode;
+    [self.navigationController pushViewController:itemdetail animated:YES];
 }
-
-
 - (IBAction)xiaoshoupaihang:(id)sender {
     
     TSItemListTableViewController * xiaoshou = [[TSItemListTableViewController alloc]initWithRankType:@"S"];

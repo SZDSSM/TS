@@ -64,4 +64,26 @@
     }];
 }
 
++(NSURLSessionDataTask *)globalTimeGetRecommendInfoWithDictionary:(NSDictionary*)parameters Block:(void(^)(NSArray *post,NSUInteger maxcount,NSError *error))block{
+    return [[TSAppDoNetAPIClient sharedClient] GET:@"FoxGetItemListSP.ashx" parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSLog(@"ppppp:%@",responseObject);
+        //        id i=[responseObject valueForKeyPath:@"maxcount"];
+        NSNumber *max = [responseObject valueForKeyPath:@"maxcount"];
+        NSArray * postsFromResponse = [responseObject valueForKeyPath:@"TSItemSP"];
+        NSMutableArray * mutablePosts = [NSMutableArray arrayWithCapacity:[postsFromResponse count]];
+        for (NSDictionary * attributes in postsFromResponse) {
+            TSItemListPost *post=[[TSItemListPost alloc] initWithAttributes:(NSDictionary *)attributes];
+            [mutablePosts addObject:post];
+        }
+        if(block){
+            block([NSArray arrayWithArray:mutablePosts],max.integerValue,nil);
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if (block) {
+            block([NSArray array],0,error);
+        }
+    }];
+}
+
 @end

@@ -65,27 +65,6 @@
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="glO-jy-zNI">
-                        <rect key="frame" x="227" y="10" width="30" height="30"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <state key="normal" backgroundImage="ic_bofanganniu">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                    </button>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Ry-Gh-23h">
-                        <rect key="frame" x="283" y="7" width="35" height="35"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <state key="normal" backgroundImage="ic_fanlianniu">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                    </button>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vx5-Ew-XR2">
-                        <rect key="frame" x="254" y="7" width="35" height="35"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <state key="normal" backgroundImage="ic_zhijianganniu">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                    </button>
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c3z-8e-Lqf">
                         <rect key="frame" x="268" y="48" width="33" height="33"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -112,19 +91,31 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ic_bofanganniu" translatesAutoresizingMaskIntoConstraints="NO" id="yl2-CI-lEp">
+                        <rect key="frame" x="227" y="12" width="30" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ic_zhijianganniu" translatesAutoresizingMaskIntoConstraints="NO" id="sJK-e3-x6o">
+                        <rect key="frame" x="255" y="9" width="35" height="35"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ic_fanlianniu" translatesAutoresizingMaskIntoConstraints="NO" id="Pwz-UG-G15">
+                        <rect key="frame" x="284" y="9" width="35" height="35"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
                 </subviews>
             </tableViewCellContentView>
             <connections>
                 <outlet property="Price" destination="RBQ-Vz-P8w" id="3oL-Zx-nfk"/>
                 <outlet property="Spec" destination="kam-JO-VNk" id="T2p-hI-vzH"/>
-                <outlet property="fanli" destination="4Ry-Gh-23h" id="Ifc-Dg-EfP"/>
                 <outlet property="guanzhu" destination="c3z-8e-Lqf" id="UEd-ew-WvQ"/>
+                <outlet property="image1" destination="Pwz-UG-G15" id="UpX-Iy-tZc"/>
+                <outlet property="image2" destination="sJK-e3-x6o" id="B3y-Nb-xNh"/>
+                <outlet property="image3" destination="yl2-CI-lEp" id="rFP-G7-Yjz"/>
                 <outlet property="itemimage" destination="Ahc-IJ-hxk" id="uKQ-l2-Z9M"/>
                 <outlet property="itemname" destination="4bF-OI-JP2" id="3l6-t0-oPr"/>
-                <outlet property="mtv" destination="glO-jy-zNI" id="ntH-qM-9Og"/>
                 <outlet property="order" destination="aGJ-ug-g2a" id="nT6-M1-Ikf"/>
                 <outlet property="shadowView" destination="PA3-bE-hsH" id="Obg-Lb-XaB"/>
-                <outlet property="zhixiao" destination="Vx5-Ew-XR2" id="E7I-Qm-KZK"/>
             </connections>
         </tableViewCell>
     </objects>
