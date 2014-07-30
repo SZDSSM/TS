@@ -12,5 +12,6 @@
 
 @property (strong, nonatomic) NSString * sectionViewTitle;
 @property (copy, nonatomic) NSString * danweitype;
+//@property (nonatomic, copy)NSString * SalesAear;
 
 @end

@@ -7,6 +7,8 @@
 //
 //#import "message.h"
 #import "SearchThridTableViewController.h"
+#import "TSAppDoNetAPIClient.h"
+
 //#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
 //NSString *RecentSearchesKey = @"RecentSearchesKey";
 
@@ -23,14 +25,14 @@
 @property (weak, nonatomic) UIBarButtonItem *rightButton;
 @property (weak, nonatomic) UIBarButtonItem *leftButton;
 
-
-
+@property(strong,nonatomic)UIButton *clearButton;
+@property (copy, nonatomic)  NSString *type;
 @property (copy, nonatomic)  NSString *RecentSearchesKey;
 
 @property (nonatomic) NSArray *recentSearches;
 @property (nonatomic) NSArray *displayedSearches;
 
-@property (nonatomic, assign) id <TsSearchbarProtocol> delegate;
+//@property (nonatomic, assign) id <TsSearchbarProtocol> delegate;
 
 @property (nonatomic) SEL selectRow;
 @end
@@ -80,6 +82,11 @@
     if (self) {
         ////////////////////////////init _RecentSearchesKey
         _RecentSearchesKey=SearchesKey;
+        if ([_RecentSearchesKey isEqualToString:@"ItemSearchesKey"]) {
+            _type=@"I";
+        }else{
+            _type=@"C";
+        }
         ////////////////////////////init sel
         _callbackObject=viewController;
         _func_selector=action;
@@ -144,7 +151,7 @@
             
             UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 120.0f)];
             view.backgroundColor=[UIColor clearColor];
-            UIButton * _clearButton=[UIButton buttonWithType:UIButtonTypeRoundedRect];
+            _clearButton=[UIButton buttonWithType:UIButtonTypeRoundedRect];
             _clearButton.frame=CGRectMake(10, 10, 300, 38);
             [_clearButton setTitle:@"清空搜索记录" forState:UIControlStateNormal];
             [_clearButton addTarget:self action:@selector(clearButClik) forControlEvents:UIControlEventTouchUpInside];
@@ -277,7 +284,7 @@
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
-    
+    _clearButton.hidden=NO;
     if (![self.tableView.superview isEqual:[UIApplication sharedApplication].keyWindow]) {
         
         [[UIApplication sharedApplication].keyWindow addSubview: self.tableView];
@@ -319,12 +326,23 @@
     _displayedSearches =_recentSearches;
     
     if ([filterString length] == 0) {
+        _clearButton.hidden=NO;
         _displayedSearches = _recentSearches;
     }
     else {
-        NSPredicate *filterPredicate = [NSPredicate predicateWithFormat:@"self BEGINSWITH[cd] %@", filterString];
-        NSArray *filteredRecentSearches = [_recentSearches filteredArrayUsingPredicate:filterPredicate];
-        _displayedSearches = filteredRecentSearches;
+        
+        [[TSAppDoNetAPIClient sharedClient] GET:@"FoxGetSearchTableWithString.ashx" parameters:@{@"str":filterString,@"type":_type} success:^(NSURLSessionDataTask *task, id responseObject) {
+            NSArray *rslt=[responseObject objectForKey:@"SearchTable"];
+            _displayedSearches=rslt;
+            _clearButton.hidden=YES;
+            [self.tableView reloadData];
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            NSPredicate *filterPredicate = [NSPredicate predicateWithFormat:@"self BEGINSWITH[cd] %@", filterString];
+            NSArray *filteredRecentSearches = [_recentSearches filteredArrayUsingPredicate:filterPredicate];
+            _displayedSearches = filteredRecentSearches;
+            _clearButton.hidden=NO;
+            [self.tableView reloadData];
+        }];
     }
     [self.tableView reloadData];
     

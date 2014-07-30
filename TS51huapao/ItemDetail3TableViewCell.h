@@ -8,7 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import "TSItemDetailPost.h"
+
+@protocol TSGuanZhuProtocol <NSObject>
+
+@optional
+-(void)guanZhuButtonClicked:(BOOL) isStore;
+@end
+
 @interface ItemDetail3TableViewCell : UITableViewCell
+
+
+@property (nonatomic, weak) id <TSGuanZhuProtocol> delegate;
+
 
 @property (weak, nonatomic)TSItemDetailPost * post;
 

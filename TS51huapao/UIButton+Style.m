@@ -18,6 +18,20 @@
     //[self.titleLabel setFont:[UIFont fontWithName:@"FontAwesome" size:self.titleLabel.font.pointSize]];
 }
 
+
+-(void)yuyueStyle{
+    
+    self.layer.borderWidth = 0.5;
+    self.layer.cornerRadius = 2.0;
+    self.layer.masksToBounds = YES;
+    [self setAdjustsImageWhenHighlighted:NO];
+    [self setTitleColor:[UIColor colorWithRed:204/255.0 green:204/255.0 blue:204/255.0 alpha:1] forState:UIControlStateNormal];
+
+    self.backgroundColor = [UIColor whiteColor];
+    self.layer.borderColor = [[UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1] CGColor];
+    //[self setBackgroundImage:[self buttonImageFromColor:[UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1]] forState:UIControlStateHighlighted];
+}
+
 -(void)guzhuqianStyle{
     
     self.layer.borderWidth = 0.5;
@@ -146,6 +160,13 @@
     self.titleLabel.font=[UIFont systemFontOfSize:11];
     [self setBackgroundImage:[self buttonImageFromColor:[UIColor colorWithRed:237/255.0 green:155/255.0 blue:67/255.0 alpha:1]] forState:UIControlStateHighlighted];
 }
+-(void)LogInStyle{
+    [self bootstrapStyle];
+    self.backgroundColor = [UIColor colorWithRed:235/255.0 green:91/255.0 blue:29/255.0 alpha:1];
+    self.layer.borderColor = [[UIColor colorWithRed:238/255.0 green:162/255.0 blue:54/255.0 alpha:1] CGColor];
+    self.titleLabel.font=[UIFont systemFontOfSize:20];
+    [self setBackgroundImage:[self buttonImageFromColor:[UIColor colorWithRed:237/255.0 green:155/255.0 blue:67/255.0 alpha:1]] forState:UIControlStateHighlighted];
+}
 -(void)cancelAttentionStyle{
     [self bootstrapStyle];
     self.backgroundColor = [UIColor colorWithRed:169/255.0 green:169/255.0 blue:169/255.0 alpha:1];
@@ -196,7 +217,7 @@
     self.layer.borderColor = [[UIColor colorWithRed:169/255.0 green:169/255.0 blue:169/255.0 alpha:1] CGColor];
     self.titleLabel.font=[UIFont systemFontOfSize:13];
     [self setTitleColor:[UIColor colorWithRed:120.0/255.0 green:120.0/255.0 blue:120.0/255.0 alpha:1.0]forState:UIControlStateNormal];
-    [self setBackgroundImage:[self buttonImageFromColor:[UIColor colorWithRed:237/255.0 green:155/255.0 blue:67/255.0 alpha:1]] forState:UIControlStateHighlighted];
+    //[self setBackgroundImage:[self buttonImageFromColor:[UIColor colorWithRed:237/255.0 green:155/255.0 blue:67/255.0 alpha:1]] forState:UIControlStateHighlighted];
     
 }
 @end

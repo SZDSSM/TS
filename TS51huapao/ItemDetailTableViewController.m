@@ -6,7 +6,7 @@
 //  Copyright (c) 2014年 Teesson Fireworks. All rights reserved.
 //
 
-#import "ItemDetail1TableViewCell.h"
+#import "xiadanTableViewController.h"
 #import "ItemDetailTableViewController.h"
 #import "WebViewController.h"
 #import "TSItemDetailPost.h"
@@ -17,7 +17,7 @@
 #import "MJRefresh.h"
 #import "TSItemCommentPost.h"
 #import "UIView+FoxExtras.h"
-
+#import "TSAppDoNetAPIClient.h"
 @interface ItemDetailTableViewController ()
 
 @property (strong, nonatomic)TSItemDetailPost * post;
@@ -31,6 +31,9 @@
 @property (strong, nonatomic)UIView * commentSectionView;
 
 @property (strong, nonatomic)UIButton * button;
+
+@property (strong, nonatomic)UIButton * xiadan;
+@property (strong, nonatomic)UIButton * kanyang;
 @property (strong, nonatomic)UIView * statusView;
 @property (strong, nonatomic)UIView * bottomView;
 
@@ -100,6 +103,10 @@
     [super viewDidLoad];
     
     [self _initKeyViewButton];
+    
+    if (![[TSUser sharedUser].U_type hasSuffix:@"客户"]) {
+        [self _initBottomView];
+    }
     [self setupRefresh];
     //[self getData];
     self.navigationController.navigationBarHidden=YES;
@@ -118,6 +125,7 @@
                     _photoSectionView=[self SectionViewWithTitle:@"图文详情:"];
                 }
                 [self getCommentData];
+                [self updateBottomView];
                 [self.tableView reloadData];
                 
                 UIView *view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 110.0f)];
@@ -226,6 +234,7 @@
     else if (indexPath.section==1){
         if (indexPath.row==0) {
             ItemDetail3TableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"itemDetailCell3"];
+            cell.delegate=_delegate;
             cell.post=_post;
             return cell;
         }else{
@@ -374,41 +383,214 @@
     [_statusView setBackgroundColor:[UIColor whiteColor]];
     
     
-    
-    _bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, ScreenHeight-50, ScreenWidth, 50)];
-    [_bottomView setBackgroundColor:[UIColor colorWithRed:250.0/255.0 green:250.0/255.0 blue:250.0/255.0 alpha:0.9]];
-    UIButton * xiadan = [[UIButton alloc]initWithFrame:CGRectMake(10, 7, ScreenWidth/2-15, 36)];
-    [xiadan setTitle:@"下单" forState:UIControlStateNormal];
-    [xiadan addTarget:self action:@selector(xiadanbackButtonTap:) forControlEvents:UIControlEventTouchUpInside];
-    [xiadan defaultStyle];
-    
-    UIButton * kanyang = [[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth/2+5,  7, ScreenWidth/2-15, 36)];
-    [kanyang setTitle:@"看样" forState:UIControlStateNormal];
-    [kanyang addTarget:self action:@selector(kanyangbackButtonTap:) forControlEvents:UIControlEventTouchUpInside];
-    [kanyang defaultStyle];
-    [_bottomView addSubview:xiadan];
-    [_bottomView addSubview:kanyang];
-    
-    
     _button = [[UIButton alloc]init];
     [_button addTarget:self action:@selector(backButtonTap:) forControlEvents:UIControlEventTouchUpInside];
     [_button backStyle];
 
 }
+-(void)updateBottomView
+{
+    if ([_post.orderQuantity floatValue]>0) {
+        [_xiadan setTitle:@"继续下单" forState:UIControlStateNormal];
+    }else{
+        [_xiadan setTitle:@"下单" forState:UIControlStateNormal];
+    }
+
+    if ([_post.IsInSeeSamp isEqualToString:@"Y"]) {
+        [_kanyang setTitle:@"取消看样" forState:UIControlStateNormal];
+    }else{
+        [_kanyang setTitle:@"看样" forState:UIControlStateNormal];
+    }
+}
+-(void)_initBottomView
+{
+    _bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, ScreenHeight-50, ScreenWidth, 50)];
+    [_bottomView setBackgroundColor:[UIColor colorWithRed:250.0/255.0 green:250.0/255.0 blue:250.0/255.0 alpha:0.9]];
+    _xiadan = [[UIButton alloc]initWithFrame:CGRectMake(10, 7, ScreenWidth/2-15, 36)];
+    
+    
+    [_xiadan addTarget:self action:@selector(xiadanbackButtonTap:) forControlEvents:UIControlEventTouchUpInside];
+    [_xiadan defaultStyle];
+    
+    _kanyang = [[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth/2+5,  7, ScreenWidth/2-15, 36)];
+
+    
+    [_kanyang addTarget:self action:@selector(kanyangbackButtonTap:) forControlEvents:UIControlEventTouchUpInside];
+    [_kanyang defaultStyle];
+    [_bottomView addSubview:_xiadan];
+    [_bottomView addSubview:_kanyang];
+}
 - (void)backButtonTap:(UIButton *)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
-//    [_button removeFromSuperview];
-//    [_statusView removeFromSuperview];
-//    [_bottomView removeFromSuperview];
     self.navigationController.navigationBarHidden=NO;
 }
 
 - (void)xiadanbackButtonTap:(UIButton *)sender
 {
+    UIStoryboard *board=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    xiadanTableViewController *xiadanview = [board instantiateViewControllerWithIdentifier:@"xiadanTableview"];
+    xiadanview.post=_post;
+    [xiadanview xiadanAtTarget:self action:@selector(updateBottomView)];
+    UINavigationController *xiadanviewNavigation=[[UINavigationController alloc]initWithRootViewController:xiadanview];
+    [self presentViewController:xiadanviewNavigation animated:YES completion:^{
+        [xiadanview.qty becomeFirstResponder];
+    }];
+//    [self.navigationController pushViewController:xiadanviewNavigation animated:YES];
 }
-
 - (void)kanyangbackButtonTap:(UIButton *)sender
 {
+    if ([sender.titleLabel.text isEqualToString:@"看样"]) {
+        UIAlertView *alertView = [[UIAlertView alloc]
+                                  initWithTitle:@"看样"
+                                  message:@"将该产品添加至你的看样列表，51花炮服务人员看到你的请求后会尽快安排预约看样或进一步的联系你"
+                                  delegate:self
+                                  cancelButtonTitle:@"添加"
+                                  otherButtonTitles:@"关闭", nil];
+        [alertView show];
+    }else if ([sender.titleLabel.text isEqualToString:@"取消看样"]) {
+        UIAlertView *alertView = [[UIAlertView alloc]
+                                  initWithTitle:@"取消看样"
+                                  message:@"确认取消对该产品的预约看样"
+                                  delegate:self
+                                  cancelButtonTitle:@"取消看样"
+                                  otherButtonTitles:@"关闭", nil];
+        [alertView show];
+    }
+    
+}
+
+#pragma  mark-- 实现UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    if ([alertView.title isEqual:@"看样"]) {
+        if (buttonIndex==0) {
+            [self addToSeeSamp];
+        }
+    }else if ([alertView.title isEqual:@"取消看样"]) {
+        if (buttonIndex==0) {
+            [self delFromSeeSamp];
+        }
+    }
+    
+}
+-(void)addToSeeSamp
+{
+    [[TSAppDoNetAPIClient sharedClient] GET:@"FoxAddSampleItem.ashx" parameters:@{@"vipcode":[TSUser sharedUser].vipcode,@"itemcode":_post.ItemCode} success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSString *rslt=[responseObject objectForKey:@"result"];
+        if ([rslt isEqualToString:@"true"]) {
+            [_post setIsInSeeSamp:@"Y"];
+            [_kanyang setTitle:@"取消看样" forState:UIControlStateNormal];
+            UIAlertView *alertView = [[UIAlertView alloc]
+                                      initWithTitle:@"成功"
+                                      message:@"添加至预约看样列表"
+                                      delegate:nil
+                                      cancelButtonTitle:nil
+                                      otherButtonTitles:nil, nil];
+            [NSTimer scheduledTimerWithTimeInterval:0.6f
+                                             target:self
+                                           selector:@selector(timerFireMethod:)
+                                           userInfo:alertView
+                                            repeats:NO];
+            [alertView show];
+        }else if ([rslt isEqualToString:@"false"]) {
+            UIAlertView *alertView = [[UIAlertView alloc]
+                                      initWithTitle:@"失败"
+                                      message:@"添加预约看样失败"
+                                      delegate:nil
+                                      cancelButtonTitle:nil
+                                      otherButtonTitles:nil, nil];
+            [NSTimer scheduledTimerWithTimeInterval:0.6f
+                                             target:self
+                                           selector:@selector(timerFireMethod:)
+                                           userInfo:alertView
+                                            repeats:NO];
+            [alertView show];
+        }else if ([rslt isEqualToString:@"repetition"]) {
+            UIAlertView *alertView = [[UIAlertView alloc]
+                                      initWithTitle:@"提示"
+                                      message:@"该物料已在我的预约看样列表"
+                                      delegate:nil
+                                      cancelButtonTitle:nil
+                                      otherButtonTitles:nil, nil];
+            [NSTimer scheduledTimerWithTimeInterval:0.6f
+                                             target:self
+                                           selector:@selector(timerFireMethod:)
+                                           userInfo:alertView
+                                            repeats:NO];
+            [alertView show];
+        }else if ([rslt isEqualToString:@"notExists"]) {
+            UIAlertView *alertView = [[UIAlertView alloc]
+                                      initWithTitle:@"提示"
+                                      message:@"该物料不存在"
+                                      delegate:nil
+                                      cancelButtonTitle:nil
+                                      otherButtonTitles:nil, nil];
+            [NSTimer scheduledTimerWithTimeInterval:0.6f
+                                             target:self
+                                           selector:@selector(timerFireMethod:)
+                                           userInfo:alertView
+                                            repeats:NO];
+            [alertView show];
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        UIAlertView *alertView = [[UIAlertView alloc]
+                                  initWithTitle:@"提示"
+                                  message:[error localizedDescription]
+                                  delegate:nil
+                                  cancelButtonTitle:@"关闭"
+                                  otherButtonTitles:nil, nil];
+        [alertView show];
+    }];
+}
+-(void)delFromSeeSamp
+{
+    [[TSAppDoNetAPIClient sharedClient] GET:@"FoxDelSampleItem.ashx" parameters:@{@"vipcode":[TSUser sharedUser].vipcode,@"itemcode":_post.ItemCode} success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSString *rslt=[responseObject objectForKey:@"result"];
+        if ([rslt isEqualToString:@"true"]) {
+            [_post setIsInSeeSamp:@"N"];
+            [_kanyang setTitle:@"看样" forState:UIControlStateNormal];
+            UIAlertView *alertView = [[UIAlertView alloc]
+                                      initWithTitle:@"成功"
+                                      message:@"已取消预约看样"
+                                      delegate:nil
+                                      cancelButtonTitle:nil
+                                      otherButtonTitles:nil, nil];
+            [NSTimer scheduledTimerWithTimeInterval:0.6f
+                                             target:self
+                                           selector:@selector(timerFireMethod:)
+                                           userInfo:alertView
+                                            repeats:NO];
+            [alertView show];
+        }else if ([rslt isEqualToString:@"false"]) {
+            UIAlertView *alertView = [[UIAlertView alloc]
+                                      initWithTitle:@"失败"
+                                      message:@"取消操作失败"
+                                      delegate:nil
+                                      cancelButtonTitle:nil
+                                      otherButtonTitles:nil, nil];
+            [NSTimer scheduledTimerWithTimeInterval:0.6f
+                                             target:self
+                                           selector:@selector(timerFireMethod:)
+                                           userInfo:alertView
+                                            repeats:NO];
+            [alertView show];
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        UIAlertView *alertView = [[UIAlertView alloc]
+                                  initWithTitle:@"提示"
+                                  message:[error localizedDescription]
+                                  delegate:nil
+                                  cancelButtonTitle:@"关闭"
+                                  otherButtonTitles:nil, nil];
+        [alertView show];
+    }];
+}
+
+- (void)timerFireMethod:(NSTimer*)theTimer
+{
+    UIAlertView *promptAlert = (UIAlertView*)[theTimer userInfo];
+    [promptAlert dismissWithClickedButtonIndex:0 animated:NO];
+    promptAlert =NULL;
 }
 @end

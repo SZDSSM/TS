@@ -31,6 +31,15 @@
     self.U_Photo1 = [self changeString:[attributes valueForKey:@"U_Photo1"]];
     self.UMTVURL = [self changeString:[attributes valueForKey:@"UMTVURL"]];
     
+    self.StorDateTime = [self changeString:[attributes objectForKey:@"StorDateTime"]];//新加
+    self.Vipcode = [self changeString:[attributes objectForKey:@"Vipcode"]];//新加
+    self.vipname = [self changeString:[attributes objectForKey:@"vipname"]];//新加
+    self.viptype = [self changeString:[attributes objectForKey:@"viptype"]];//新加
+    self.quantity = [self changeString:[attributes objectForKey:@"quantity"]];//新加
+    self.note = [self changeString:[attributes objectForKey:@"note"]];//新加
+    self.status = [self changeString:[attributes objectForKey:@"status"]];//新加
+    self.lineid = [self changeString:[attributes objectForKey:@"lineid"]];//新加
+    self.cardname = [self changeString:[attributes objectForKey:@"cardname"]];//新加
     return self;
 }
 
@@ -45,7 +54,7 @@
 }
 
 +(NSURLSessionDataTask *)globalTimeGetRecommendInfoWithRanktype:(NSString *)rankType Block:(void(^)(NSArray * posts,NSError *error))block{
-    return [[TSAppDoNetAPIClient sharedClient] GET:@"FoxGetRankingList.ashx" parameters:@{@"rankType":rankType} success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[TSAppDoNetAPIClient sharedClient] GET:@"FoxGetRankingList.ashx" parameters:@{@"rankType":rankType,@"vipcode":[TSUser sharedUser].vipcode} success:^(NSURLSessionDataTask *task, id responseObject) {
 //                NSLog(@"ppppp:%@",responseObject);
         NSArray * postsFromResponse = [responseObject valueForKeyPath:@"TSItemSP"];
         NSMutableArray * mutablePosts = [NSMutableArray arrayWithCapacity:[postsFromResponse count]];
@@ -66,7 +75,7 @@
 
 +(NSURLSessionDataTask *)globalTimeGetRecommendInfoWithDictionary:(NSDictionary*)parameters Block:(void(^)(NSArray *post,NSUInteger maxcount,NSError *error))block{
     return [[TSAppDoNetAPIClient sharedClient] GET:@"FoxGetItemListSP.ashx" parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"ppppp:%@",responseObject);
+        //NSLog(@"ppppp:%@",responseObject);
         //        id i=[responseObject valueForKeyPath:@"maxcount"];
         NSNumber *max = [responseObject valueForKeyPath:@"maxcount"];
         NSArray * postsFromResponse = [responseObject valueForKeyPath:@"TSItemSP"];
@@ -85,5 +94,67 @@
         }
     }];
 }
+
+
++(NSURLSessionDataTask *)globalTimeGetMyStorUpInfoWithDictionary:(NSDictionary*)parameters Block:(void(^)(NSArray *post,NSUInteger maxcount,NSError *error))block{
+    return [[TSAppDoNetAPIClient sharedClient] GET:@"FoxGetMyStorUpItemList.ashx" parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSNumber *max = [responseObject valueForKeyPath:@"maxcount"];
+        NSArray * postsFromResponse = [responseObject valueForKeyPath:@"TSMyStorUpItemSP"];
+        NSMutableArray * mutablePosts = [NSMutableArray arrayWithCapacity:[postsFromResponse count]];
+        for (NSDictionary * attributes in postsFromResponse) {
+            TSItemListPost *post=[[TSItemListPost alloc] initWithAttributes:(NSDictionary *)attributes];
+            [mutablePosts addObject:post];
+        }
+        if(block){
+            block([NSArray arrayWithArray:mutablePosts],max.integerValue,nil);
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if (block) {
+            block([NSArray array],0,error);
+        }
+    }];
+}
+
++(NSURLSessionDataTask *)globalTimeGetKanyangInfoWithDictionary:(NSDictionary*)parameters Block:(void(^)(NSArray *post,NSUInteger maxcount,NSError *error))block{
+    return [[TSAppDoNetAPIClient sharedClient] GET:@"FoxGetSampleItem.ashx" parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSNumber *max = [responseObject valueForKeyPath:@"maxcount"];
+        NSArray * postsFromResponse = [responseObject valueForKeyPath:@"TSMyStorUpItemSP"];
+        NSMutableArray * mutablePosts = [NSMutableArray arrayWithCapacity:[postsFromResponse count]];
+        for (NSDictionary * attributes in postsFromResponse) {
+            TSItemListPost *post=[[TSItemListPost alloc] initWithAttributes:(NSDictionary *)attributes];
+            [mutablePosts addObject:post];
+        }
+        if(block){
+            block([NSArray arrayWithArray:mutablePosts],max.integerValue,nil);
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if (block) {
+            block([NSArray array],0,error);
+        }
+    }];
+}
+
++(NSURLSessionDataTask *)globalTimeGetYiXiangDingdanInfoWithDictionary:(NSDictionary*)parameters Block:(void(^)(NSArray *post,NSUInteger maxcount,NSError *error))block{
+    return [[TSAppDoNetAPIClient sharedClient] GET:@"FoxGetOrderItemList.ashx" parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSNumber *max = [responseObject valueForKeyPath:@"maxcount"];
+        NSArray * postsFromResponse = [responseObject valueForKeyPath:@"TSMyStorUpItemSP"];
+        NSMutableArray * mutablePosts = [NSMutableArray arrayWithCapacity:[postsFromResponse count]];
+        for (NSDictionary * attributes in postsFromResponse) {
+            TSItemListPost *post=[[TSItemListPost alloc] initWithAttributes:(NSDictionary *)attributes];
+            [mutablePosts addObject:post];
+        }
+        if(block){
+            block([NSArray arrayWithArray:mutablePosts],max.integerValue,nil);
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if (block) {
+            block([NSArray array],0,error);
+        }
+    }];
+}
+
 
 @end

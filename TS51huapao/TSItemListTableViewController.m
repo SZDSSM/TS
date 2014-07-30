@@ -10,11 +10,17 @@
 #import "TSItemTableViewCell.h"
 #import "TSItemListPost.h"
 #import "UIKit+AFNetworking.h"
+#import "ItemSearchTableViewController.h"
+#import "TSSecondResultTableViewController.h"
+
 
 @interface TSItemListTableViewController ()
 
 @property (strong, nonatomic) NSString * rankType;
 @property (strong, nonatomic) NSArray * posts;
+
+
+@property(strong,nonatomic)ItemSearchTableViewController *searchbarControl;
 
 @end
 
@@ -43,12 +49,30 @@
         
     }
     [super viewDidLoad];
+    [self.tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 1)]];
+    
+    
     [self getData];
     UINib * nib = [UINib nibWithNibName:@"TSItemTableViewCell" bundle:nil];
     self.tableView.rowHeight = 65;
     [self.tableView registerNib:nib forCellReuseIdentifier:@"reuseIdentifier"];
     
    
+    _searchbarControl=[[ItemSearchTableViewController alloc]initWithSearchesKey:@"ItemSearchesKey" SearchPlaceholder:NSLocalizedString(@"itemsearchplaceholder", @"") target:self action:@selector(searchButtonClick:)];
+    
+}
+
+-(void)searchButtonClick:(NSString *)searchText
+{
+    TSSecondResultTableViewController * viewController = [[TSSecondResultTableViewController alloc] init];
+    viewController.searchtext = searchText;
+    viewController.hidesBottomBarWhenPushed=YES;
+    [self.navigationController pushViewController:viewController animated:YES];
+}
+
+-(void)backbutton
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)getData
@@ -113,10 +137,6 @@
         cell.order.textColor = [UIColor grayColor];
         cell.order.font = [UIFont italicSystemFontOfSize:17];
     }
-    // Configure the cell...
-    //cell.textLabel.text = _itemcode;
-    //[cell.zhixiao setCenter:CGPointMake(200, 40)];
-    //[self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     return cell;
 }
 

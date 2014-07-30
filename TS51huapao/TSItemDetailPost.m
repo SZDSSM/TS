@@ -53,7 +53,8 @@
     self.photolist=[attributes valueForKeyPath:@"photolist"];
     self.stocksum=[self changeString:[attributes valueForKeyPath:@"stocksum"]];//库存
    
-
+    self.IsInSeeSamp=[self changeString:[attributes valueForKeyPath:@"IsInSeeSamp"]];
+    self.orderQuantity=[self changeString:[attributes valueForKeyPath:@"orderQuanty"]];
     return self;
 }
 
@@ -72,7 +73,7 @@
 
 
 +(NSURLSessionDataTask *)globalTimeGetRecommendInfoWithItemcode:(NSString *)itemcode Block:(void(^)(TSItemDetailPost *post,NSError *error))block{
-    return [[TSAppDoNetAPIClient sharedClient] GET:@"FoxGetAnItemData.ashx" parameters:@{@"itemcode":itemcode} success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[TSAppDoNetAPIClient sharedClient] GET:@"FoxGetAnItemData.ashx" parameters:@{@"itemcode":itemcode,@"vipcode":[TSUser sharedUser].vipcode} success:^(NSURLSessionDataTask *task, id responseObject) {
 //        NSLog(@"ppppp:%@",responseObject);
         TSItemDetailPost *post=[[TSItemDetailPost alloc] initWithAttributes:(NSDictionary *)responseObject];
         if(block){

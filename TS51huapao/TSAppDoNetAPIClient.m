@@ -24,5 +24,4 @@ static NSString * const AFAppDotNetAPIBaseURLString = @"http://124.232.163.242/c
     
     return _sharedClient;
 }
-
 @end

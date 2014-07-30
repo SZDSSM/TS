@@ -19,6 +19,11 @@
 #import "TSrecommendPost.h"
 #import "ItemDetailTableViewController.h"
 #import "FristSearchTableViewController.h"
+#import "TSRecommentTableViewController.h"
+#import "TSSecondResultTableViewController.h"
+
+
+#import "LoginNavigationController.h"
 
 //static NSString *  const touchurl = @"http://124.232.163.242/com.ds.ws/FOXHttpHandler/FoxGetRecommendList.ashx";
 
@@ -78,9 +83,28 @@
 -(void)viewWillAppear:(BOOL)animated
 {
 
-
 }
-
+-(void)checkVipInfo
+{
+    if (![[TSUser sharedUser].LogStatus isEqualToString:@"Y"]) {
+        UIStoryboard *board=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        LoginNavigationController *loginNavigation=[board instantiateViewControllerWithIdentifier:@"LoginNavigation"];
+        [self presentViewController:loginNavigation animated:NO completion:nil];
+    }else{
+       // NSString *pas=[TSUser sharedUser].password;
+        //[TSUser sharedUser].password=@"1234567";
+        
+        [[TSAppDoNetAPIClient sharedClient] GET:@"FoxCheckLoginPassword.ashx" parameters:@{@"vipcode":[TSUser sharedUser].vipcode,@"password":[TSUser sharedUser].password} success:^(NSURLSessionDataTask *task, id responseObject) {
+                NSString *rslt=[responseObject objectForKey:@"result"];
+                if ([rslt isEqualToString:@"false"]) {
+                    UIStoryboard *board=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                    LoginNavigationController *loginNavigation=[board instantiateViewControllerWithIdentifier:@"LoginNavigation"];
+                    [self presentViewController:loginNavigation animated:NO completion:nil];
+                }
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        }];
+    }
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -91,22 +115,22 @@
     _subjctRcmd2 = [[TSRcmd alloc]init];
     _subjctRcmd3 = [[TSRcmd alloc]init];
     
-//    NSURLSessionDataTask * task = []
-
-    
-
-    
-//    [self gettouch];
-//    [self imageSet];
+    [self checkVipInfo];
     
     //1.初始化刷新
     [self setupRefresh];
     //2.初始化搜索框
     _searchbarControl=[[FristSearchTableViewController alloc]initWithSearchesKey:@"ItemSearchesKey" SearchPlaceholder:NSLocalizedString(@"itemsearchplaceholder", @"") target:self action:@selector(searchButtonClick:)];
+    
+    
+    
 }
 -(void)searchButtonClick:(NSString *)searchText
 {
-    NSLog(@"search:::%@",searchText);
+    TSSecondResultTableViewController * viewController = [[TSSecondResultTableViewController alloc] init];
+    viewController.searchtext = searchText;
+    viewController.hidesBottomBarWhenPushed=YES;
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 - (void)gettouch
@@ -225,13 +249,13 @@
         [self pushtoItemDetailView:_prdctRcmd3.itemCode];
 
     }else if (recognizer.view.tag == 201){
-//        [self performSegueWithIdentifier:@"imageViewToItemDetail" sender:_subjctRcmd1.itemCode];
+        [self toItemlist:_subjctRcmd1.itemCode];
 
     }else if (recognizer.view.tag == 202){
-//        [self performSegueWithIdentifier:@"imageViewToItemDetail" sender:_subjctRcmd2.itemCode];
+        [self toItemlist:_subjctRcmd2.itemCode];
 
     }else if (recognizer.view.tag == 203){
-//        [self performSegueWithIdentifier:@"imageViewToItemDetail" sender:_subjctRcmd3.itemCode];
+        [self toItemlist:_subjctRcmd3.itemCode];
 
     }else{
     }
@@ -253,10 +277,14 @@
 
 - (void)buttonTap:(UIButton *)button
 {
-    NSLog(@"%@",button.titleLabel.text);
+    [self toItemlist:button.titleLabel.text];
 //    [button.superview.frame.size
 }
-
+-(void)toItemlist:(NSString *)name
+{
+    TSRecommentTableViewController * recommentTable = [[TSRecommentTableViewController alloc]initWithRecomment:name];
+    [self.navigationController pushViewController:recommentTable animated:YES];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -282,7 +310,7 @@
 -(void)callButton:(id)sender
 {
     NSString *phonenumber=@"4006751518";
-    NSString *call=[NSString stringWithFormat:@"tel://%@",phonenumber];//telprompt 打电话前先弹框  是否打电话 然后打完电话之后回到程序中,可能不合法无法通过审核
+    NSString *call=[NSString stringWithFormat:@"telprompt://%@",phonenumber];//telprompt 打电话前先弹框  是否打电话 然后打完电话之后回到程序中,可能不合法无法通过审核
     NSURL *callURL=[NSURL URLWithString:call];
     [[UIApplication sharedApplication] openURL:callURL];
 }

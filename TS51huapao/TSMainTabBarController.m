@@ -5,8 +5,11 @@
 //  Created by 80_xiaoye on 14-3-27.
 //  Copyright (c) 2014年 Teesson Fireworks. All rights reserved.
 //
-#import "UIKit+AFNetworking.h"
+
 #import "TSMainTabBarController.h"
+
+
+
 @interface TSMainTabBarController ()
 
 @end
@@ -22,6 +25,14 @@
     return self;
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+
+}
+//-(void)getVipInfo:(NSString *)vipcode
+//{
+//    [TSUser sharedUser].vipcode=vipcode;
+//}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -42,8 +53,8 @@
     
 
 
-    [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
-
+//    [TSUser sharedUser].password=@"1234567";
+    
     //id a=[secondBarItem valueForKey:@"selectedimage"];
     //NSString *path = [[NSBundle mainBundle] pathForResource:@"recommend" ofType:@"png"];
     //UIImage *image=[self reSizeImage: [UIImage imageNamed:@"recommend"]toSize:CGSizeMake(30,30)];

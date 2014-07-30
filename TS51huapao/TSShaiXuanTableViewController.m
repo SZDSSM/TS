@@ -186,16 +186,22 @@
         [array insertObject:@"全部" atIndex:0];
 
         cell.textLabel.text = [@"\t" stringByAppendingString:[array objectAtIndex:indexPath.row-1]];
-        
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        [cell setBackgroundColor: [UIColor colorWithRed:247.0/255.0 green:247.0/255.0 blue:247.0/255.0 alpha:1.0]];
-        [cell.textLabel setFont:[UIFont systemFontOfSize:14]];
-        cell.textLabel.textColor = [UIColor grayColor];
-        
         if (_yixuan !=nil && [cell.textLabel.text  hasSuffix:self.yixuan])
         {
             [cell.textLabel setTextColor:[UIColor redColor]];
+            [cell.textLabel setFont:[UIFont systemFontOfSize:17]];
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        }else{
+            cell.textLabel.textColor = [UIColor grayColor];
+            [cell.textLabel setFont:[UIFont systemFontOfSize:14]];
+            cell.accessoryType = UITableViewCellAccessoryNone;
         }
+        
+        [cell setBackgroundColor: [UIColor colorWithRed:247.0/255.0 green:247.0/255.0 blue:247.0/255.0 alpha:1.0]];
+        
+        
+        
+
         return cell;
     }else{
         static NSString *CellIdentifier = @"Cell1";

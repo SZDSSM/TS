@@ -11,5 +11,4 @@
 @interface TSAppDoNetAPIClient : AFHTTPSessionManager
 
 + (instancetype) sharedClient;
-
 @end

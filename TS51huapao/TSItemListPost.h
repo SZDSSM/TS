@@ -24,6 +24,23 @@
 @property (strong, nonatomic) NSString * U_Photo1;
 @property (strong, nonatomic) NSString * UMTVURL;
 
+@property (nonatomic, strong) NSString * StorDateTime;//新加
+@property (strong, nonatomic) NSString * Vipcode;//
+@property (strong, nonatomic) NSString * vipname;//
+@property (strong, nonatomic) NSString * viptype;//
+@property (strong, nonatomic) NSString * quantity;//
+@property (strong, nonatomic) NSString * note;//
+@property (strong, nonatomic) NSString * status;//
+@property (strong, nonatomic) NSString * lineid;//
+@property (nonatomic, strong) NSString * cardname;//新加
+
 +(NSURLSessionDataTask *)globalTimeGetRecommendInfoWithRanktype:(NSString *)rankType Block:(void(^)(NSArray *posts,NSError *error))block;
 +(NSURLSessionDataTask *)globalTimeGetRecommendInfoWithDictionary:(NSDictionary*)parameters Block:(void(^)(NSArray *post,NSUInteger maxcount,NSError *error))block;
+
++(NSURLSessionDataTask *)globalTimeGetMyStorUpInfoWithDictionary:(NSDictionary*)parameters Block:(void(^)(NSArray *post,NSUInteger maxcount,NSError *error))block;
+
++(NSURLSessionDataTask *)globalTimeGetKanyangInfoWithDictionary:(NSDictionary*)parameters Block:(void(^)(NSArray *post,NSUInteger maxcount,NSError *error))block;
+
++(NSURLSessionDataTask *)globalTimeGetYiXiangDingdanInfoWithDictionary:(NSDictionary*)parameters Block:(void(^)(NSArray *post,NSUInteger maxcount,NSError *error))block;
+
 @end

@@ -10,6 +10,7 @@
 #import "TSResultViewController.h"
 #import "AFNetworking.h"
 
+#import "CardShuaiXuanTableViewController.h"
 #import "SearchThridTableViewController.h"
 
 #define saparator @"-------------------------------------------------------------------------------------------------------"
@@ -38,7 +39,13 @@
 
 - (void)initSearchbar
 {
-    _SearchThridTableViewController=[[SearchThridTableViewController alloc]initWithSearchesKey:@"CardSearchesKey" SearchPlaceholder:NSLocalizedString(@"cardsearchplaceholder", @"") target:self action:@selector(SearchButtonClicked:)];
+    if ([_danweitype isEqualToString:@"生产厂家"]) {
+        _SearchThridTableViewController=[[SearchThridTableViewController alloc]initWithSearchesKey:@"CardSearchesKey" SearchPlaceholder:NSLocalizedString(@"cardsearchplaceholder", @"") searchtext:nil rightButtonTitle:@"筛选" target:self action:@selector(SearchButtonClicked:)];
+        [_SearchThridTableViewController shuaixuanAtTarget:self action:@selector(shaixuan)];
+    }else{
+        _SearchThridTableViewController=[[SearchThridTableViewController alloc]initWithSearchesKey:@"CardSearchesKey" SearchPlaceholder:NSLocalizedString(@"cardsearchplaceholder", @"") searchtext:nil rightButtonTitle:nil target:self action:@selector(SearchButtonClicked:)];
+        [_SearchThridTableViewController shuaixuanAtTarget:self action:@selector(shaixuan)];
+    }
 }
 //TsSearchbarProtocol
 -(void)SearchButtonClicked:(NSString *)searchBartxt
@@ -108,10 +115,7 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     //[self.navigationItem.leftBarButtonItem setTitle:@"a"];
 }
--(void)backbutton
-{
-    
-}
+
 - (void)_init
 {
     [self _initData];
@@ -131,7 +135,25 @@
 
 
 
+- (void)shaixuan
+{
+    CardShuaiXuanTableViewController * viewController = [[CardShuaiXuanTableViewController alloc]init];
+    [viewController shuaixuanAtTarget:self action:@selector(updateWithShuaixuan:)];
+    UINavigationController *shuaixuanNavigation=[[UINavigationController alloc]initWithRootViewController:viewController];
+//    viewController.yixuan=_SalesAear;
+    [self presentViewController:shuaixuanNavigation animated:YES completion:nil];
+}
 
+//筛选页面 回调
+-(void)updateWithShuaixuan:(NSString *)shuaixuanstring
+{
+//    _SalesAear=shuaixuanstring;
+    TSResultViewController *viewController = [[TSResultViewController alloc]init];
+    
+    viewController.SalesAear=shuaixuanstring;
+    viewController.danweitype = self.danweitype;
+    [self.navigationController pushViewController:viewController animated:YES];
+}
 
 
 #pragma mark - Table view data source

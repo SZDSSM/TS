@@ -17,7 +17,6 @@
 @property (nonatomic,strong) NSString * searchtext;
 @property (nonatomic, strong) NSString * itemType;
 @property (nonatomic, strong) NSString * sortType;
-@property (nonatomic, strong) NSString * vipCode;
 @property (nonatomic, strong) NSString * priceRange;
 
 @property (nonatomic, strong) NSArray * posts;

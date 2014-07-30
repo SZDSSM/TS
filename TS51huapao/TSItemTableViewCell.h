@@ -5,11 +5,14 @@
 //  Created by 张明生 on 14-7-13.
 //  Copyright (c) 2014年 Teesson Fireworks. All rights reserved.
 //
-#import "TSGetItemListPost.h"
+
 #import <UIKit/UIKit.h>
+#import "ItemDetailTableViewController.h"
+#import "TSGetItemListPost.h"
+
 @class TSItemListPost;
 @class TSFactorypost;
-@interface TSItemTableViewCell : UITableViewCell
+@interface TSItemTableViewCell : UITableViewCell<TSGuanZhuProtocol>
 
 @property (weak, nonatomic) IBOutlet UIImageView *shadowView;
 

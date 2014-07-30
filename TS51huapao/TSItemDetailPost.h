@@ -75,6 +75,12 @@
 
 @property (strong, nonatomic) NSString * shuoming;
 
+
+@property (strong, nonatomic) NSString * IsInSeeSamp;
+
+@property (strong, nonatomic) NSString * orderQuantity;
+
+
 +(NSURLSessionDataTask *)globalTimeGetRecommendInfoWithItemcode:(NSString *)itemcode Block:(void(^)(TSItemDetailPost *post,NSError *error))block;
 
 

@@ -11,11 +11,7 @@
 //#import "TSThridNavigationController.h"
 #import "UIButton+Style.h"
 
-@protocol TsSearchbarProtocol <NSObject>
 
-@optional
--(void)SearchButtonClicked:(NSString *)searchtxt;
-@end
 
 
 

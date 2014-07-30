@@ -11,7 +11,7 @@
 
 @class TSCoLtdpost;
 
-@interface TSResultViewController : UITableViewController<UISearchBarDelegate,TsSearchbarProtocol>
+@interface TSResultViewController : UITableViewController<UISearchBarDelegate>
 
 @property (nonatomic, strong)NSArray * array;
 @property (nonatomic)NSUInteger page;
@@ -21,6 +21,7 @@
 @property (nonatomic, copy)NSString * section;
 @property (nonatomic, copy)NSString * danweitype;
 @property (nonatomic, copy)NSString * searchtxt;
+@property (nonatomic, copy)NSString * SalesAear;
 
 @property (nonatomic, strong)NSDictionary * pushDic;
 @property (nonatomic, strong)NSArray * posts;

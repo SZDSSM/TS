@@ -32,9 +32,11 @@
 
 @interface TSUser : NSObject
 
+@property (nonatomic, strong)NSString * LogStatus;
+
 @property (nonatomic, strong)NSString * JoinDate;
 @property (nonatomic, strong)NSString * JoinTime;
-@property (nonatomic, strong)NSDictionary * U_CardInfo;
+//@property (nonatomic, strong)NSDictionary * U_CardInfo;
 @property (nonatomic, strong)NSString * U_age;
 @property (nonatomic, strong)NSString * U_email;
 @property (nonatomic, strong)NSString * U_gender;
@@ -45,6 +47,18 @@
 @property (nonatomic, strong)NSString * password;
 @property (nonatomic, strong)NSString * phone;
 @property (nonatomic, strong)NSString * vipcode;
+
+
+@property (nonatomic, strong)NSString * CARD_Address;
+@property (nonatomic, strong)NSString * CARD_CardName;
+@property (nonatomic, strong)NSString * CARD_CntctPrsn;
+@property (nonatomic, strong)NSString * CARD_CntctPrsnCellolar;
+@property (nonatomic, strong)NSString * CARD_Phone1;
+@property (nonatomic, strong)NSString * CARD_Position;
+@property (nonatomic, strong)NSString * CARD_Summary;
+
+
+-(void)getMyVipInfo;
 
 +(TSUser *) sharedUser;
 

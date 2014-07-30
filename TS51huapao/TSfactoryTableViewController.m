@@ -151,7 +151,17 @@
     
     [self setupRefresh];
     //[self getData];
+    
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle: @"く返回" style:UIBarButtonItemStylePlain target:self action:@selector(backbutton)];
+    [backItem setTintColor:[UIColor lightGrayColor]];
+    
+    self.navigationItem.leftBarButtonItem = backItem;
 
+}
+
+-(void)backbutton
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)phone:(UIButton *)sender
@@ -174,6 +184,9 @@
     if ( _CardCode!=nil) {
         [dic setObject:_CardCode forKey:@"CardCode"];
     }
+    
+    [dic setObject:[TSUser sharedUser].vipcode forKey:@"vipcode"];
+    
     [dic setObject:[NSString stringWithFormat:@"%lu",(unsigned long)_page] forKey:@"pageindex"];
     
     NSURLSessionDataTask * task = [TSFactorypost globalTimeGetRecommendInfoWithDictionary:dic Block:^(NSArray *posts,NSUInteger maxcount, NSError *error) {
@@ -221,12 +234,8 @@
         [self getData];
     }else{
         UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"通知" message:@"没有更多数据了" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles: nil];
-        //[alert show];
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self.tableView footerEndRefreshing];
-            [alert show];
-        });
+        [self.tableView footerEndRefreshing];
+        [alert show];
     }
 }
 

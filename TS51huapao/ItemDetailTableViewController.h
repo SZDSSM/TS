@@ -8,8 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ItemDetailTableViewController : UITableViewController
+#import "ItemDetail1TableViewCell.h"
 
+
+
+@interface ItemDetailTableViewController : UITableViewController<TSGuanZhuProtocol,UIAlertViewDelegate>
+
+
+@property (nonatomic, weak) id <TSGuanZhuProtocol> delegate;
 
 @property (copy, nonatomic) NSString * itemcode;
 

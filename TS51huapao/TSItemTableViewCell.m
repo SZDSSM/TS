@@ -12,7 +12,8 @@
 #import "UIImageView+AFNetworking.h"
 #import "UIButton+Style.h"
 #import "TSFactorypost.h"
-#import "ItemDetailTableViewController.h"
+#import "TSAppDoNetAPIClient.h"
+
 
 @interface TSItemTableViewCell ()
 
@@ -116,8 +117,10 @@
     
     
     
-    if (![_post.IsStroe isEqualToString:@"Y"]) {
-        
+    if ([_post.IsStroe isEqualToString:@"Y"]) {
+        [_guanzhu guzhuhouStyle];
+    }else{
+        [_guanzhu guzhuqianStyle];
     }
     [self.itemimage setImageWithURL:[NSURL URLWithString:_post.U_Photo1] placeholderImage:[UIImage imageNamed:@"noImage"]];
     
@@ -196,9 +199,12 @@
         }
     }
     
-    if (![_getItemPost.IsStroe isEqualToString:@"Y"]) {
-        
+    if ([_getItemPost.IsStroe isEqualToString:@"Y"]) {
+        [_guanzhu guzhuhouStyle];
+    }else{
+        [_guanzhu guzhuqianStyle];
     }
+    
     [self.itemimage setImageWithURL:[NSURL URLWithString:_getItemPost.U_Photo1] placeholderImage:[UIImage imageNamed:@"noImage"]];
     
     [self setSelectionStyle:UITableViewCellSelectionStyleNone];
@@ -276,9 +282,12 @@
         }
     }
     
-    if (![_thirdPageFacPost.IsStroe isEqualToString:@"Y"]) {
-        
+    if ([_thirdPageFacPost.IsStroe isEqualToString:@"Y"]) {
+        [_guanzhu guzhuhouStyle];
+    }else{
+        [_guanzhu guzhuqianStyle];
     }
+    
     [self.itemimage setImageWithURL:[NSURL URLWithString:_thirdPageFacPost.U_Photo1] placeholderImage:[UIImage imageNamed:@"noImage"]];
     
     [self setSelectionStyle:UITableViewCellSelectionStyleNone];
@@ -288,26 +297,167 @@
 
 
 - (IBAction)guanzhu:(UIButton *)sender {
-    if ([sender.titleLabel.text isEqualToString:@"☆"]) {
-        [sender guzhuqianStyle];
+
+    if (![sender.titleLabel.text isEqualToString:@"☆"]) {
+        [[TSAppDoNetAPIClient sharedClient] GET:@"FoxStorUpItem.ashx" parameters:@{@"vipcode":[TSUser sharedUser].vipcode,@"itemcode":[self getPostItem]} success:^(NSURLSessionDataTask *task, id responseObject) {
+            NSString *rslt=[responseObject objectForKey:@"result"];
+            if ([rslt isEqualToString:@"true"]) {
+                [self updatePostValue:@"Y"];
+                [sender guzhuhouStyle];
+                UIAlertView *alertView = [[UIAlertView alloc]
+                                          initWithTitle:@"成功"
+                                          message:@"添加至我的收藏"
+                                          delegate:nil
+                                          cancelButtonTitle:nil
+                                          otherButtonTitles:nil, nil];
+                [NSTimer scheduledTimerWithTimeInterval:0.6f
+                                                 target:self
+                                               selector:@selector(timerFireMethod:)
+                                               userInfo:alertView
+                                                repeats:NO];
+                [alertView show];
+            }else if ([rslt isEqualToString:@"false"]) {
+                UIAlertView *alertView = [[UIAlertView alloc]
+                                          initWithTitle:@"失败"
+                                          message:@"添加收藏失败"
+                                          delegate:nil
+                                          cancelButtonTitle:nil
+                                          otherButtonTitles:nil, nil];
+                [NSTimer scheduledTimerWithTimeInterval:0.6f
+                                                 target:self
+                                               selector:@selector(timerFireMethod:)
+                                               userInfo:alertView
+                                                repeats:NO];
+                [alertView show];
+            }else if ([rslt isEqualToString:@"repetition"]) {
+                UIAlertView *alertView = [[UIAlertView alloc]
+                                          initWithTitle:@"提示"
+                                          message:@"该物料已在我的收藏列表"
+                                          delegate:nil
+                                          cancelButtonTitle:nil
+                                          otherButtonTitles:nil, nil];
+                [NSTimer scheduledTimerWithTimeInterval:0.6f
+                                                 target:self
+                                               selector:@selector(timerFireMethod:)
+                                               userInfo:alertView
+                                                repeats:NO];
+                [alertView show];
+            }else if ([rslt isEqualToString:@"notExists"]) {
+                UIAlertView *alertView = [[UIAlertView alloc]
+                                          initWithTitle:@"提示"
+                                          message:@"该物料不存在"
+                                          delegate:nil
+                                          cancelButtonTitle:nil
+                                          otherButtonTitles:nil, nil];
+                [NSTimer scheduledTimerWithTimeInterval:0.6f
+                                                 target:self
+                                               selector:@selector(timerFireMethod:)
+                                               userInfo:alertView
+                                                repeats:NO];
+                [alertView show];
+            }
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            UIAlertView *alertView = [[UIAlertView alloc]
+                                      initWithTitle:@"提示"
+                                      message:[error localizedDescription]
+                                      delegate:nil
+                                      cancelButtonTitle:@"关闭"
+                                      otherButtonTitles:nil, nil];
+            [alertView show];
+        }];
     }else{
-        [sender guzhuhouStyle];
+        [[TSAppDoNetAPIClient sharedClient] GET:@"FoxDelStorUpItem.ashx" parameters:@{@"vipcode":[TSUser sharedUser].vipcode,@"itemcode":[self getPostItem]} success:^(NSURLSessionDataTask *task, id responseObject) {
+            NSString *rslt=[responseObject objectForKey:@"result"];
+            if ([rslt isEqualToString:@"true"]) {
+                [self updatePostValue:@"N"];
+                [sender guzhuqianStyle];
+                UIAlertView *alertView = [[UIAlertView alloc]
+                                          initWithTitle:@"成功"
+                                          message:@"移除该收藏"
+                                          delegate:nil
+                                          cancelButtonTitle:nil
+                                          otherButtonTitles:nil, nil];
+                [NSTimer scheduledTimerWithTimeInterval:0.6f
+                                                 target:self
+                                               selector:@selector(timerFireMethod:)
+                                               userInfo:alertView
+                                                repeats:NO];
+                [alertView show];
+            }else if ([rslt isEqualToString:@"false"]) {
+                UIAlertView *alertView = [[UIAlertView alloc]
+                                          initWithTitle:@"失败"
+                                          message:@"删除操作失败"
+                                          delegate:nil
+                                          cancelButtonTitle:nil
+                                          otherButtonTitles:nil, nil];
+                [NSTimer scheduledTimerWithTimeInterval:0.6f
+                                                 target:self
+                                               selector:@selector(timerFireMethod:)
+                                               userInfo:alertView
+                                                repeats:NO];
+                [alertView show];
+            }
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            UIAlertView *alertView = [[UIAlertView alloc]
+                                      initWithTitle:@"提示"
+                                      message:[error localizedDescription]
+                                      delegate:nil
+                                      cancelButtonTitle:@"关闭"
+                                      otherButtonTitles:nil, nil];
+            [alertView show];
+        }];
     }
     
+}
+- (void)timerFireMethod:(NSTimer*)theTimer
+{
+    UIAlertView *promptAlert = (UIAlertView*)[theTimer userInfo];
+    [promptAlert dismissWithClickedButtonIndex:0 animated:NO];
+    promptAlert =NULL;
+}
+
+-(void)updatePostValue:(NSString *)str
+{
+    if (_post !=nil) {
+        _post.IsStroe=str;
+    }else if (_getItemPost !=nil) {
+        _getItemPost.IsStroe=str;
+    }else if (_thirdPageFacPost !=nil) {
+        _thirdPageFacPost.IsStroe=str;
+    }
+}
+
+-(NSString *)getPostItem
+{
+    if (_post !=nil) {
+        return _post.itemCode;
+    }else if (_getItemPost !=nil) {
+        return _getItemPost.itemCode;
+    }else if (_thirdPageFacPost !=nil) {
+        return _thirdPageFacPost.ItemCode;
+    }else{
+        return @"";
+    }
 }
 
 -(void)pushtoItemDetailView
 {
     UIStoryboard *board=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
     ItemDetailTableViewController *itemdetail = [board instantiateViewControllerWithIdentifier:@"tsItemdetail"];
-    if (_post.itemCode!=nil) {
-        itemdetail.itemcode=_post.itemCode;
-    }else if(_thirdPageFacPost!=nil)
-    {
-        itemdetail.itemcode=_thirdPageFacPost.ItemCode;
-    }else if (_getItemPost!=nil){
-        itemdetail.itemcode=_getItemPost.itemCode;
-    }
+    itemdetail.itemcode=[self getPostItem];
+    itemdetail.delegate=self;
     [_sender.navigationController pushViewController:itemdetail animated:YES];
+}
+
+#pragma -TSGuanZhuProtocol
+-(void)guanZhuButtonClicked:(BOOL)isStore
+{
+    if (isStore) {
+        [self updatePostValue:@"Y"];
+        [_guanzhu guzhuhouStyle];
+    }else{
+        [self updatePostValue:@"N"];
+        [_guanzhu guzhuqianStyle];
+    }
 }
 @end

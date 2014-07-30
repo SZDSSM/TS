@@ -60,7 +60,7 @@
     
     
     
-    
+//    NSLog(@"%@",[TSUser sharedUser].vipcode);
     //self.searchDisplayController.displaysSearchBarInNavigationBar = YES;
     
 }
@@ -317,11 +317,13 @@
             TSSecondResultTableViewController * viewController = [[TSSecondResultTableViewController alloc] init];
             
             viewController.itemname = [NSString stringWithFormat:@"组合烟花类%@",[self changeName:[[_zuhe objectAtIndex:indexPath.row-1]objectForKey:@"spec"]]];
+            viewController.hidesBottomBarWhenPushed=YES;
             [self.navigationController pushViewController:viewController animated:YES];
             
         }} else{
             TSSecondResultTableViewController * viewController = [[TSSecondResultTableViewController alloc] init];
             viewController.itemname = [self.tableView cellForRowAtIndexPath:indexPath].textLabel.text;
+            viewController.hidesBottomBarWhenPushed=YES;
             [self.navigationController pushViewController:viewController animated:YES];
         }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

@@ -10,6 +10,10 @@
 #import "AFNetworking.h"
 #import "TSMyInfoTableViewController.h"
 #import "TSMyComInfoTableViewController.h"
+#import "TSdingdanTableViewController.h"
+#import "TSKanYangTableViewController.h"
+#import "TSguzhuTableViewController.h"
+#import "TSYiXiangDingDanTableViewController.h"
 
 static NSString*const BaseURLString = @"http://124.232.163.242/com.ds.ws/FOXHttpHandler/FoxGetAnVipTradeCondition.ashx?U_type=M&ConditionType=TO&CardCode=m";
 
@@ -35,21 +39,26 @@ static NSString*const BaseURLString = @"http://124.232.163.242/com.ds.ws/FOXHttp
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     self.title = @"管理中心";
     
-    _itemArray = [@[@"会员管理",@"51仓库",@"收货单",@"发货单",@"预约打样",@"意向订单",@"我的消息",@"会员退出"]mutableCopy];
+    _itemArray = [@[@"会员管理",@"51仓库",@"我的关注",@"销售订单",@"采购订单",@"收货单",@"发货单",@"返点清单",@"预约打样",@"意向订单",@"我的消息",@"会员退出"]mutableCopy];
+    
     [self _initData];
     
     _sectionView=[self _initsectionView];
     [self.tableView setTableHeaderView:_sectionView];
-
+    
+    
     
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.tableView addSubview:_sectionView];
+    //    self.tabBarController.tabBar.hidden = NO;
 }
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -165,7 +174,7 @@ static NSString*const BaseURLString = @"http://124.232.163.242/com.ds.ws/FOXHttp
             [sectionview addSubview:view];
         }
     }
-
+    
     UILabel * linelabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 192, ScreenWidth, 7)];
     [linelabel setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1]];
     UILabel * linelabel1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 191, ScreenWidth, 9)];
@@ -201,7 +210,7 @@ static NSString*const BaseURLString = @"http://124.232.163.242/com.ds.ws/FOXHttp
             
         }
     }
-
+    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -216,10 +225,67 @@ static NSString*const BaseURLString = @"http://124.232.163.242/com.ds.ws/FOXHttp
         [viewController.tableView setTableHeaderView: _sectionView];
         [self.navigationController pushViewController:viewController animated:YES];
     }
-
+    if ([[tableView cellForRowAtIndexPath:indexPath].textLabel.text isEqualToString:@"销售订单"]) {
+        TSdingdanTableViewController * viewController = [[TSdingdanTableViewController alloc] initWithStyle:UITableViewStylePlain];
+        viewController.ConditionType = @"SO";
+        viewController.title = @"销售订单";
+        viewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:viewController animated:YES];
+    }
+    if ([[tableView cellForRowAtIndexPath:indexPath].textLabel.text isEqualToString:@"采购订单"]) {
+        TSdingdanTableViewController * viewController = [[TSdingdanTableViewController alloc] initWithStyle:UITableViewStylePlain];
+        viewController.ConditionType = @"PO";
+        viewController.title = @"采购订单";
+        viewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:viewController animated:YES];
+    }
+    if ([[tableView cellForRowAtIndexPath:indexPath].textLabel.text isEqualToString:@"收货单"]) {
+        TSdingdanTableViewController * viewController = [[TSdingdanTableViewController alloc] initWithStyle:UITableViewStylePlain];
+        viewController.ConditionType = @"PD";
+        viewController.title = @"收货单";
+        viewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:viewController animated:YES];
+    }
+    if ([[tableView cellForRowAtIndexPath:indexPath].textLabel.text isEqualToString:@"发货单"]) {
+        TSdingdanTableViewController * viewController = [[TSdingdanTableViewController alloc] initWithStyle:UITableViewStylePlain];
+        viewController.ConditionType = @"SD";
+        viewController.title = @"发货单";
+        viewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:viewController animated:YES];
+    }
+    if ([[tableView cellForRowAtIndexPath:indexPath].textLabel.text isEqualToString:@"返点清单"]) {
+        TSdingdanTableViewController * viewController = [[TSdingdanTableViewController alloc] initWithStyle:UITableViewStylePlain];
+        viewController.ConditionType = @"SR";
+        viewController.title = @"返点清单";
+        viewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:viewController animated:YES];
+    }
+    if ([[tableView cellForRowAtIndexPath:indexPath].textLabel.text isEqualToString:@"预约打样"]) {
+        TSKanYangTableViewController * viewController = [[TSKanYangTableViewController alloc] initWithStyle:UITableViewStylePlain];
+        viewController.vipcode = @"ALL";
+        viewController.title = @"预约打样";
+        viewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:viewController animated:YES];
+    }
+    if ([[tableView cellForRowAtIndexPath:indexPath].textLabel.text isEqualToString:@"我的关注"]) {
+        TSguzhuTableViewController * viewController = [[TSguzhuTableViewController alloc] initWithStyle:UITableViewStylePlain];
+        viewController.title = @"我的关注";
+        viewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:viewController animated:YES];
+    }
+    if ([[tableView cellForRowAtIndexPath:indexPath].textLabel.text isEqualToString:@"意向订单"]) {
+        TSYiXiangDingDanTableViewController * viewController = [[TSYiXiangDingDanTableViewController alloc] initWithStyle:UITableViewStylePlain];
+        viewController.vipcode = @"ALL";
+        viewController.title = @"意向订单";
+        viewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:viewController animated:YES];
+    }
+    
+    
+    
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
+    
 }
 
 

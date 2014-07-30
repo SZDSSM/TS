@@ -29,7 +29,7 @@ static NSString*const BaseURLString = @"http://124.232.163.242/com.ds.ws/FOXHttp
 {
     self = [super initWithStyle:style];
     if (self) {
-
+        
     }
     return self;
 }
@@ -106,7 +106,7 @@ static NSString*const BaseURLString = @"http://124.232.163.242/com.ds.ws/FOXHttp
             self.getDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingAllowFragments error:&error];
             [self _initXiangXiLabel];
             [self.tableView reloadData];
-
+            
             
         }else if(nil == resData){
             UIAlertView *AlertView1=[[UIAlertView alloc]initWithTitle:@"提示" message:@"未获取到数据" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil];
@@ -131,7 +131,7 @@ static NSString*const BaseURLString = @"http://124.232.163.242/com.ds.ws/FOXHttp
     UIImageView * headImage = [[UIImageView alloc]initWithFrame:CGRectMake(10, 20, 45, 45)];
     [headImage setImage:[UIImage imageNamed:@"2.jpg"]];
     headImage.contentMode = UIViewContentModeScaleToFill;
-//    [headImage setBackgroundColor:[UIColor blueColor]];
+    //    [headImage setBackgroundColor:[UIColor blueColor]];
     
     UILabel * nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 20, ScreenWidth-70, 45)];
     nameLabel.numberOfLines = 2;
@@ -169,14 +169,14 @@ static NSString*const BaseURLString = @"http://124.232.163.242/com.ds.ws/FOXHttp
     [_sectionView addSubview:linelabel];
     [_sectionView addSubview:nameLabel];
     [_sectionView addSubview:headImage];
-  
+    
 }
 
 - (void)_initXiangXiLabel
 {
-   
+    
     for (int i = 0; i<3; i++) {
-         UILabel * xiangxilabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 27, (ScreenWidth-30)/3, 15)];
+        UILabel * xiangxilabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 27, (ScreenWidth-30)/3, 15)];
         if (self.getDic != nil) {
             if (i == 0) {
                 xiangxilabel.text = [NSString stringWithFormat:@"%@",[self.getDic objectForKey:@"DeliverQtSUM"]];
@@ -190,8 +190,8 @@ static NSString*const BaseURLString = @"http://124.232.163.242/com.ds.ws/FOXHttp
             xiangxilabel.textAlignment = NSTextAlignmentCenter;
             
         }
-            [[self.view viewWithTag:100+i] addSubview:xiangxilabel];
-
+        [[self.view viewWithTag:100+i] addSubview:xiangxilabel];
+        
     }
 }
 
@@ -211,9 +211,9 @@ static NSString*const BaseURLString = @"http://124.232.163.242/com.ds.ws/FOXHttp
         [viewController.tableView setTableHeaderView: _sectionView];
         [self.navigationController pushViewController:viewController animated:YES];
     }
-
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
+    
 }
 
 

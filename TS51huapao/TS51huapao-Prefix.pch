@@ -6,16 +6,49 @@
 
 #import <Availability.h>
 
+//用户登入状态
+#define kMY_LOG_IN @"U_ISLogIN"
+
+//用户信息
+#define kMY_USER_ID @"myUserId"
+#define kMY_USER_PASSWORD @"myUserPassword"
+#define kMY_USER_NAME @"userName"
+#define kMY_USER_MING @"Uname"
+#define kMY_USER_CARDCODE @"CardCode"
+#define kMY_USER_IS_MANGER @"Manager"
+#define kMY_USER_SEX @"sex"
+#define kMY_USER_AGE @"age"
+#define kMY_USER_EMAIL @"email"
+#define kMY_USER_APPLY @"apply"
+#define kMY_USER_PHONE @"userphone"
+#define kMY_USER_JoinDate @"U_JoinDate"
+#define kMY_USER_JoinTime @"U_JoinTime"
+#define kMY_USER_TYPE @"USER_TYPE"
+//用户企业信息
+#define kMY_BUSINESS_CARDNAME @"bCardName"
+#define kMY_BUSINESS_CONTACT @"bContact"
+#define kMY_BUSINESS_Cellolar @"bContactsPhone"
+#define kMY_BUSINESS_ADDRESS @"bAddress"
+#define kMY_BUSINESS_PHONE @"bPhone"
+#define kMY_BUSINESS_POSITON @"bPositon"
+#define kMY_BUSINESS_Summary @"bSummary"
+
+
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 #ifndef __IPHONE_6_0
 #warning "This project uses features only available in iPhone SDK 6.0 and later."
 #endif
+
+
 
 #ifdef __OBJC__
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <MobileCoreServices/MobileCoreServices.h>
+
+
+#import "TSUser.h"
 #endif
 #else
 #ifdef __OBJC__

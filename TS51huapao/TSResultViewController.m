@@ -12,7 +12,7 @@
 #import "MJRefresh.h"
 #import "UIScrollView+MJRefresh.h"
 #import "TSfactoryTableViewController.h"
-
+#import "CardShuaiXuanTableViewController.h"
 
 
 @interface TSResultViewController ()
@@ -37,8 +37,16 @@
 
 - (void)initSearchbar
 {
-    _SearchThridTableViewController=[[SearchThridTableViewController alloc]initWithSearchesKey:@"CardSearchesKey" SearchPlaceholder:NSLocalizedString(@"cardsearchplaceholder", @"") searchtext:_searchtxt rightButtonTitle:@"筛选" target:self action:@selector(SearchButtonClicked:)];
-    _SearchBar=_SearchThridTableViewController.searchBar;
+    if ([_danweitype isEqualToString:@"生产厂家"]) {
+        _SearchThridTableViewController=[[SearchThridTableViewController alloc]initWithSearchesKey:@"CardSearchesKey" SearchPlaceholder:NSLocalizedString(@"cardsearchplaceholder", @"") searchtext:_searchtxt rightButtonTitle:@"筛选" target:self action:@selector(SearchButtonClicked:)];
+        [_SearchThridTableViewController shuaixuanAtTarget:self action:@selector(shaixuan)];
+        _SearchBar=_SearchThridTableViewController.searchBar;
+    }else{
+        _SearchThridTableViewController=[[SearchThridTableViewController alloc]initWithSearchesKey:@"CardSearchesKey" SearchPlaceholder:NSLocalizedString(@"cardsearchplaceholder", @"") searchtext:_searchtxt rightButtonTitle:nil target:self action:@selector(SearchButtonClicked:)];
+        [_SearchThridTableViewController shuaixuanAtTarget:self action:@selector(shaixuan)];
+        _SearchBar=_SearchThridTableViewController.searchBar;
+    }
+
     
 }
 //TsSearchbarProtocol
@@ -47,7 +55,22 @@
     _searchtxt = searchBartxt;
     [self getData];
 }
+- (void)shaixuan
+{
+    CardShuaiXuanTableViewController * viewController = [[CardShuaiXuanTableViewController alloc]init];
+    [viewController shuaixuanAtTarget:self action:@selector(updateWithShuaixuan:)];
+    viewController.yixuan = self.SalesAear;
+    UINavigationController *shuaixuanNavigation=[[UINavigationController alloc]initWithRootViewController:viewController];
+    [self presentViewController:shuaixuanNavigation animated:YES completion:nil];
+}
 
+//筛选页面 回调
+-(void)updateWithShuaixuan:(NSString *)shuaixuanstring
+{
+    _page=1;
+    _SalesAear=shuaixuanstring;
+    [self getData];
+}
 
 - (void)getData
 {
@@ -57,6 +80,9 @@
     }
     if (_section !=nil && ![_section isEqualToString:@"全部"]) {
         [dic setObject:_section forKey:@"CardAear"];
+    }
+    if (_SalesAear != nil && ![_SalesAear isEqualToString:@"全部"]) {
+        [dic setObject:_SalesAear forKey:@"SalesAear"];
     }
     if (_searchtxt != nil) {
         [dic setObject:_searchtxt forKey:@"queryname"];
@@ -164,12 +190,8 @@
         [self getData];
     }else{
         UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"通知" message:@"没有更多数据了" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles: nil];
-        //[alert show];
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self.tableView footerEndRefreshing];
-            [alert show];
-        });
+        [self.tableView footerEndRefreshing];
+        [alert show];
     }
 }
 

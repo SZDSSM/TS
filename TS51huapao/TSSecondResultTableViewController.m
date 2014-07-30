@@ -73,6 +73,8 @@
 {
     [super viewDidLoad];
     
+    
+    
     [self initSectionView];
     self.page = 1;
     _sortType=@"C";
@@ -173,9 +175,9 @@
     if (_sortType != nil) {
         [dic setObject:_sortType forKey:@"sortType"];
     }
-    if (_vipCode != nil) {
-        [dic setObject:_vipCode forKey:@"vipcode"];
-    }
+    
+    [dic setObject:[TSUser sharedUser].vipcode forKey:@"vipcode"];
+
     if (_priceRange != nil) {
         [dic setObject:_priceRange forKey:@"priceRange"];
     }
@@ -210,7 +212,7 @@
     [self.tableView headerBeginRefreshing];
     // 2.添加上拉刷新
     [self.tableView addFooterWithTarget:self action:@selector(footerRereshing)];
-   }
+}
 
 
 
@@ -230,12 +232,8 @@
         [self getData];
     }else{
         UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"通知" message:@"没有更多数据了" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles: nil];
-        //[alert show];
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self.tableView footerEndRefreshing];
-            [alert show];
-        });
+        [self.tableView footerEndRefreshing];
+        [alert show];
     }
 }
 

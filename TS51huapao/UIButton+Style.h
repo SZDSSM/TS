@@ -17,6 +17,7 @@
 -(void)infoStyle;
 -(void)warningStyle;
 -(void)dangerStyle;
+-(void)LogInStyle;
 -(void)AttentionStyle;
 -(void)callPhoneStyle;
 -(void)submitStyle;
@@ -27,4 +28,6 @@
 -(void)backStyle;
 //主流产品
 -(void)mainProductStyle;
+
+-(void)yuyueStyle;
 @end
