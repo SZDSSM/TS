@@ -10,4 +10,11 @@
 
 @interface LoginNavigationController : UINavigationController
 
+
+/**
+ *  登录回到（我）页面就会调用
+ */
+- (void)addVipInfoRefreshWithCallback:(void (^)())callback;
+
+-(void)refreshVipInfoWithCallback;
 @end

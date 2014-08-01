@@ -52,6 +52,17 @@ static TSUser* sharedUser = nil;
             sharedUser.U_gender=[[NSUserDefaults standardUserDefaults] objectForKey:kMY_USER_SEX];
             sharedUser.U_ismanager=[[NSUserDefaults standardUserDefaults] objectForKey:kMY_USER_IS_MANGER];
             sharedUser.U_type=[[NSUserDefaults standardUserDefaults] objectForKey:kMY_USER_TYPE];
+            
+            if ([sharedUser.U_type isEqualToString:@"51管理"]) {
+                sharedUser.USERTYPE=TSManager;
+            }else if ([sharedUser.U_type isEqualToString:@"供应商"]) {
+                sharedUser.USERTYPE=TSVender;
+            }else if ([sharedUser.U_type isEqualToString:@"联盟客户"]) {
+                sharedUser.USERTYPE=TSUnionClient;
+            }else {
+                sharedUser.USERTYPE=TSCommonClient;
+            }
+            
             sharedUser.phone=[[NSUserDefaults standardUserDefaults] objectForKey:kMY_USER_PHONE];
             
             sharedUser.cardcode=[[NSUserDefaults standardUserDefaults] objectForKey:kMY_USER_CARDCODE];
@@ -172,35 +183,87 @@ static TSUser* sharedUser = nil;
 }
 
 
--(void)getMyVipInfo
-{
-    NSURLSessionDataTask * task =[[TSAppDoNetAPIClient sharedClient] GET:@"FoxGetAnVipInfo.ashx" parameters:@{@"vipcode":self.vipcode} success:^(NSURLSessionDataTask *task, id responseObject) {
-        self.JoinDate=[responseObject objectForKey:@"JoinDate"];
-        self.JoinTime=[responseObject objectForKey:@"JoinTime"];
-        self.U_name=[responseObject objectForKey:@"U_name"];
-        self.U_type=[responseObject objectForKey:@"U_type"];
-        self.U_age=[responseObject objectForKey:@"U_age"];
-        self.U_gender=[responseObject objectForKey:@"U_gender"];
-        self.U_email=[responseObject objectForKey:@"U_email"];
-        self.U_ismanager=[responseObject objectForKey:@"U_ismanager"];
-        self.cardcode=[responseObject objectForKey:@"cardcode"];
-        self.phone=[responseObject objectForKey:@"phone"];
+-(NSURLSessionDataTask *)getMyVipInfoBlock:(void(^)(NSError *error))block{
+    return [[TSAppDoNetAPIClient sharedClient] GET:@"FoxGetAnVipInfo.ashx" parameters:@{@"vipcode":self.vipcode} success:^(NSURLSessionDataTask *task, id responseObject) {
+        self.JoinDate=[self changeString:[responseObject objectForKey:@"JoinDate"]];
+        self.JoinTime=[self changeString:[responseObject objectForKey:@"JoinTime"]];
+        self.U_name=[self changeString:[responseObject objectForKey:@"U_name"]];
+        
+        self.U_type=[self changeString:[responseObject objectForKey:@"U_type"]];
+        if ([self.U_type isEqualToString:@"51管理"]) {
+            self.USERTYPE=TSManager;
+        }else if ([self.U_type isEqualToString:@"供应商"]) {
+            self.USERTYPE=TSVender;
+        }else if ([self.U_type isEqualToString:@"联盟客户"]) {
+            self.USERTYPE=TSUnionClient;
+        }else {
+            self.USERTYPE=TSCommonClient;
+        }
+        
+        self.U_age=[self changeString:[responseObject objectForKey:@"U_age"]];
+        self.U_gender=[self changeString:[responseObject objectForKey:@"U_gender"]];
+        self.U_email=[self changeString:[responseObject objectForKey:@"U_email"]];
+        self.U_ismanager=[self changeString:[responseObject objectForKey:@"U_ismanager"]];
+        self.cardcode=[self changeString:[responseObject objectForKey:@"cardcode"]];
+        self.phone=[self changeString:[responseObject objectForKey:@"phone"]];
 //        self.vipcode=[responseObject objectForKey:@"vipcode"];
 //        self.password=[responseObject objectForKey:@"password"];
-    
-        NSDictionary *dict=[responseObject objectForKey:@"U_CardInfo"];
-        self.CARD_CardName=[dict objectForKey:@"CardName"];
-        self.CARD_Address=[dict objectForKey:@"Address"];
-        self.CARD_CntctPrsn=[dict objectForKey:@"CntctPrsn"];
-        self.CARD_CntctPrsnCellolar=[dict objectForKey:@"CntctPrsnCellolar"];
-        self.CARD_Phone1=[dict objectForKey:@"Phone1"];
-        self.CARD_Position=[dict objectForKey:@"Position"];
-        self.CARD_Summary=[dict objectForKey:@"Summary"];
         
+        NSDictionary *dict=[responseObject objectForKey:@"U_CardInfo"];
+        self.CARD_CardName=[self changeString:[dict objectForKey:@"CardName"]];
+        self.CARD_Address=[self changeString:[dict objectForKey:@"Address"]];
+        self.CARD_CntctPrsn=[self changeString:[dict objectForKey:@"CntctPrsn"]];
+        self.CARD_CntctPrsnCellolar=[self changeString:[dict objectForKey:@"CntctPrsnCellolar"]];
+        self.CARD_Phone1=[self changeString:[dict objectForKey:@"Phone1"]];
+        self.CARD_Position=[self changeString:[dict objectForKey:@"Position"]];
+        self.CARD_Summary=[self changeString:[dict objectForKey:@"Summary"]];
+
+        if (block) {
+            block(nil);
+        }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if (block) {
+            block(error);
+        }
     }];
-    [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
 }
 
+- (NSString *)changeString:(id)sender
+{
+    if ([sender isEqual:[NSNull null]]) {
+        return @"";
+    }
+    NSString * str = [NSString string];
+    str = [NSString stringWithFormat:@"%@",sender];
+    if ([str isKindOfClass:[NSNull class]]){
+        str = @"";
+    }
+    return str;
+}
 
+-(void)cleanVipInfo
+{
+    self.LogStatus=@"N";
+    self.JoinDate=nil;
+    self.JoinTime=nil;
+    self.U_name=nil;
+    
+    self.U_type=TSNone;
+    self.U_age=nil;
+    self.U_gender=nil;
+    self.U_email=nil;
+    self.U_ismanager=nil;
+    self.cardcode=nil;
+    self.phone=nil;
+    self.vipcode=nil;
+    self.password=nil;
+    
+    self.CARD_CardName=nil;
+    self.CARD_Address=nil;
+    self.CARD_CntctPrsn=nil;
+    self.CARD_CntctPrsnCellolar=nil;
+    self.CARD_Phone1=nil;
+    self.CARD_Position=nil;
+    self.CARD_Summary=nil;
+}
 @end

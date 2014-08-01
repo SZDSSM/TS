@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "TSItemListPost.h"
+#import "TSYiXiangDingDanTableViewController.h"
 
-@interface TSyixiangdingdanTableViewCell : UITableViewCell
+@interface TSyixiangdingdanTableViewCell : UITableViewCell<UIActionSheetDelegate>
 
+@property (weak, nonatomic) IBOutlet UIButton *status;
+@property (weak, nonatomic) IBOutlet UILabel *cardname;
 @property (weak, nonatomic) IBOutlet UIImageView *itemimage;
 @property (weak, nonatomic) IBOutlet UIImageView *shadowView;
 @property (weak, nonatomic) IBOutlet UILabel *itemname;
@@ -23,5 +26,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *kucun;
 
 @property (nonatomic, strong) TSItemListPost * yixiangdingdanpost;
+
+@property (weak, nonatomic) TSYiXiangDingDanTableViewController  *sender;
+-(void)pushtoItemDetailView;
+- (IBAction)changeStatus:(id)sender;
 
 @end

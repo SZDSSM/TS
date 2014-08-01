@@ -100,6 +100,9 @@
                     UIStoryboard *board=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
                     LoginNavigationController *loginNavigation=[board instantiateViewControllerWithIdentifier:@"LoginNavigation"];
                     [self presentViewController:loginNavigation animated:NO completion:nil];
+                }else{
+                    [[TSUser sharedUser] getMyVipInfoBlock:nil];
+//                    [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
                 }
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
         }];

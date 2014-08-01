@@ -445,7 +445,7 @@
     UIStoryboard *board=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
     ItemDetailTableViewController *itemdetail = [board instantiateViewControllerWithIdentifier:@"tsItemdetail"];
     itemdetail.itemcode=[self getPostItem];
-    itemdetail.delegate=self;
+    itemdetail.GuanZhudelegate=self;
     [_sender.navigationController pushViewController:itemdetail animated:YES];
 }
 

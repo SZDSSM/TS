@@ -10,6 +10,7 @@
 #import "UIButton+Style.h"
 #import "UIImageView+AFNetworking.h"
 
+#import "TSAppDoNetAPIClient.h"
 @interface TSkanyangTableViewCell ()
 
 @property(nonatomic,assign) NSInteger iconNumbers;
@@ -39,7 +40,12 @@
     _iconNumbers=0;
     
     [self.guzhu yuyueStyle];
-    [self.guzhu setTitle:@"取消预约" forState:UIControlStateNormal];
+    if ([TSUser sharedUser].USERTYPE==TSManager) {
+        [self.guzhu setTitle:@"关闭预约" forState:UIControlStateNormal];
+    }else{
+        [self.guzhu setTitle:@"取消看样" forState:UIControlStateNormal];
+    }
+    
     
     self.date.text = _kanyangpost.StorDateTime;
     self.contectperson.text = _kanyangpost.vipname;
@@ -119,9 +125,54 @@
 }
 
 - (IBAction)guanzhu:(UIButton *)sender {
-//    if ([sender.titleLabel.text isEqualToString:@"☆"]) {
-//        
-//    }
-    NSLog(@"sdasdasd");
+    [[TSAppDoNetAPIClient sharedClient] GET:@"FoxDelSampleItem.ashx" parameters:@{@"vipcode":_kanyangpost.Vipcode,@"itemcode":_kanyangpost.itemCode} success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSString *rslt=[responseObject objectForKey:@"result"];
+        if ([rslt isEqualToString:@"true"]) {
+            UIAlertView *alertView = [[UIAlertView alloc]
+                                      initWithTitle:@"关闭预约"
+                                      message:@"关闭预约看样成功"
+                                      delegate:nil
+                                      cancelButtonTitle:@"关闭"
+                                      otherButtonTitles:nil, nil];
+            [alertView show];
+            [_sender removeFormPosts:_kanyangpost];
+        }else if ([rslt isEqualToString:@"false"]) {
+            UIAlertView *alertView = [[UIAlertView alloc]
+                                      initWithTitle:@"失败"
+                                      message:@"关闭操作失败"
+                                      delegate:nil
+                                      cancelButtonTitle:nil
+                                      otherButtonTitles:nil, nil];
+            [NSTimer scheduledTimerWithTimeInterval:0.6f
+                                             target:self
+                                           selector:@selector(timerFireMethod:)
+                                           userInfo:alertView
+                                            repeats:NO];
+            [alertView show];
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        UIAlertView *alertView = [[UIAlertView alloc]
+                                  initWithTitle:@"提示"
+                                  message:[error localizedDescription]
+                                  delegate:nil
+                                  cancelButtonTitle:@"关闭"
+                                  otherButtonTitles:nil, nil];
+        [alertView show];
+    }];
+}
+
+-(void)pushtoItemDetailView
+{
+    UIStoryboard *board=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    ItemDetailTableViewController *itemdetail = [board instantiateViewControllerWithIdentifier:@"tsItemdetail"];
+    itemdetail.itemcode=_kanyangpost.itemCode;
+    itemdetail.KanYandelegate=self;
+    [_sender.navigationController pushViewController:itemdetail animated:YES];
+}
+
+#pragma ---TsKanYanProtocol
+-(void)KanYanButtonClicked
+{
+    [_sender removeFormPosts:_kanyangpost];
 }
 @end

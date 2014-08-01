@@ -30,7 +30,19 @@
  "vipcode": "13590166783"*/
 #import <Foundation/Foundation.h>
 
+#pragma mark - 用户类型
+typedef enum {
+    TSNone = 0,//没有vip
+	TSManager = 1, //管理员
+	TSVender = 2, // 厂家
+	TSCommonClient = 3, // 普通客户
+    TSUnionClient = 4//联盟客户
+} USERTYPE;
+
 @interface TSUser : NSObject
+
+@property (nonatomic,assign)USERTYPE USERTYPE;
+
 
 @property (nonatomic, strong)NSString * LogStatus;
 
@@ -58,8 +70,8 @@
 @property (nonatomic, strong)NSString * CARD_Summary;
 
 
--(void)getMyVipInfo;
-
+-(NSURLSessionDataTask *)getMyVipInfoBlock:(void(^)(NSError *error))block;
+-(void)cleanVipInfo;
 +(TSUser *) sharedUser;
 
 @end

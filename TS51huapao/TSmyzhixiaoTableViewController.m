@@ -152,12 +152,18 @@
     }
     
     cell.getItemPost = [self.posts objectAtIndex:indexPath.row];
+    cell.sender=self;
     cell.order.hidden = YES;
     //    cell.itemimage.frame = CGRectMake(0, 0, 30, 30);
     
     return cell;
 }
 
-
+// In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    TSItemTableViewCell *cell=(TSItemTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    [cell pushtoItemDetailView];
+}
 
 @end

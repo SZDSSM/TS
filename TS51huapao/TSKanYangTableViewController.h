@@ -12,7 +12,8 @@
 
 @property (nonatomic) NSUInteger page;
 @property (nonatomic) NSUInteger maxcount;
-@property (nonatomic, strong) NSArray * posts;
-@property (nonatomic, strong) NSString * vipcode;
+@property (nonatomic, strong) NSMutableArray * posts;
+//@property (nonatomic, strong) NSString * vipcode;
 
+-(void)removeFormPosts:(id)sender;
 @end

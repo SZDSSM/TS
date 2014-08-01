@@ -18,6 +18,8 @@
 
 
 @property (weak, nonatomic)TSItemDetailPost * post;
+
+
 @property (weak, nonatomic) IBOutlet UILabel *labelQty;
 
 @property (weak, nonatomic) IBOutlet UILabel *labelYiXiaDan;
@@ -36,6 +38,6 @@
 - (IBAction)callClick:(UIButton *)sender;
 
 -(void)xiadanAtTarget:(UIViewController *)target action:(SEL)action;
-
+-(void)changeInfo:(UIBarButtonItem *)sender;
 
 @end

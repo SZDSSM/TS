@@ -6,6 +6,7 @@
 //  Copyright (c) 2014年 Teesson Fireworks. All rights reserved.
 //
 
+#import "LoginNavigationController.h"
 #import "LoginTableViewController.h"
 #import "UIButton+Style.h"
 #import "TSAppDoNetAPIClient.h"
@@ -190,8 +191,19 @@
                                     repeats:NO];
     [alertView show];
     
-    [[TSUser sharedUser] getMyVipInfo];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    //[[TSUser sharedUser] getMyVipInfo];
+    NSURLSessionDataTask * task=[[TSUser sharedUser] getMyVipInfoBlock:^(NSError *error) {
+        if (!error) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+            
+            //如果是由会员退出页面到此页，登入成功后需要回调管理中心页面，刷新
+            LoginNavigationController *NavigationController=(LoginNavigationController*)self.navigationController;
+            [NavigationController refreshVipInfoWithCallback];
+        }
+    }];
+    [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
+    
+    
 }
 
 

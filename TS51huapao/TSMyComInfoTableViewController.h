@@ -10,4 +10,10 @@
 
 @interface TSMyComInfoTableViewController : UITableViewController
 
+@property (weak, nonatomic) IBOutlet UILabel *comname;
+@property (weak, nonatomic) IBOutlet UILabel *contectnumber;
+@property (weak, nonatomic) IBOutlet UILabel *address;
+@property (weak, nonatomic) IBOutlet UILabel *contectperson;
+@property (weak, nonatomic) IBOutlet UILabel *phoneNumber;
+
 @end

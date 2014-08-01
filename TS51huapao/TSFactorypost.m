@@ -51,7 +51,8 @@
     return str;
 }
 
-+(NSURLSessionDataTask *)globalTimeGetRecommendInfoWithDictionary:(NSDictionary*)parameters Block:(void(^)(NSArray *post,NSUInteger maxcount,NSError *error))block{
++(NSURLSessionDataTask *)globalTimeGetRecommendInfoWithDictionary:(NSDictionary*)parameters Block:(void(^)(NSArray *post,NSUInteger maxcount,NSError *error))block
+{
     return [[TSAppDoNetAPIClient sharedClient] GET:@"FoxGetCardsItemList.ashx" parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
 //        NSLog(@"ppppp:%@",responseObject);
 //        id i=[responseObject valueForKeyPath:@"maxcount"];

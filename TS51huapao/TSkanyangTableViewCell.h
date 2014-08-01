@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "TSItemListPost.h"
-
-@interface TSkanyangTableViewCell : UITableViewCell
+#import "TSKanYangTableViewController.h"
+#import "ItemDetailTableViewController.h"
+//@class TSKanYangTableViewController;
+@interface TSkanyangTableViewCell : UITableViewCell<TsKanYanProtocol>
 
 @property (weak, nonatomic) IBOutlet UIImageView *shadowView;
 @property (weak, nonatomic) IBOutlet UILabel *date;
@@ -27,9 +29,11 @@
 @property (weak, nonatomic) IBOutlet UIImageView *image2;
 @property (weak, nonatomic) IBOutlet UIImageView *image3;
 
-
+@property (weak, nonatomic) TSKanYangTableViewController  *sender;
 
 - (IBAction)guanzhu:(UIButton *)sender;
 @property (nonatomic, strong) TSItemListPost * kanyangpost;
 
+
+-(void)pushtoItemDetailView;
 @end

@@ -35,15 +35,27 @@
     return self;
 }
 
-- (NSString *)changeString:(NSString *)sender
+- (NSString *)changeString:(id)sender
 {
+    if ([sender isEqual:[NSNull null]]) {
+        return @"";
+    }
     NSString * str = [NSString string];
     str = [NSString stringWithFormat:@"%@",sender];
     if ([str isKindOfClass:[NSNull class]]){
-        str = @" ";
+        str = @"";
     }
     return str;
 }
+//- (NSString *)changeString:(NSString *)sender
+//{
+//    NSString * str = [NSString string];
+//    str = [NSString stringWithFormat:@"%@",sender];
+//    if ([str isKindOfClass:[NSNull class]]){
+//        str = @" ";
+//    }
+//    return str;
+//}
 
 +(NSURLSessionDataTask *)globalTimeGetCommentInfoWithItemcode:(NSString *)itemcode Block:(void(^)(NSArray * posts,NSString *reputably,NSError *error))block{
     return [[TSAppDoNetAPIClient sharedClient] GET:@"GetAnItemCommentInfoList.ashx" parameters:@{@"itemcode":itemcode} success:^(NSURLSessionDataTask *task, id responseObject) {

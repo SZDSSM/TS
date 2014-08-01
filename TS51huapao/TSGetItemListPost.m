@@ -33,12 +33,15 @@
     return self;
 }
 
-- (NSString *)changeString:(NSString *)sender
+- (NSString *)changeString:(id)sender
 {
+    if ([sender isEqual:[NSNull null]]) {
+        return @"";
+    }
     NSString * str = [NSString string];
     str = [NSString stringWithFormat:@"%@",sender];
     if ([str isKindOfClass:[NSNull class]]){
-        str = @" ";
+        str = @"";
     }
     return str;
 }

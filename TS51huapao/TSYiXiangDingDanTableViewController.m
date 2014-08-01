@@ -39,7 +39,7 @@
 //    [self.tableView setSeparatorInset:UIEdgeInsetsZero];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     UINib * nib = [UINib nibWithNibName:@"TSyixiangdingdanTableViewCell" bundle:nil];
-    self.tableView.rowHeight = 133;
+    self.tableView.rowHeight = 149;
     [self.tableView registerNib:nib forCellReuseIdentifier:@"dingdan"];
 }
 
@@ -57,9 +57,9 @@
         if (!error) {
             _maxcount=maxcount;
             if (_page>1) {
-                _posts=[_posts arrayByAddingObjectsFromArray:posts];
+                _posts=[NSMutableArray arrayWithArray:[_posts arrayByAddingObjectsFromArray:posts]];
             }else{
-                _posts = posts;
+                _posts = [NSMutableArray arrayWithArray:posts];
             }
             [self.tableView reloadData];
             [self.tableView headerEndRefreshing];
@@ -127,8 +127,21 @@
     }
     
     cell.yixiangdingdanpost = [self.posts objectAtIndex:indexPath.row];
-    
+    cell.sender=self;
     return cell;
 }
+// In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    TSyixiangdingdanTableViewCell *cell=(TSyixiangdingdanTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    [cell pushtoItemDetailView];
+}
 
+-(void)removeFormPosts:(id)sender
+{
+    if ([_posts containsObject:sender]) {
+        [_posts removeObject:sender];
+        [self.tableView reloadData];
+    }
+}
 @end

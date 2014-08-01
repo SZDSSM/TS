@@ -12,5 +12,12 @@
 
 @property (nonatomic, strong)UIView * sectionView;
 
+@property (weak, nonatomic) IBOutlet UITextField *username;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *usersex;
+@property (weak, nonatomic) IBOutlet UITextField *userage;
+@property (weak, nonatomic) IBOutlet UITextField *useremail;
+@property (weak, nonatomic) IBOutlet UIButton *xiugaiziliao;
+
+- (IBAction)xiugaiziliao:(id)sender;
 
 @end

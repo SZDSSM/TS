@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TSglyTableViewController : UITableViewController
+@interface TSglyTableViewController : UITableViewController<UIAlertViewDelegate>
 
 @property (nonatomic, strong)UIView * sectionView;
 

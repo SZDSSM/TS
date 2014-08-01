@@ -51,10 +51,6 @@
     //设置tabbar的上色颜色：橙红
     [self.tabBar setTintColor:[UIColor colorWithRed:1 green:69/255.0 blue:0 alpha:1]];
     
-
-
-//    [TSUser sharedUser].password=@"1234567";
-    
     //id a=[secondBarItem valueForKey:@"selectedimage"];
     //NSString *path = [[NSBundle mainBundle] pathForResource:@"recommend" ofType:@"png"];
     //UIImage *image=[self reSizeImage: [UIImage imageNamed:@"recommend"]toSize:CGSizeMake(30,30)];

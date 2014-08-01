@@ -20,8 +20,11 @@
 #import "TSAppDoNetAPIClient.h"
 @interface ItemDetailTableViewController ()
 
+@property (nonatomic, copy) void (^xiadanCallback)(int orderQty);
+
 @property (strong, nonatomic)TSItemDetailPost * post;
 
+@property(nonatomic,assign)int ordrQty;
 @property (strong, nonatomic) NSString  * replty;
 
 @property (strong, nonatomic) NSArray  * commentPost;
@@ -41,6 +44,11 @@
 
 @implementation ItemDetailTableViewController
 
+
+- (void)xiadanCallback:(void (^)(int orderQty))callback
+{
+    self.xiadanCallback=callback;
+}
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -104,7 +112,7 @@
     
     [self _initKeyViewButton];
     
-    if (![[TSUser sharedUser].U_type hasSuffix:@"客户"]) {
+    if ([TSUser sharedUser].USERTYPE==TSManager) {
         [self _initBottomView];
     }
     [self setupRefresh];
@@ -118,6 +126,8 @@
         if (!error) {
             if ([post.ItemCode length]>5) {
                 self.post = post;
+                _ordrQty=[post.orderQuantity intValue];
+                
                 if ([_post.photolist isEqual:[NSNull null]]) {
                     _post.photolist=[NSArray array];
                 }
@@ -234,7 +244,7 @@
     else if (indexPath.section==1){
         if (indexPath.row==0) {
             ItemDetail3TableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"itemDetailCell3"];
-            cell.delegate=_delegate;
+            cell.delegate=_GuanZhudelegate;
             cell.post=_post;
             return cell;
         }else{
@@ -391,7 +401,7 @@
 -(void)updateBottomView
 {
     if ([_post.orderQuantity floatValue]>0) {
-        [_xiadan setTitle:@"继续下单" forState:UIControlStateNormal];
+        [_xiadan setTitle:@"修改下单" forState:UIControlStateNormal];
     }else{
         [_xiadan setTitle:@"下单" forState:UIControlStateNormal];
     }
@@ -422,6 +432,15 @@
 }
 - (void)backButtonTap:(UIButton *)sender
 {
+    //取消看样回调 预约看样列表
+    if ([_post.IsInSeeSamp isEqualToString:@"N"]&&[_KanYandelegate respondsToSelector:@selector(KanYanButtonClicked)]) {
+        [_KanYandelegate KanYanButtonClicked];
+    }
+    //下单数量变更后回调 意向订单列表
+    if (self.xiadanCallback && _ordrQty!=[_post.orderQuantity intValue]) {
+        self.xiadanCallback([_post.orderQuantity intValue]);
+    }
+    
     [self.navigationController popViewControllerAnimated:YES];
     self.navigationController.navigationBarHidden=NO;
 }
@@ -434,7 +453,11 @@
     [xiadanview xiadanAtTarget:self action:@selector(updateBottomView)];
     UINavigationController *xiadanviewNavigation=[[UINavigationController alloc]initWithRootViewController:xiadanview];
     [self presentViewController:xiadanviewNavigation animated:YES completion:^{
-        [xiadanview.qty becomeFirstResponder];
+        if ([_post.orderQuantity hasPrefix:@"0"]) {
+            [xiadanview.qty becomeFirstResponder];
+        }else{
+            [xiadanview changeInfo:nil];
+        }
     }];
 //    [self.navigationController pushViewController:xiadanviewNavigation animated:YES];
 }

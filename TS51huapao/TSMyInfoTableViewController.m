@@ -6,22 +6,72 @@
 //  Copyright (c) 2014年 Teesson Fireworks. All rights reserved.
 //
 
+//#define kNumberOfEditableRows         5
+//#define kNameRowIndex                 0
+//#define kMiMaRowIndex                 1
+//#define kMiMaQueRenRowIndex           2
+//#define kAgeIndex                     3
+//#define kPhoneIndex                   4
+//
+//#define kLabelTag                     2048
+//#define kTextFieldTag                 4094
+
+
 #import "TSMyInfoTableViewController.h"
+#import "TSAppDoNetAPIClient.h"
 
 @interface TSMyInfoTableViewController ()
 
 @property (nonatomic, strong)NSMutableArray * itemArray;
 @property (nonatomic, strong)NSDictionary * getDic;
+@property (nonatomic)BOOL xiugaitap;
 
 @end
 
 @implementation TSMyInfoTableViewController
 
+
+/*
+ [[TSAppDoNetAPIClient sharedClient] GET:@"FoxDelSampleItem.ashx" parameters:@{@"vipcode":_kanyangpost.Vipcode,@"itemcode":_kanyangpost.itemCode} success:^(NSURLSessionDataTask *task, id responseObject) {
+ NSString *rslt=[responseObject objectForKey:@"result"];
+ if ([rslt isEqualToString:@"true"]) {
+ UIAlertView *alertView = [[UIAlertView alloc]
+ initWithTitle:@"关闭预约"
+ message:@"关闭预约看样成功"
+ delegate:nil
+ cancelButtonTitle:@"关闭"
+ otherButtonTitles:nil, nil];
+ [alertView show];
+ [_sender removeFormPosts:_kanyangpost];
+ }else if ([rslt isEqualToString:@"false"]) {
+ UIAlertView *alertView = [[UIAlertView alloc]
+ initWithTitle:@"失败"
+ message:@"关闭操作失败"
+ delegate:nil
+ cancelButtonTitle:nil
+ otherButtonTitles:nil, nil];
+ [NSTimer scheduledTimerWithTimeInterval:0.6f
+ target:self
+ selector:@selector(timerFireMethod:)
+ userInfo:alertView
+ repeats:NO];
+ [alertView show];
+ }
+ } failure:^(NSURLSessionDataTask *task, NSError *error) {
+ UIAlertView *alertView = [[UIAlertView alloc]
+ initWithTitle:@"提示"
+ message:[error localizedDescription]
+ delegate:nil
+ cancelButtonTitle:@"关闭"
+ otherButtonTitles:nil, nil];
+ [alertView show];
+ }];
+ */
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
-
+        
     }
     return self;
 }
@@ -29,39 +79,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    _itemArray = [@[@"用户名",@"姓名",@"年龄",@"邮箱"]mutableCopy];
-//    [self.tableView setTableHeaderView:_sectionView];
-    [self _initXiangXiLabel];
-
-}
-
-- (void)_initXiangXiLabel
-{
-    for (int j = 0; j < 2; j++) {
-        for (int i = 0; i<2; i++) {
-            UILabel * xiangxilabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 27, (ScreenWidth-25)/2, 15)];
-            if (self.getDic != nil) {
-                if (i == 0 && j == 0) {
-                    xiangxilabel.text = [NSString stringWithFormat:@"%@",[self.getDic objectForKey:@"DeliverPriceSUM"]];
-                }else if (i == 1 && j == 0){
-                    xiangxilabel.text = [NSString stringWithFormat:@"%@",[self.getDic objectForKey:@"OpenDeliverPriceSUM"]];
-                }else if (i == 0 && j == 1){
-                    xiangxilabel.text = [NSString stringWithFormat:@"%@",[self.getDic objectForKey:@"RecivePriceSUM"]];
-                }else if (i == 1 && j == 1){
-                    xiangxilabel.text = [NSString stringWithFormat:@"%@",[self.getDic objectForKey:@"OpenRecivePriceSUM"]];
-                }
-                xiangxilabel.textColor = [UIColor grayColor];
-                xiangxilabel.font = [UIFont systemFontOfSize:14];
-                xiangxilabel.textAlignment = NSTextAlignmentCenter;
-                
-            }
-            [[self.view viewWithTag:100 - i + 2*j] addSubview:xiangxilabel];
-            
-        }
-    }
+    
+    _xiugaitap = YES;
+    
+    [self.tableView setTableFooterView:[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 5)]];
+    
+    self.tableView.allowsSelection = NO;
+    
+    //    UIBarButtonItem * xiugai = [[UIBarButtonItem alloc] initWithTitle:@"修改" style:UIBarButtonItemStyleBordered target:self action:@selector(xiugai:)];
+    //    self.navigationItem.rightBarButtonItem = xiugai;
     
 }
-
 
 - (void)didReceiveMemoryWarning
 {
@@ -69,82 +97,28 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    // Return the number of sections.
-    return 1;
+- (IBAction)xiugaiziliao:(id)sender {
+//    if (_xiugaitap) {
+//        
+//        _username.enabled = YES;
+//        _userage.enabled = YES;
+//        _useremail.enabled = YES;
+//        _usersex.enabled = YES;
+//        
+//        [self.xiugaiziliao setTitle:@"提交资料" forState:UIControlStateNormal];
+//        
+//    }else{
+//        
+//        [self.xiugaiziliao setTitle:@"修改资料" forState:UIControlStateNormal];
+//        _username.enabled = NO;
+//        _userage.enabled = NO;
+//        _useremail.enabled = NO;
+//        _usersex.enabled = NO;
+//        
+//        [[TSAppDoNetAPIClient sharedClient] GET:@"FoxDelSampleItem.ashx" parameters:@{@"vipcode":_kanyangpost.Vipcode,@"itemcode":_kanyangpost.itemCode} success:^(NSURLSessionDataTask *task, id responseObject)
+//         
+//         
+//         }
+//         _xiugaitap = !_xiugaitap;
 }
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    // Return the number of rows in the section.
-    return [_itemArray count];
-}
-
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reuseIdentifier"];
-    
-    if (nil == cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"reuseIdentifier"];
-    }
-    cell.textLabel.text = [_itemArray objectAtIndex:indexPath.row];
-    cell.textLabel.textColor = [UIColor grayColor];
-    
-    return cell;
-}
-
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 @end

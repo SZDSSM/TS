@@ -11,11 +11,20 @@
 #import "ItemDetail1TableViewCell.h"
 
 
+@protocol TsKanYanProtocol <NSObject>
 
-@interface ItemDetailTableViewController : UITableViewController<TSGuanZhuProtocol,UIAlertViewDelegate>
+@optional
+-(void)KanYanButtonClicked;
+@end
 
 
-@property (nonatomic, weak) id <TSGuanZhuProtocol> delegate;
+@interface ItemDetailTableViewController : UITableViewController<UIAlertViewDelegate>
+
+
+@property (nonatomic, weak) id <TSGuanZhuProtocol> GuanZhudelegate;
+@property (nonatomic, weak) id <TsKanYanProtocol> KanYandelegate;
+
+- (void)xiadanCallback:(void (^)(int orderQty))callback;
 
 @property (copy, nonatomic) NSString * itemcode;
 

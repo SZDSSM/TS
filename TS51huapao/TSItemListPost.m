@@ -42,16 +42,27 @@
     self.cardname = [self changeString:[attributes objectForKey:@"cardname"]];//新加
     return self;
 }
-
-- (NSString *)changeString:(NSString *)sender
+- (NSString *)changeString:(id)sender
 {
+    if ([sender isEqual:[NSNull null]]) {
+        return @"";
+    }
     NSString * str = [NSString string];
     str = [NSString stringWithFormat:@"%@",sender];
     if ([str isKindOfClass:[NSNull class]]){
-        str = @" ";
+        str = @"";
     }
     return str;
 }
+//- (NSString *)changeString:(NSString *)sender
+//{
+//    NSString * str = [NSString string];
+//    str = [NSString stringWithFormat:@"%@",sender];
+//    if ([str isKindOfClass:[NSNull class]]){
+//        str = @" ";
+//    }
+//    return str;
+//}
 
 +(NSURLSessionDataTask *)globalTimeGetRecommendInfoWithRanktype:(NSString *)rankType Block:(void(^)(NSArray * posts,NSError *error))block{
     return [[TSAppDoNetAPIClient sharedClient] GET:@"FoxGetRankingList.ashx" parameters:@{@"rankType":rankType,@"vipcode":[TSUser sharedUser].vipcode} success:^(NSURLSessionDataTask *task, id responseObject) {

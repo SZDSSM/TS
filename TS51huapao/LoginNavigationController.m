@@ -10,9 +10,21 @@
 
 @interface LoginNavigationController ()
 
+@property (nonatomic, copy) void (^beginRefreshingVipInfoCallback)();
+
 @end
 
 @implementation LoginNavigationController
+
+- (void)addVipInfoRefreshWithCallback:(void (^)())callback{
+    self.beginRefreshingVipInfoCallback=callback;
+}
+-(void)refreshVipInfoWithCallback
+{
+    if (self.beginRefreshingVipInfoCallback) {
+        self.beginRefreshingVipInfoCallback();
+    }
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

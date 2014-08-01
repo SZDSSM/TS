@@ -49,10 +49,10 @@
 - (void)getData
 {
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:5];
-    if ( _vipcode!=nil) {
-        [dic setObject:_vipcode forKey:@"vipcode"];
+    if ([TSUser sharedUser].USERTYPE ==TSManager) {
+        [dic setObject:@"ALL" forKey:@"vipcode"];
     }else{
-        [dic setObject:@"13590166783" forKey:@"vipcode"];
+        [dic setObject:[TSUser sharedUser].vipcode forKey:@"vipcode"];
     }
     [dic setObject:[NSString stringWithFormat:@"%lu",(unsigned long)_page] forKey:@"pageindex"];
     
@@ -60,9 +60,9 @@
         if (!error) {
             _maxcount=maxcount;
             if (_page>1) {
-                _posts=[_posts arrayByAddingObjectsFromArray:posts];
+                _posts=[NSMutableArray arrayWithArray:[_posts arrayByAddingObjectsFromArray:posts]];
             }else{
-                _posts = posts;
+                _posts = [NSMutableArray arrayWithArray:posts];
             }
             [self.tableView reloadData];
             [self.tableView headerEndRefreshing];
@@ -108,7 +108,10 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+//-(void)dealloc
+//{
+//    NSLog(@"dealloc");
+//}
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -133,11 +136,23 @@
     if (nil == cell) {
         cell = [[TSkanyangTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"kanyang"];
     }
-    
     cell.kanyangpost = [self.posts objectAtIndex:indexPath.row];
-    
+    cell.sender=self;
     return cell;
-
+    
+}
+// In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    TSkanyangTableViewCell *cell=(TSkanyangTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    [cell pushtoItemDetailView];
 }
 
+-(void)removeFormPosts:(id)sender
+{
+    if ([_posts containsObject:sender]) {
+        [_posts removeObject:sender];
+        [self.tableView reloadData];
+    }
+}
 @end
