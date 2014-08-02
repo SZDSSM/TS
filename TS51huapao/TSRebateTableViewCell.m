@@ -8,6 +8,7 @@
 
 #import "TSRebateTableViewCell.h"
 
+
 @implementation TSRebateTableViewCell
 
 - (void)awakeFromNib
@@ -35,5 +36,6 @@
 
     // Configure the view for the selected state
 }
+
 
 @end

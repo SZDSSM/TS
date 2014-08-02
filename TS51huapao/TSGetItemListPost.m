@@ -23,6 +23,9 @@
     self.stocksum = [self changeString:[attributes valueForKey:@"stocksum"]];
     self.Price = [self changeString:[attributes valueForKey:@"Price"]];
     self.costPrice = [self changeString:[attributes valueForKey:@"costPrice"]];
+    self.oldPrice = [self changeString:[attributes valueForKey:@"OldPrice"]];
+
+    
     self.U_Neu_Content = [self changeString:[attributes valueForKey:@"U_Neu_Content"]];
     self.IsOTO = [self changeString:[attributes valueForKey:@"IsOTO"]];
     self.IsRebate = [self changeString:[attributes valueForKey:@"IsRebate"]];

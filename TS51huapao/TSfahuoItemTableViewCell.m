@@ -7,6 +7,7 @@
 //
 
 #import "TSfahuoItemTableViewCell.h"
+#import "ItemDetailTableViewController.h"
 
 @implementation TSfahuoItemTableViewCell
 
@@ -22,7 +23,13 @@
     //    [self.guanzhu setTintColor:[UIColor redColor]];
     
     self.date.text = _dingdanpost.DocDate;
-    self.name.text = _dingdanpost.CardName;
+    if([TSUser sharedUser].USERTYPE==TSManager){
+        self.name.text = _dingdanpost.CardName;
+        self.name.hidden=NO;
+    }else{
+        self.name.hidden=YES;
+    }
+    
     self.quantity.text = [NSString stringWithFormat:@"%@",_dingdanpost.Quantity];
     
     self.priceSum.text = [NSString stringWithFormat:@"%@",_dingdanpost.DocTotal];
@@ -30,6 +37,7 @@
     self.status.text = [NSString stringWithFormat:@"状态:%@",_dingdanpost.DocStatus];
     
     [self setSelectionStyle:UITableViewCellSelectionStyleNone];
+
 }
 
 

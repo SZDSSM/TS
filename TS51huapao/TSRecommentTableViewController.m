@@ -91,7 +91,7 @@
     
     [dic setObject:[TSUser sharedUser].vipcode forKey:@"vipcode"];
 
-    [dic setObject:[NSString stringWithFormat:@"%u",_page] forKey:@"pageindex"];
+    [dic setObject:[NSString stringWithFormat:@"%lu",(unsigned long)_page] forKey:@"pageindex"];
     
     NSURLSessionDataTask * task = [TSItemListPost globalTimeGetRecommendInfoWithDictionary:dic Block:^(NSArray *posts,NSUInteger maxcount, NSError *error) {
         if (!error) {

@@ -18,6 +18,7 @@
 
 @interface ItemDetail1TableViewCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *zhixiaojia;
 @property(weak,nonatomic)UIViewController *sender;
 
 @property (weak, nonatomic)TSItemDetailPost * post;

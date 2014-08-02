@@ -15,6 +15,7 @@
 @interface xiadanTableViewController ()
 //callback
 @property(weak,nonatomic)UIViewController *viewContr;
+@property(nonatomic,copy)NSString *cPrice;
 @property(nonatomic)SEL func_selector;
 @end
 
@@ -78,10 +79,21 @@
     
     self.itemname.text=_post.ItemName;
     _spec.text=_post.Spec;
-
-    NSMutableAttributedString *str = [[NSMutableAttributedString alloc]initWithString:[_post.Price stringByAppendingString:@"元/每箱"]];
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0,[_post.Price length])];
-    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"TrebuchetMS-Bold" size:20.0] range:NSMakeRange(0,[_post.Price length])];
+    
+    NSString *cp=[[NSString alloc]init];
+    if ([_post.U_NEU_SaleType isEqualToString:@"直销"]) {
+        if (_post.CostPrice.floatValue>0 &&[TSUser sharedUser].USERTYPE==TSUnionClient) {
+            cp=_post.CostPrice;
+        }else{
+            cp=_post.Price;
+        }
+    }else{
+        cp=_post.Price;
+    }
+    _cPrice=cp;
+    NSMutableAttributedString *str = [[NSMutableAttributedString alloc]initWithString:[cp stringByAppendingString:@"元/每箱"]];
+    [str addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0,[cp length])];
+    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"TrebuchetMS-Bold" size:20.0] range:NSMakeRange(0,[cp length])];
     //_labelCurrentPrice.text=cp;
     _price.attributedText=str;
     if ([_post.orderQuantity hasPrefix:@"0"]) {
@@ -249,7 +261,7 @@
 ///-----数据操作
 -(void)updateOrderItem
 {
-    [[TSAppDoNetAPIClient sharedClient] GET:@"FoxPlaceAnOrder.ashx" parameters:@{@"type":@"U",@"vipcode":[TSUser sharedUser].vipcode,@"itemcode":_post.ItemCode,@"Quantity":_qty.text,@"price":_post.Price} success:^(NSURLSessionDataTask *task, id responseObject) {
+    [[TSAppDoNetAPIClient sharedClient] GET:@"FoxPlaceAnOrder.ashx" parameters:@{@"type":@"U",@"vipcode":[TSUser sharedUser].vipcode,@"itemcode":_post.ItemCode,@"Quantity":_qty.text,@"price":_cPrice} success:^(NSURLSessionDataTask *task, id responseObject) {
         NSString *rslt=[responseObject objectForKey:@"result"];
         if ([rslt isEqualToString:@"true"]) {
             UIAlertView *alertView = [[UIAlertView alloc]
@@ -281,7 +293,7 @@
 }
 -(void)AddOrderItem
 {
-    [[TSAppDoNetAPIClient sharedClient] GET:@"FoxPlaceAnOrder.ashx" parameters:@{@"type":@"A",@"vipcode":[TSUser sharedUser].vipcode,@"itemcode":_post.ItemCode,@"Quantity":_qty.text,@"price":_post.Price} success:^(NSURLSessionDataTask *task, id responseObject) {
+    [[TSAppDoNetAPIClient sharedClient] GET:@"FoxPlaceAnOrder.ashx" parameters:@{@"type":@"A",@"vipcode":[TSUser sharedUser].vipcode,@"itemcode":_post.ItemCode,@"Quantity":_qty.text,@"price":_cPrice} success:^(NSURLSessionDataTask *task, id responseObject) {
         NSString *rslt=[responseObject objectForKey:@"result"];
         if ([rslt isEqualToString:@"true"]) {
             UIAlertView *alertView = [[UIAlertView alloc]

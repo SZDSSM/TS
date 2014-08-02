@@ -54,6 +54,15 @@
 		64474CCA197A42CD000C1C7D /* TSThridNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64474CC4197A42CD000C1C7D /* TSThridNavigationController.m */; };
 		64474CCD197AADBF000C1C7D /* SearchThridTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64474CCC197AADBF000C1C7D /* SearchThridTableViewController.m */; };
 		6457DE0618E55E49008193BC /* UIImage+UIImageExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 6457DE0518E55E49008193BC /* UIImage+UIImageExtras.m */; };
+		646FEE10198BB52400F2092B /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 646FEE0F198BB52400F2092B /* CFNetwork.framework */; };
+		646FEE12198BB54E00F2092B /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 646FEE11198BB54E00F2092B /* CoreTelephony.framework */; };
+		646FEE14198BB55B00F2092B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 646FEE13198BB55B00F2092B /* SystemConfiguration.framework */; };
+		646FEE16198BB58200F2092B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 646FEE15198BB58200F2092B /* libz.dylib */; };
+		646FEE1A198BECD000F2092B /* TS51cangkuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 646FEE18198BECD000F2092B /* TS51cangkuTableViewController.m */; };
+		646FEE1E198BED4100F2092B /* TSmimaxiugaiTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 646FEE1C198BED4100F2092B /* TSmimaxiugaiTableViewController.m */; };
+		646FEE25198C1B0D00F2092B /* TSmyproductTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 646FEE20198C1B0D00F2092B /* TSmyproductTableViewController.m */; };
+		646FEE26198C1B0D00F2092B /* TSmyproductTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 646FEE21198C1B0D00F2092B /* TSmyproductTableViewCell.xib */; };
+		646FEE27198C1B0D00F2092B /* TSmyproductTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 646FEE23198C1B0D00F2092B /* TSmyproductTableViewCell.m */; };
 		64772D551989710A008CC8F0 /* FifthNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64772D541989710A008CC8F0 /* FifthNavigationController.m */; };
 		64772D5E198A309A008CC8F0 /* TShuiyuanguanliTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64772D5A198A309A008CC8F0 /* TShuiyuanguanliTableViewController.m */; };
 		64772D5F198A309A008CC8F0 /* TShuiyuanguanliTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 64772D5B198A309A008CC8F0 /* TShuiyuanguanliTableViewCell.m */; };
@@ -70,6 +79,7 @@
 		647F35F319625A840014A64F /* UIView+FoxExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 647F35F219625A840014A64F /* UIView+FoxExtras.m */; };
 		648870161983F13200E5612F /* FristSearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 648870151983F13200E5612F /* FristSearchTableViewController.m */; };
 		64887019198409F100E5612F /* TSGetItemListPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 64887018198409F100E5612F /* TSGetItemListPost.m */; };
+		649AD3C2198CC30900F7FAC8 /* libXG-SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 649AD3C1198CC30900F7FAC8 /* libXG-SDK.a */; };
 		649E303E197A4030002E22DD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 649E303D197A4030002E22DD /* Images.xcassets */; };
 		64BD4E591988D1E500A8B7AA /* xiadanTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64BD4E581988D1E500A8B7AA /* xiadanTableViewController.m */; };
 		64BD4E6719890A7700A8B7AA /* TSdanjuxiangqingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64BD4E5C19890A7700A8B7AA /* TSdanjuxiangqingTableViewController.m */; };
@@ -133,7 +143,6 @@
 		EB086819196F886600EF416B /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB086818196F886600EF416B /* WebViewController.m */; };
 		EB0AB52E19760EA400FBF1B6 /* TSItemListPost.m in Sources */ = {isa = PBXBuildFile; fileRef = EB0AB52D19760EA400FBF1B6 /* TSItemListPost.m */; };
 		EB5BDBA31972EC7100403299 /* TSAppDoNetAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5BDBA21972EC7100403299 /* TSAppDoNetAPIClient.m */; };
-		EB642BCC197508DC00E4E527 /* TSCommentPost.m in Sources */ = {isa = PBXBuildFile; fileRef = EB642BCB197508DC00E4E527 /* TSCommentPost.m */; };
 		EB81EDD11972397600AAE4DA /* TSItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB81EDCF1972397600AAE4DA /* TSItemTableViewCell.m */; };
 		EB81EDD21972397600AAE4DA /* TSItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB81EDD01972397600AAE4DA /* TSItemTableViewCell.xib */; };
 		EB81EDDD19727E4900AAE4DA /* TSRcmd.m in Sources */ = {isa = PBXBuildFile; fileRef = EB81EDDC19727E4900AAE4DA /* TSRcmd.m */; };
@@ -247,6 +256,20 @@
 		64474CCC197AADBF000C1C7D /* SearchThridTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchThridTableViewController.m; sourceTree = "<group>"; };
 		6457DE0418E55E49008193BC /* UIImage+UIImageExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+UIImageExtras.h"; sourceTree = "<group>"; };
 		6457DE0518E55E49008193BC /* UIImage+UIImageExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+UIImageExtras.m"; sourceTree = "<group>"; };
+		646FEE0E198BB4DE00F2092B /* XGPush.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGPush.h; sourceTree = "<group>"; };
+		646FEE0F198BB52400F2092B /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		646FEE11198BB54E00F2092B /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		646FEE13198BB55B00F2092B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		646FEE15198BB58200F2092B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		646FEE18198BECD000F2092B /* TS51cangkuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TS51cangkuTableViewController.m; sourceTree = "<group>"; };
+		646FEE19198BECD000F2092B /* TS51cangkuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TS51cangkuTableViewController.h; sourceTree = "<group>"; };
+		646FEE1C198BED4100F2092B /* TSmimaxiugaiTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSmimaxiugaiTableViewController.m; sourceTree = "<group>"; };
+		646FEE1D198BED4100F2092B /* TSmimaxiugaiTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSmimaxiugaiTableViewController.h; sourceTree = "<group>"; };
+		646FEE20198C1B0D00F2092B /* TSmyproductTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSmyproductTableViewController.m; sourceTree = "<group>"; };
+		646FEE21198C1B0D00F2092B /* TSmyproductTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSmyproductTableViewCell.xib; sourceTree = "<group>"; };
+		646FEE22198C1B0D00F2092B /* TSmyproductTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSmyproductTableViewController.h; sourceTree = "<group>"; };
+		646FEE23198C1B0D00F2092B /* TSmyproductTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSmyproductTableViewCell.m; sourceTree = "<group>"; };
+		646FEE24198C1B0D00F2092B /* TSmyproductTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSmyproductTableViewCell.h; sourceTree = "<group>"; };
 		64772D531989710A008CC8F0 /* FifthNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FifthNavigationController.h; sourceTree = "<group>"; };
 		64772D541989710A008CC8F0 /* FifthNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FifthNavigationController.m; sourceTree = "<group>"; };
 		64772D57198A309A008CC8F0 /* TShuiyuanguanliTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TShuiyuanguanliTableViewController.h; sourceTree = "<group>"; };
@@ -278,6 +301,7 @@
 		648870151983F13200E5612F /* FristSearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FristSearchTableViewController.m; sourceTree = "<group>"; };
 		64887017198409F100E5612F /* TSGetItemListPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSGetItemListPost.h; sourceTree = "<group>"; };
 		64887018198409F100E5612F /* TSGetItemListPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSGetItemListPost.m; sourceTree = "<group>"; };
+		649AD3C1198CC30900F7FAC8 /* libXG-SDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libXG-SDK.a"; sourceTree = "<group>"; };
 		649E303D197A4030002E22DD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		64BD4E571988D1E500A8B7AA /* xiadanTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xiadanTableViewController.h; sourceTree = "<group>"; };
 		64BD4E581988D1E500A8B7AA /* xiadanTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = xiadanTableViewController.m; sourceTree = "<group>"; };
@@ -390,8 +414,6 @@
 		EB0AB52D19760EA400FBF1B6 /* TSItemListPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSItemListPost.m; sourceTree = "<group>"; };
 		EB5BDBA11972EC7100403299 /* TSAppDoNetAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSAppDoNetAPIClient.h; sourceTree = "<group>"; };
 		EB5BDBA21972EC7100403299 /* TSAppDoNetAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSAppDoNetAPIClient.m; sourceTree = "<group>"; };
-		EB642BCA197508DC00E4E527 /* TSCommentPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCommentPost.h; sourceTree = "<group>"; };
-		EB642BCB197508DC00E4E527 /* TSCommentPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCommentPost.m; sourceTree = "<group>"; };
 		EB81EDCE1972397600AAE4DA /* TSItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSItemTableViewCell.h; sourceTree = "<group>"; };
 		EB81EDCF1972397600AAE4DA /* TSItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSItemTableViewCell.m; sourceTree = "<group>"; };
 		EB81EDD01972397600AAE4DA /* TSItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSItemTableViewCell.xib; sourceTree = "<group>"; };
@@ -409,10 +431,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				646FEE16198BB58200F2092B /* libz.dylib in Frameworks */,
+				646FEE14198BB55B00F2092B /* SystemConfiguration.framework in Frameworks */,
+				646FEE12198BB54E00F2092B /* CoreTelephony.framework in Frameworks */,
+				646FEE10198BB52400F2092B /* CFNetwork.framework in Frameworks */,
 				EB0688A41973CBE2001AC4C1 /* libsqlite3.dylib in Frameworks */,
 				64FA00C718E409A0006E12B2 /* CoreGraphics.framework in Frameworks */,
 				64FA00C918E409A0006E12B2 /* UIKit.framework in Frameworks */,
 				64FA00C518E409A0006E12B2 /* Foundation.framework in Frameworks */,
+				649AD3C2198CC30900F7FAC8 /* libXG-SDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,6 +459,7 @@
 		643A14D0195BB71500854928 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				649AD3C0198CC2C700F7FAC8 /* XG */,
 				EB0688921973CA3B001AC4C1 /* fmdb */,
 				647F35D819616A240014A64F /* MJRefresh */,
 				643A14D1195BB72E00854928 /* AFNetworking */,
@@ -509,6 +537,27 @@
 			name = "Fox-Categroy";
 			sourceTree = "<group>";
 		};
+		646FEE17198BECAC00F2092B /* 51cangku */ = {
+			isa = PBXGroup;
+			children = (
+				646FEE18198BECD000F2092B /* TS51cangkuTableViewController.m */,
+				646FEE19198BECD000F2092B /* TS51cangkuTableViewController.h */,
+			);
+			name = 51cangku;
+			sourceTree = "<group>";
+		};
+		646FEE1F198C1AFD00F2092B /* product */ = {
+			isa = PBXGroup;
+			children = (
+				646FEE22198C1B0D00F2092B /* TSmyproductTableViewController.h */,
+				646FEE20198C1B0D00F2092B /* TSmyproductTableViewController.m */,
+				646FEE24198C1B0D00F2092B /* TSmyproductTableViewCell.h */,
+				646FEE23198C1B0D00F2092B /* TSmyproductTableViewCell.m */,
+				646FEE21198C1B0D00F2092B /* TSmyproductTableViewCell.xib */,
+			);
+			name = product;
+			sourceTree = "<group>";
+		};
 		64772D56198A308A008CC8F0 /* vipManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -544,6 +593,15 @@
 				647F35E819616A240014A64F /* UIView+Extension.m */,
 			);
 			path = MJRefresh;
+			sourceTree = "<group>";
+		};
+		649AD3C0198CC2C700F7FAC8 /* XG */ = {
+			isa = PBXGroup;
+			children = (
+				646FEE0E198BB4DE00F2092B /* XGPush.h */,
+				649AD3C1198CC30900F7FAC8 /* libXG-SDK.a */,
+			);
+			name = XG;
 			sourceTree = "<group>";
 		};
 		64BD4E5A19890A6300A8B7AA /* doc-line */ = {
@@ -591,6 +649,8 @@
 				64F483B61983630B00B33333 /* TSMyInfoTableViewController.m */,
 				64F483B71983630B00B33333 /* TSMyComInfoTableViewController.h */,
 				64F483B81983630B00B33333 /* TSMyComInfoTableViewController.m */,
+				646FEE1D198BED4100F2092B /* TSmimaxiugaiTableViewController.h */,
+				646FEE1C198BED4100F2092B /* TSmimaxiugaiTableViewController.m */,
 			);
 			name = MyInfo;
 			sourceTree = "<group>";
@@ -631,7 +691,9 @@
 				64772D541989710A008CC8F0 /* FifthNavigationController.m */,
 				64BD4E8019890AF900A8B7AA /* TSguzhuTableViewController.h */,
 				64BD4E8119890AF900A8B7AA /* TSguzhuTableViewController.m */,
+				646FEE1F198C1AFD00F2092B /* product */,
 				64772D56198A308A008CC8F0 /* vipManager */,
+				646FEE17198BECAC00F2092B /* 51cangku */,
 				64BD4E8C19890B2300A8B7AA /* kanyang */,
 				64BD4E8319890B0500A8B7AA /* yixiangdingdan */,
 				64BD4E7F19890ACC00A8B7AA /* MyInfo */,
@@ -664,6 +726,10 @@
 		64FA00C318E409A0006E12B2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				646FEE15198BB58200F2092B /* libz.dylib */,
+				646FEE13198BB55B00F2092B /* SystemConfiguration.framework */,
+				646FEE11198BB54E00F2092B /* CoreTelephony.framework */,
+				646FEE0F198BB52400F2092B /* CFNetwork.framework */,
 				EB0688A31973CBE2001AC4C1 /* libsqlite3.dylib */,
 				64FA00C418E409A0006E12B2 /* Foundation.framework */,
 				64FA00C618E409A0006E12B2 /* CoreGraphics.framework */,
@@ -849,8 +915,6 @@
 				EB0688AA1973D7DB001AC4C1 /* TSrecommendPost.m */,
 				EB0688AC1973E7A4001AC4C1 /* TSItemDetailPost.h */,
 				EB0688AD1973E7A4001AC4C1 /* TSItemDetailPost.m */,
-				EB642BCA197508DC00E4E527 /* TSCommentPost.h */,
-				EB642BCB197508DC00E4E527 /* TSCommentPost.m */,
 				EB0AB52C19760EA400FBF1B6 /* TSItemListPost.h */,
 				EB0AB52D19760EA400FBF1B6 /* TSItemListPost.m */,
 				64F483CD198380F500B33333 /* TSItemCommentPost.h */,
@@ -989,6 +1053,7 @@
 				64F483CC1983651E00B33333 /* 2.jpg in Resources */,
 				64BD4E7E19890AB500A8B7AA /* TSfahuoItemTableViewCell.xib in Resources */,
 				647F35E919616A240014A64F /* MJRefresh.bundle in Resources */,
+				646FEE26198C1B0D00F2092B /* TSmyproductTableViewCell.xib in Resources */,
 				64FA00D818E409A0006E12B2 /* Main.storyboard in Resources */,
 				EB081668196E281900C03045 /* 1.png in Resources */,
 				64BD4E7C19890AB500A8B7AA /* TSRebateTableViewCell.xib in Resources */,
@@ -1039,10 +1104,10 @@
 				64F483C41983638800B33333 /* TSmyzhixiaoTableViewController.m in Sources */,
 				EB5BDBA31972EC7100403299 /* TSAppDoNetAPIClient.m in Sources */,
 				640FAB521986205600AF3518 /* TSRecommentTableViewController.m in Sources */,
-				EB642BCC197508DC00E4E527 /* TSCommentPost.m in Sources */,
 				643A1502195BB74200854928 /* UIAlertView+AFNetworking.m in Sources */,
 				643A1500195BB74200854928 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				EB086819196F886600EF416B /* WebViewController.m in Sources */,
+				646FEE27198C1B0D00F2092B /* TSmyproductTableViewCell.m in Sources */,
 				EB0688A71973CFBE001AC4C1 /* UIImage+saveimage.m in Sources */,
 				64F483CF198380F500B33333 /* TSItemCommentPost.m in Sources */,
 				64772D551989710A008CC8F0 /* FifthNavigationController.m in Sources */,
@@ -1088,6 +1153,7 @@
 				64474CC8197A42CD000C1C7D /* TSCoLtdpost.m in Sources */,
 				64BD4E6919890A7700A8B7AA /* TSfandianTableViewController.m in Sources */,
 				64BD4E9219890B3400A8B7AA /* TSKanYangTableViewController.m in Sources */,
+				646FEE25198C1B0D00F2092B /* TSmyproductTableViewController.m in Sources */,
 				647F35F019616A240014A64F /* UIView+Extension.m in Sources */,
 				64FA00D518E409A0006E12B2 /* TSAppDelegate.m in Sources */,
 				64BD4E7A19890AB500A8B7AA /* TSdingdanpost.m in Sources */,
@@ -1098,9 +1164,11 @@
 				647F35EF19616A240014A64F /* UIScrollView+MJRefresh.m in Sources */,
 				EB0AB52E19760EA400FBF1B6 /* TSItemListPost.m in Sources */,
 				647F35EB19616A240014A64F /* MJRefreshConst.m in Sources */,
+				646FEE1A198BECD000F2092B /* TS51cangkuTableViewController.m in Sources */,
 				6457DE0618E55E49008193BC /* UIImage+UIImageExtras.m in Sources */,
 				64BD4E7B19890AB500A8B7AA /* TSRebateTableViewCell.m in Sources */,
 				EB00B1F2196CF03E00F7388E /* TSForthViewController.m in Sources */,
+				646FEE1E198BED4100F2092B /* TSmimaxiugaiTableViewController.m in Sources */,
 				64772D5F198A309A008CC8F0 /* TShuiyuanguanliTableViewCell.m in Sources */,
 				640FAB61198673F800AF3518 /* RegisterTableViewController.m in Sources */,
 				6401E394197F9F33006FA185 /* ItemDetail2TableViewCell.m in Sources */,
@@ -1262,6 +1330,10 @@
 				GCC_WARN_UNDECLARED_SELECTOR = NO;
 				INFOPLIST_FILE = "TS51huapao/TS51huapao-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TS51huapao",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -1280,6 +1352,10 @@
 				GCC_WARN_UNDECLARED_SELECTOR = NO;
 				INFOPLIST_FILE = "TS51huapao/TS51huapao-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TS51huapao",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;

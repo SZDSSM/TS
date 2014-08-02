@@ -83,10 +83,29 @@
         _labelCurrentPrice.attributedText=str;
     }
     
-    if ([_post.Price isEqualToString:@""]) {
-        _labelOldPrice.text=NSLocalizedString(@"kong", @"");
+    if (!_post.oldPrice.floatValue>0) {
+        _labelOldPrice.text=[[@"¥" stringByAppendingString:post.Price] stringByAppendingString:@"/每箱"];;
     }else{
-        _labelOldPrice.text=[[@"¥" stringByAppendingString:_post.Price] stringByAppendingString:@"/每箱"];
+        _labelOldPrice.text=[[@"¥" stringByAppendingString:post.oldPrice] stringByAppendingString:@"/每箱"];
+    }
+    
+    if ([_post.U_NEU_SaleType isEqualToString:@"直销"]) {
+        if (post.CostPrice.floatValue>0 &&([TSUser sharedUser].USERTYPE==TSManager ||[TSUser sharedUser].USERTYPE==TSUnionClient)) {
+            _zhixiaojia.text=[NSString stringWithFormat:@"直销价: %@元/箱",post.CostPrice];
+            _zhixiaojia.hidden=NO;
+        }else{
+            _zhixiaojia.hidden=YES;
+        }
+    }else{
+        _zhixiaojia.hidden=YES;
+    }
+
+    if ([TSUser sharedUser].USERTYPE==TSVender) {
+        _labelCurrentPrice.hidden=YES;
+        _labelOldPrice.hidden=YES;
+    }else{
+        _labelCurrentPrice.hidden=NO;
+        _labelOldPrice.hidden=NO;
     }
 }
 @end

@@ -16,7 +16,7 @@
 #import "UIScrollView+MJRefresh.h"
 #import "TSRebateTableViewCell.h"
 #import "TSfandianTableViewController.h"
-
+#import "TSAppDoNetAPIClient.h"
 
 
 @interface TSdingdanTableViewController ()
@@ -53,16 +53,17 @@
 {
     [super viewDidLoad];
     
+    [self.tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 1)]];
 //    self.title = @"销售订单";
     
     self.page = 1;
     
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     
     
 //    self.hidesBottomBarWhenPushed = YES;
     
-    [self setupRefresh];
+    [self getDocSum];
     
      if ([_ConditionType isEqualToString:@"SR"]) {
         
@@ -71,27 +72,76 @@
         
         [self.tableView registerNib:nib forCellReuseIdentifier:@"rebate"];
     }else{
-    
-    UINib * nib = [UINib nibWithNibName:@"TSfahuoItemTableViewCell" bundle:nil];
-    
-    self.tableView.rowHeight = 76;
-    
-    [self.tableView registerNib:nib forCellReuseIdentifier:@"fahuo"];
+        UINib * nib = [UINib nibWithNibName:@"TSfahuoItemTableViewCell" bundle:nil];
+        self.tableView.rowHeight = 76;
+        [self.tableView registerNib:nib forCellReuseIdentifier:@"fahuo"];
     }
 }
 
+-(void)getDocSum
+{
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:3];
+    
+    [dic setObject:_userType forKey:@"U_type"];
+    
+    [dic setObject:_ConditionType forKey:@"ConditionType"];
+    
+    if ([TSUser sharedUser].cardcode!=nil) {
+        [dic setObject:[TSUser sharedUser].cardcode forKey:@"CardCode"];
+    }
+    
+    [[TSAppDoNetAPIClient sharedClient] GET:@"FoxGetDocSumInfo.ashx" parameters:dic success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSNumber *sum1=[[NSNumber alloc]init];
+        NSNumber *sum2=[[NSNumber alloc]init];
+        
+        UILabel *label1=[[UILabel alloc] init];
+        label1.frame=CGRectMake(15, 10, 130, 25);
+        label1.backgroundColor=[UIColor clearColor];
+        label1.textColor=[UIColor lightGrayColor];
+        label1.font=[UIFont boldSystemFontOfSize:15];
+        label1.adjustsFontSizeToFitWidth=YES;
+        
+        UILabel *label2=[[UILabel alloc] init];
+        label2.frame=CGRectMake(160, 10, 150, 25);
+        label2.backgroundColor=[UIColor clearColor];
+        label2.textColor=[UIColor lightGrayColor];
+        label2.font=[UIFont boldSystemFontOfSize:15];
+        label2.adjustsFontSizeToFitWidth=YES;
+        
+        if (![_ConditionType isEqualToString:@"SR"]) {
+            sum1=[responseObject objectForKey:@"qtySum"];
+            sum2=[responseObject objectForKey:@"priceSum"];
+            label1.text=[NSString stringWithFormat:@"总数量: %@",sum1];
+            label2.text=[NSString stringWithFormat:@"总金额: %@",sum2];
+        }else{
+            sum1=[responseObject objectForKey:@"RebateSum"];
+            sum2=[responseObject objectForKey:@"ClosedRebateSumum"];
+            label1.text=[NSString stringWithFormat:@"返点总计: %@",sum1];
+            label2.text=[NSString stringWithFormat:@"已返点总计: %@",sum2];
+        }
+        _sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 45)];
+        [_sectionView setBackgroundColor:[UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1]];
+        [_sectionView addSubview:label1];
+        [_sectionView addSubview:label2];
+        [self setupRefresh];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [self setupRefresh];
+    }];
+}
 - (void)getData
 {
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:5];
     
 
-    [dic setObject:@"M" forKey:@"U_type"];
-
-    if (_ConditionType != nil) {
-        [dic setObject:_ConditionType forKey:@"ConditionType"];
-    }else{
-        [dic setObject:@"SO" forKey:@"ConditionType"];
+    [dic setObject:_userType forKey:@"U_type"];
+    
+    [dic setObject:_ConditionType forKey:@"ConditionType"];
+    
+    if ([TSUser sharedUser].cardcode!=nil) {
+        [dic setObject:[TSUser sharedUser].cardcode forKey:@"CardCode"];
     }
+    
     [dic setObject:[NSString stringWithFormat:@"%lu",(unsigned long)_page] forKey:@"pageindex"];
     
     NSURLSessionDataTask * task = [TSdingdanpost globalTimeGetAnVipTradeConditionWithDictionary:dic Block:^(NSArray *posts,NSUInteger maxcount, NSError *error) {
@@ -103,9 +153,9 @@
                 _posts = posts;
             }
             [self.tableView reloadData];
-            [self.tableView headerEndRefreshing];
-            [self.tableView footerEndRefreshing];
         }
+        [self.tableView headerEndRefreshing];
+        [self.tableView footerEndRefreshing];
     }];
     [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
     
@@ -124,10 +174,10 @@
 {
     // 1.添加下拉花炮云商标语
     [self.tableView addHeaderWithTarget:self action:@selector(headerRereshing)];
-    
-    [self.tableView headerBeginRefreshing];
     // 2.添加上拉刷新
     [self.tableView addFooterWithTarget:self action:@selector(footerRereshing)];
+    
+    [self.tableView headerBeginRefreshing];
 }
 
 #pragma mark 开始进入刷新状态
@@ -174,20 +224,16 @@
         if (nil == cell) {
             cell = [[TSRebateTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"rebate"];
         }
-        
         cell.dingdanpost = [_posts objectAtIndex:indexPath.row];
         return cell;
         
     }else{
-
-    TSfahuoItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"fahuo"];
-    if (nil == cell) {
-        cell = [[TSfahuoItemTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"fahuo"];
-    }
-    
-    cell.dingdanpost = [self.posts objectAtIndex:indexPath.row];
-        
-    return cell;
+        TSfahuoItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"fahuo"];
+        if (nil == cell) {
+            cell = [[TSfahuoItemTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"fahuo"];
+        }
+        cell.dingdanpost = [self.posts objectAtIndex:indexPath.row];
+        return cell;
     }
 }
 
@@ -201,13 +247,22 @@
         viewController.lastpost = ((TSRebateTableViewCell *)[tableView cellForRowAtIndexPath:indexPath]).dingdanpost;
         [self.navigationController pushViewController:viewController animated:YES];
     }else{
-    TSdanjuxiangqingTableViewController * viewController = [[TSdanjuxiangqingTableViewController alloc] initWithStyle:UITableViewStylePlain];
-    //viewController.danhao = ((TSfahuoItemTableViewCell *)[tableView cellForRowAtIndexPath:indexPath]).danhao.text;
-    viewController.conditiontype = _ConditionType;
-    viewController.dingdanpost = ((TSfahuoItemTableViewCell *)[tableView cellForRowAtIndexPath:indexPath]).dingdanpost;
-    [self.navigationController pushViewController:viewController animated:YES];
+        TSdanjuxiangqingTableViewController * viewController = [[TSdanjuxiangqingTableViewController alloc] initWithStyle:UITableViewStylePlain];
+        viewController.conditiontype = _ConditionType;
+        viewController.dingdanpost = ((TSfahuoItemTableViewCell *)[tableView cellForRowAtIndexPath:indexPath]).dingdanpost;
+        [self.navigationController pushViewController:viewController animated:YES];
     }
 }
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    return _sectionView;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 45;
+}
+
+// In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 
 
 @end

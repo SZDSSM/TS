@@ -8,7 +8,7 @@
 
 #import "TSShaiXuanTableViewController.h"
 #import "AFNetworking.h"
-
+#import "TSAppDoNetAPIClient.h"
 
 @interface TSShaiXuanTableViewController ()
 
@@ -76,25 +76,9 @@
 
 - (void)_initData
 {
-    
-    NSString * touchurl = @"http://124.232.163.242/com.ds.ws/FOXHttpHandler/FoxGetScreenList.ashx";
-    NSString *URLTmp1 = [touchurl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];  //转码成UTF-8  否则可能会出现错误
-    touchurl = URLTmp1;
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString: touchurl]];
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSString *requestTmp = [NSString stringWithString:operation.responseString];
-        requestTmp = [requestTmp stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
-        
-        requestTmp = [requestTmp stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-        
-        requestTmp = [requestTmp stringByReplacingOccurrencesOfString:@"\t" withString:@""];
-        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-        //系统自带JSON解析
-        if (resData != nil) {
-            //将获取到的数据JSON解析到数组中
-            NSError *error;
-            self.getDic = [[NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingAllowFragments error:&error]mutableCopy];
+   
+            [[TSAppDoNetAPIClient sharedClient] GET:@"FoxGetScreenList.ashx" parameters:@{} success:^(NSURLSessionDataTask *task, id responseObject) {
+            self.getDic = [(NSDictionary *)responseObject mutableCopy];
             
             if ([self.itemName isEqualToString:@"爆竹类"]) {
                 [_getDic removeObjectForKey:@"MEIFA"];
@@ -115,21 +99,14 @@
                     }
                 }
             }
-//            self.dataList = [self.getDic objectForKey:@"TSItmsGrp"];
+            //            self.dataList = [self.getDic objectForKey:@"TSItmsGrp"];
+            [self.tableView reloadData];
             [self.tableView reloadData];
             
-        }else if(nil == resData){
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
             UIAlertView *AlertView1=[[UIAlertView alloc]initWithTitle:@"提示" message:@"未获取到数据" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil];
             [AlertView1 show];
-            
-        }
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Failure: %@", error);
-        UIAlertView *AlertView1=[[UIAlertView alloc]initWithTitle:@"提示" message:@"未获取到数据" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil];
-        [AlertView1 show];
-    }];
-    [operation start];
+        }];
     
     
 }
@@ -165,7 +142,7 @@
 
 }
 
-- (float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 40;
 }
@@ -300,8 +277,8 @@
     
     [self.tableView beginUpdates];
     
-    int section = self.selectIndex.section;
-    int contentCount = [[self.getDic objectForKey:[_tiaojianitem objectAtIndex:section]] count]+1;
+    NSUInteger section = self.selectIndex.section;
+    NSUInteger contentCount = [[self.getDic objectForKey:[_tiaojianitem objectAtIndex:section]] count]+1;
 	NSMutableArray* rowToInsert = [[NSMutableArray alloc] init];
 	for (NSUInteger i = 1; i < contentCount + 1; i++) {
 		NSIndexPath* indexPathToInsert = [NSIndexPath indexPathForRow:i inSection:section];

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TSMyInfoTableViewController : UITableViewController
+@interface TSMyInfoTableViewController : UITableViewController<UITextFieldDelegate>
 
 @property (nonatomic, strong)UIView * sectionView;
 

@@ -24,6 +24,8 @@
     self.VendorPrice = [self changeString:[attributes objectForKey:@"VendorPrice"]];
     self.Price = [self changeString:[attributes objectForKey:@"Price"]];
     self.costPrice = [self changeString:[attributes objectForKey:@"costPrice"]];
+    self.oldPrice = [self changeString:[attributes valueForKey:@"OldPrice"]];
+
     self.U_Neu_Content = [self changeString:[attributes objectForKey:@"U_Neu_Content"]];
     self.IsOTO = [self changeString:[attributes objectForKey:@"IsOTO"]];
     self.IsRebate = [self changeString:[attributes objectForKey:@"IsRebate"]];
@@ -33,7 +35,7 @@
     self.onHand = [self changeString:[attributes objectForKey:@"onHand"]];
     self.U_Photo1 = [self changeString:[attributes objectForKey:@"U_Photo1"]];
     self.UMTVURL = [self changeString:[attributes objectForKey:@"UMTVURL"]];
-
+    self.VendorOnhand = [self changeString:[attributes objectForKey:@"VendorOnhand"]];
     
     return self;
 }

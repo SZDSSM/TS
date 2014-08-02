@@ -17,6 +17,8 @@
 @property (strong, nonatomic) NSString * stocksum;
 @property (strong, nonatomic) NSString * Price;
 @property (strong, nonatomic) NSString * costPrice;
+@property (strong, nonatomic) NSString * oldPrice;
+
 @property (strong, nonatomic) NSString * U_Neu_Content;
 @property (strong, nonatomic) NSString * IsOTO;
 @property (strong, nonatomic) NSString * IsRebate;

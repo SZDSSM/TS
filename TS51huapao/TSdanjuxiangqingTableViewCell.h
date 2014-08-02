@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "TSdanjuxiangqingpost.h"
-
+#import "TSdanjuxiangqingTableViewController.h"
 @interface TSdanjuxiangqingTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *itemimage;
@@ -20,5 +20,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *openQuantity;
 
 @property (strong, nonatomic) TSdanjuxiangqingpost * danjuxiangqingpost;
+
+@property (weak, nonatomic) TSdanjuxiangqingTableViewController  *sender;
+
+-(void)pushtoItemDetailView;
 
 @end

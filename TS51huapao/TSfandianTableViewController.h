@@ -16,6 +16,9 @@
 @property (nonatomic, strong)NSString * cardnumber;
 @property (nonatomic, strong)TSdingdanpost * lastpost;
 
+@property (nonatomic, strong)NSString * CardName;
+@property (nonatomic, strong)NSString * U_RebateSUM;
+@property (nonatomic, strong)NSString * Rebate;
 
 
 @end

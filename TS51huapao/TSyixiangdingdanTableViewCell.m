@@ -50,7 +50,17 @@
     }
     self.itemname.text = _yixiangdingdanpost.ItemName;
     self.specContent.text = [NSString stringWithFormat:@"规格:%@\t含量:%@",_yixiangdingdanpost.Spec,_yixiangdingdanpost.U_Neu_Content];
-    self.price.text = _yixiangdingdanpost.Price;
+    
+    
+    //self.price.text
+    NSString *cp= _yixiangdingdanpost.Price;
+    if (![_yixiangdingdanpost.costPrice isEqualToString:@""]&&[TSUser sharedUser].USERTYPE==TSManager) {
+        cp=[cp stringByAppendingString:@"("];
+        cp=[cp stringByAppendingString:_yixiangdingdanpost.costPrice];
+        cp=[cp stringByAppendingString:@")"];
+    }
+    _price.text=[cp stringByAppendingString:@"元/箱"];
+    
     self.quantity.text = _yixiangdingdanpost.quantity;
     self.date.text = _yixiangdingdanpost.StorDateTime;
     self.contectperson.text = _yixiangdingdanpost.vipname;

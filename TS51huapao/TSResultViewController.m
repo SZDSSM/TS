@@ -148,6 +148,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 1)]];
     self.page = 1;
     [self initSearchbar];
     [self setupRefresh];

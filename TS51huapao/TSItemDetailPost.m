@@ -17,7 +17,8 @@
     if(!self){
         return nil;
     };
-    self.CostPrice=[self changeString:[attributes valueForKeyPath:@"CostPrice"]];//原价
+    self.CostPrice=[self changeString:[attributes valueForKeyPath:@"CostPrice"]];//采购价
+    self.oldPrice=[self changeString:[attributes valueForKeyPath:@"oldPrice"]];//原价
     self.Effect=[self changeString:[attributes valueForKeyPath:@"Effect"]];
     self.IsEnsure=[self changeString:[attributes valueForKeyPath:@"IsEnsure"]];
     self.IsFreeShip=[self changeString:[attributes valueForKeyPath:@"IsFreeShip"]];

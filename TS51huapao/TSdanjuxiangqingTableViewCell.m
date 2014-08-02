@@ -9,6 +9,7 @@
 #import "TSdanjuxiangqingTableViewCell.h"
 #import "AFNetworking.h"
 #import "UIKit+AFNetworking.h"
+#import "ItemDetailTableViewController.h"
 
 @implementation TSdanjuxiangqingTableViewCell
 
@@ -42,6 +43,14 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+-(void)pushtoItemDetailView
+{
+    UIStoryboard *board=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    ItemDetailTableViewController *itemdetail = [board instantiateViewControllerWithIdentifier:@"tsItemdetail"];
+    itemdetail.itemcode=_danjuxiangqingpost.ItemCode;
+    [_sender.navigationController pushViewController:itemdetail animated:YES];
 }
 
 @end

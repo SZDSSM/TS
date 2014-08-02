@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "TSdingdanpost.h"
-
+#import "TSfandianTableViewController.h"
 @interface TSRebateMoreTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *itemimage;
@@ -21,5 +21,8 @@
 
 @property (strong, nonatomic) TSdingdanpost * dingdanpost;
 
+@property (weak, nonatomic) TSfandianTableViewController  *sender;
+
+-(void)pushtoItemDetailView;
 
 @end

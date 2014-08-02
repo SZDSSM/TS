@@ -11,6 +11,8 @@
 #import "FristSearchTableViewController.h"
 #import "TSSecondViewController.h"
 #import "TSSecondResultTableViewController.h"
+#import "TSAppDoNetAPIClient.h"
+#import "MJRefresh.h"
 
 @interface TSSecondViewController ()
 
@@ -53,8 +55,7 @@
 {
     [super viewDidLoad];
     [self _initSearchBar];
-    [self _initData];
-    [self getChicun];
+    [self setupRefresh];
     self.isOpen = NO;
     [self.tableView setSeparatorInset:UIEdgeInsetsZero];
     
@@ -67,83 +68,51 @@
 
 - (void)_initData
 {
-    
-    NSString * touchurl = @"http://124.232.163.242/com.ds.ws/FOXHttpHandler/FoxGetItemGroupList.ashx";
-    NSString *URLTmp1 = [touchurl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];  //转码成UTF-8  否则可能会出现错误
-    touchurl = URLTmp1;
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString: touchurl]];
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSString *requestTmp = [NSString stringWithString:operation.responseString];
-        requestTmp = [requestTmp stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
+    [[TSAppDoNetAPIClient sharedClient] GET:@"FoxGetItemGroupList.ashx" parameters:@{} success:^(NSURLSessionDataTask *task, id responseObject) {
+        self.dataList = [responseObject objectForKey:@"TSItmsGrp"];
+        [self getChicun];
         
-        requestTmp = [requestTmp stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-        
-        requestTmp = [requestTmp stringByReplacingOccurrencesOfString:@"\t" withString:@""];
-        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-        //系统自带JSON解析
-        if (resData != nil) {
-            //将获取到的数据JSON解析到数组中
-            NSError *error;
-            self.getDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingAllowFragments error:&error];
-            self.dataList = [self.getDic objectForKey:@"TSItmsGrp"];
-            [self.tableView reloadData];
-            
-        }else if(nil == resData){
-            UIAlertView *AlertView1=[[UIAlertView alloc]initWithTitle:@"提示" message:@"未获取到数据" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil];
-            [AlertView1 show];
-            
-        }
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Failure: %@", error);
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         UIAlertView *AlertView1=[[UIAlertView alloc]initWithTitle:@"提示" message:@"未获取到数据" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil];
         [AlertView1 show];
+        [self.tableView headerEndRefreshing];
     }];
-    [operation start];
-    
-    
 }
 
 - (void)getChicun
 {
-    NSString * touchurl = @"http://124.232.163.242/com.ds.ws/FOXHttpHandler/FoxGetTZspecList.ashx";
-    NSString *URLTmp1 = [touchurl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];  //转码成UTF-8  否则可能会出现错误
-    touchurl = URLTmp1;
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString: touchurl]];
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSString *requestTmp = [NSString stringWithString:operation.responseString];
-        requestTmp = [requestTmp stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
+    [[TSAppDoNetAPIClient sharedClient] GET:@"FoxGetTZspecList.ashx" parameters:@{} success:^(NSURLSessionDataTask *task, id responseObject) {
+        self.zuhe = [[responseObject objectForKey:@"TSItemTZspec"]mutableCopy];
+        [_zuhe insertObject:@{@"spec": @"全部"} atIndex:0];
         
-        requestTmp = [requestTmp stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        [self.tableView reloadData];
         
-        requestTmp = [requestTmp stringByReplacingOccurrencesOfString:@"\t" withString:@""];
-        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-        //系统自带JSON解析
-        if (resData != nil) {
-            //将获取到的数据JSON解析到数组中
-            NSError *error;
-            self.getDic1 = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingAllowFragments error:&error];
-            self.zuhe = [[self.getDic1 objectForKey:@"TSItemTZspec"]mutableCopy];
-            [_zuhe insertObject:@{@"spec": @"全部"} atIndex:0];
-            //            [self.tableView reloadData];
-            
-        }else if(nil == resData){
-            UIAlertView *AlertView1=[[UIAlertView alloc]initWithTitle:@"提示" message:@"未获取到数据" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil];
-            [AlertView1 show];
-            
-        }
+        [self.tableView headerEndRefreshing];
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Failure: %@", error);
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         UIAlertView *AlertView1=[[UIAlertView alloc]initWithTitle:@"提示" message:@"未获取到数据" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil];
         [AlertView1 show];
+        [self.tableView headerEndRefreshing];
     }];
-    [operation start];
-    
 }
 
+/**
+ *  集成刷新控件
+ */
+- (void)setupRefresh
+{
+    // 1.添加下拉花炮云商标语
+    [self.tableView addHeaderWithTarget:self action:@selector(headerRereshing)];
+    
+    [self.tableView headerBeginRefreshing];
+}
+
+#pragma mark 开始进入刷新状态
+- (void)headerRereshing
+{
+    [self _initData];
+}
 - (void)_initSearchBar
 {
     //导航条的搜索条
@@ -183,17 +152,17 @@
     return 1;
 }
 
-- (float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.isOpen) {
         if (self.selectIndex.section == indexPath.section){
             if (indexPath.row != 0) {
-                return 30;
+                return 30.0;
             }else
-                return 50;
+                return 50.0;
         }
     }
-    return 50;
+    return 50.0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

@@ -14,6 +14,10 @@
 #import "MJRefresh.h"
 #import "UIScrollView+MJRefresh.h"
 
+
+#import "TSdanjuxiangqingTableViewCell.h"
+
+
 @interface TSdanjuxiangqingTableViewController ()
 
 @property (nonatomic, strong)NSArray * posts;
@@ -207,8 +211,8 @@
             _posts = posts;
             
             [self.tableView reloadData];
-            [self.tableView headerEndRefreshing];
         }
+        [self.tableView headerEndRefreshing];
     }];
     [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
 }
@@ -241,7 +245,14 @@
     }
     
     cell.danjuxiangqingpost = [_posts objectAtIndex:indexPath.row];
+    cell.sender=self;
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+        TSdanjuxiangqingTableViewCell *cell=(TSdanjuxiangqingTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+        [cell pushtoItemDetailView];
 }
 
 @end

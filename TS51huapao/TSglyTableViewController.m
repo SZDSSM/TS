@@ -18,7 +18,9 @@
 #import "TSAppDoNetAPIClient.h"
 #import "TSmyzhixiaoTableViewController.h"
 #import "TShuiyuanguanliTableViewController.h"
-
+#import "TS51cangkuTableViewController.h"
+#import "TSmyproductTableViewController.h"
+#import "TSfandianTableViewController.h"
 
 static NSString*const BaseURLString = @"http://124.232.163.242/com.ds.ws/FOXHttpHandler/FoxGetAnVipTradeCondition.ashx?U_type=M&ConditionType=TO&CardCode=m";
 
@@ -143,6 +145,7 @@ static NSString*const BaseURLString = @"http://124.232.163.242/com.ds.ws/FOXHttp
     nameLabel.lineBreakMode = NSLineBreakByWordWrapping;
     nameLabel.text = [TSUser sharedUser].CARD_CardName;
     [nameLabel setBackgroundColor:[UIColor whiteColor]];
+    nameLabel.adjustsFontSizeToFitWidth=YES;
     //cantactname
     UILabel * nameLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(60, 45, ScreenWidth-70, 20)];
     [nameLabel2 setTextColor:[UIColor lightGrayColor]];
@@ -237,6 +240,7 @@ static NSString*const BaseURLString = @"http://124.232.163.242/com.ds.ws/FOXHttp
     nameLabel.lineBreakMode = NSLineBreakByWordWrapping;
     nameLabel.text = [TSUser sharedUser].CARD_CardName;
     [nameLabel setBackgroundColor:[UIColor whiteColor]];
+    nameLabel.adjustsFontSizeToFitWidth=YES;
     //cantactname
     UILabel * nameLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(60, 45, ScreenWidth-70, 20)];
     [nameLabel2 setTextColor:[UIColor lightGrayColor]];
@@ -300,6 +304,7 @@ static NSString*const BaseURLString = @"http://124.232.163.242/com.ds.ws/FOXHttp
     nameLabel.lineBreakMode = NSLineBreakByWordWrapping;
     nameLabel.text = [TSUser sharedUser].CARD_CardName;
     [nameLabel setBackgroundColor:[UIColor whiteColor]];
+    nameLabel.adjustsFontSizeToFitWidth=YES;
     //cantactname
     UILabel * nameLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(60, 45, ScreenWidth-70, 20)];
     [nameLabel2 setTextColor:[UIColor lightGrayColor]];
@@ -375,7 +380,11 @@ static NSString*const BaseURLString = @"http://124.232.163.242/com.ds.ws/FOXHttp
 {
     _label1.text = [NSString stringWithFormat:@"%@",[self.getDic objectForKey:@"DeliverQtSUM"]];
     _label2.text = [NSString stringWithFormat:@"%@",[self.getDic objectForKey:@"DeliverPriceSUM"]];
-    _label3.text = [NSString stringWithFormat:@"%@",[self.getDic objectForKey:@"ReBatePriceSUM"]];
+    NSNumber *rebate=[self.getDic objectForKey:@"ReBatePriceSUM"];
+    NSNumber *closedRebate=[self.getDic objectForKey:@"ClosedReBatePriceSUM"];
+    
+    _label3.text =[NSString stringWithFormat:@"%d",(rebate.intValue-closedRebate.intValue)];
+    // [NSString stringWithFormat:@"%@",[self.getDic objectForKey:@"ReBatePriceSUM"]];
 }
 - (void)_initVenderXiangXiLabel
 {
@@ -417,20 +426,22 @@ static NSString*const BaseURLString = @"http://124.232.163.242/com.ds.ws/FOXHttp
         [self.navigationController pushViewController:viewController animated:YES];
     }
     else if ([[tableView cellForRowAtIndexPath:indexPath].textLabel.text isEqualToString:@"企业资料"]) {
-        TSMyComInfoTableViewController * viewController = [[TSMyComInfoTableViewController alloc] init];
+        UIStoryboard *board=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        TSMyComInfoTableViewController *viewController = [board instantiateViewControllerWithIdentifier:@"TSMyComInfoTableView"];
         [viewController.tableView setTableHeaderView: _sectionView];
         viewController.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:viewController animated:YES];
     }
     else if ([[tableView cellForRowAtIndexPath:indexPath].textLabel.text isEqualToString:@"个人资料"]) {
-        TSMyInfoTableViewController * viewController = [[TSMyInfoTableViewController alloc] init];
+        UIStoryboard *board=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        TSMyInfoTableViewController *viewController = [board instantiateViewControllerWithIdentifier:@"MyInfoTableView"];
         [viewController.tableView setTableHeaderView: _sectionView];
         viewController.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:viewController animated:YES];
     }
     else if ([[tableView cellForRowAtIndexPath:indexPath].textLabel.text isEqualToString:@"51仓库"]) {
-        TSguzhuTableViewController * viewController = [[TSguzhuTableViewController alloc] initWithStyle:UITableViewStylePlain];
-        viewController.title = @"我的关注";
+        TS51cangkuTableViewController * viewController = [[TS51cangkuTableViewController alloc] initWithStyle:UITableViewStylePlain];
+        viewController.title = @"51仓库";
         viewController.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:viewController animated:YES];
     }
@@ -446,43 +457,40 @@ static NSString*const BaseURLString = @"http://124.232.163.242/com.ds.ws/FOXHttp
         [self.navigationController pushViewController:viewController animated:YES];
     }
     else if ([[tableView cellForRowAtIndexPath:indexPath].textLabel.text isEqualToString:@"我的产品库"]) {
-        TSguzhuTableViewController * viewController = [[TSguzhuTableViewController alloc] initWithStyle:UITableViewStylePlain];
-        viewController.title = @"我的关注";
+        TSmyproductTableViewController * viewController = [[TSmyproductTableViewController alloc] initWithStyle:UITableViewStylePlain];
+        viewController.title = @"我的产品库";
         viewController.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:viewController animated:YES];
     }
-    else if ([[tableView cellForRowAtIndexPath:indexPath].textLabel.text isEqualToString:@"销售订单"]) {
+    else if ([[tableView cellForRowAtIndexPath:indexPath].textLabel.text isEqualToString:@"销售订单"] ||([[tableView cellForRowAtIndexPath:indexPath].textLabel.text isEqualToString:@"我的订单"]&&[_U_type isEqualToString:@"C"])) {
         TSdingdanTableViewController * viewController = [[TSdingdanTableViewController alloc] initWithStyle:UITableViewStylePlain];
         viewController.ConditionType = @"SO";
         viewController.title = @"销售订单";
+        viewController.userType=_U_type;
         viewController.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:viewController animated:YES];
     }
-    else if ([[tableView cellForRowAtIndexPath:indexPath].textLabel.text isEqualToString:@"采购订单"]) {
+    else if ([[tableView cellForRowAtIndexPath:indexPath].textLabel.text isEqualToString:@"采购订单"]||([[tableView cellForRowAtIndexPath:indexPath].textLabel.text isEqualToString:@"我的订单"]&&[_U_type isEqualToString:@"S"])) {
         TSdingdanTableViewController * viewController = [[TSdingdanTableViewController alloc] initWithStyle:UITableViewStylePlain];
         viewController.ConditionType = @"PO";
         viewController.title = @"采购订单";
+        viewController.userType=_U_type;
         viewController.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:viewController animated:YES];
     }
-    else if ([[tableView cellForRowAtIndexPath:indexPath].textLabel.text isEqualToString:@"收货单"]) {
+    else if ([[tableView cellForRowAtIndexPath:indexPath].textLabel.text isEqualToString:@"收货单"]||([[tableView cellForRowAtIndexPath:indexPath].textLabel.text isEqualToString:@"发货单"]&&[_U_type isEqualToString:@"S"])) {
         TSdingdanTableViewController * viewController = [[TSdingdanTableViewController alloc] initWithStyle:UITableViewStylePlain];
         viewController.ConditionType = @"PD";
         viewController.title = @"收货单";
+        viewController.userType=_U_type;
         viewController.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:viewController animated:YES];
     }
-    else if ([[tableView cellForRowAtIndexPath:indexPath].textLabel.text isEqualToString:@"发货单"]) {
+    else if ([[tableView cellForRowAtIndexPath:indexPath].textLabel.text isEqualToString:@"发货单"]||[[tableView cellForRowAtIndexPath:indexPath].textLabel.text isEqualToString:@"收货单/51发货单"]) {
         TSdingdanTableViewController * viewController = [[TSdingdanTableViewController alloc] initWithStyle:UITableViewStylePlain];
         viewController.ConditionType = @"SD";
         viewController.title = @"发货单";
-        viewController.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:viewController animated:YES];
-    }
-    else if ([[tableView cellForRowAtIndexPath:indexPath].textLabel.text isEqualToString:@"收货单/51发货单"]) {
-        TSdingdanTableViewController * viewController = [[TSdingdanTableViewController alloc] initWithStyle:UITableViewStylePlain];
-        viewController.ConditionType = @"SD";
-        viewController.title = @"收货单/51发货单";
+        viewController.userType=_U_type;
         viewController.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:viewController animated:YES];
     }
@@ -490,6 +498,18 @@ static NSString*const BaseURLString = @"http://124.232.163.242/com.ds.ws/FOXHttp
         TSdingdanTableViewController * viewController = [[TSdingdanTableViewController alloc] initWithStyle:UITableViewStylePlain];
         viewController.ConditionType = @"SR";
         viewController.title = @"返点清单";
+        viewController.userType=_U_type;
+        viewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:viewController animated:YES];
+    }
+    else if ([[tableView cellForRowAtIndexPath:indexPath].textLabel.text isEqualToString:@"我的返点"]) {
+        TSfandianTableViewController * viewController = [[TSfandianTableViewController alloc] initWithStyle:UITableViewStylePlain];
+        viewController.ConditionType =@"SR";
+        viewController.userType = @"C";
+        viewController.cardnumber =[TSUser sharedUser].cardcode;
+        viewController.CardName=[TSUser sharedUser].CARD_CardName;
+        viewController.U_RebateSUM =[NSString stringWithFormat:@"%@",[self.getDic objectForKey:@"ClosedReBatePriceSUM"]];
+        viewController.Rebate=[NSString stringWithFormat:@"%@",[self.getDic objectForKey:@"ReBatePriceSUM"]];
         viewController.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:viewController animated:YES];
     }
@@ -501,7 +521,6 @@ static NSString*const BaseURLString = @"http://124.232.163.242/com.ds.ws/FOXHttp
     }
     else if ([[tableView cellForRowAtIndexPath:indexPath].textLabel.text isEqualToString:@"意向订单"]) {
         TSYiXiangDingDanTableViewController * viewController = [[TSYiXiangDingDanTableViewController alloc] initWithStyle:UITableViewStylePlain];
-        viewController.vipcode = @"ALL";
         viewController.title = @"意向订单";
         viewController.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:viewController animated:YES];

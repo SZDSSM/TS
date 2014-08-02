@@ -31,6 +31,202 @@
     [self.shadowView layer].borderWidth = 0.2;
 }
 
+-(void)setPriceTextWith:(NSString *)price costPrice:(NSString *)costPrice oldPrice:(NSString *)oldPrice stock:(NSString *)stock
+{
+    if ([TSUser sharedUser].USERTYPE==TSVender) {
+        _price.text=[stock stringByAppendingString:@"箱"];
+    }else{
+        NSString *cp=[[NSString alloc]init];
+        if([TSUser sharedUser].USERTYPE==TSUnionClient && costPrice.floatValue>1){
+            cp=[@"¥" stringByAppendingString:costPrice];
+        }else{
+            cp=[@"¥" stringByAppendingString:price];
+        }
+        NSUInteger len=cp.length;
+        if (costPrice.floatValue>1&&[TSUser sharedUser].USERTYPE==TSManager) {
+            cp=[cp stringByAppendingString:@"("];
+            cp=[cp stringByAppendingString:costPrice];
+            cp=[cp stringByAppendingString:@")"];
+            len=len+costPrice.length+2;
+        }
+        cp=[cp stringByAppendingString:@"元/箱"];
+        if (stock.floatValue>0) {
+            cp=[cp stringByAppendingString:@"  "];
+            cp=[cp stringByAppendingString:stock];
+            cp=[cp stringByAppendingString:@"箱"];
+        }
+        NSMutableAttributedString *str = [[NSMutableAttributedString alloc]initWithString:cp];
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0,len)];
+        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:16] range:NSMakeRange(0,len)];
+        _price.attributedText=str;
+    }
+}
+-(void)setImageViewWithIsOTO:(NSString *)IsOTO IsRebate:(NSString *)IsRebate MTVURL:(NSString *)MTVURL JIAN:(BOOL)IsJian{
+    if ([TSUser sharedUser].USERTYPE==TSCommonClient) {
+        if (![IsRebate isEqualToString:@"Y"]) {
+            if (!IsJian) {
+                if (![MTVURL hasPrefix:@"http"]) {
+                    _image1.hidden=YES;
+                    _image2.hidden=YES;
+                    _image3.hidden=YES;
+                }else{
+                    [_image1 setImage:[UIImage imageNamed:@"ic_bofanganniu"]];
+                    _image1.hidden=NO;
+                    _image2.hidden=YES;
+                    _image3.hidden=YES;
+                }
+            }else{
+                if (![MTVURL hasPrefix:@"http"]) {
+                    [_image1 setImage:[UIImage imageNamed:@"ic_launcher_jjph"]];
+                    _image1.hidden=NO;
+                    _image2.hidden=YES;
+                    _image3.hidden=YES;
+                }else{
+                    [_image1 setImage:[UIImage imageNamed:@"ic_launcher_jjph"]];
+                    [_image2 setImage:[UIImage imageNamed:@"ic_bofanganniu"]];
+                    _image1.hidden=NO;
+                    _image2.hidden=NO;
+                    _image3.hidden=YES;
+                }
+            }
+        }else{
+            if (!IsJian) {
+                if (![MTVURL hasPrefix:@"http"]) {
+                    [_image1 setImage:[UIImage imageNamed:@"ic_fanlianniu"]];
+                    _image1.hidden=NO;
+                    _image2.hidden=YES;
+                    _image3.hidden=YES;
+                }else{
+                    [_image1 setImage:[UIImage imageNamed:@"ic_fanlianniu"]];
+                    [_image2 setImage:[UIImage imageNamed:@"ic_bofanganniu"]];
+                    _image1.hidden=NO;
+                    _image2.hidden=NO;
+                    _image3.hidden=YES;
+                }
+            }else{
+                if (![MTVURL hasPrefix:@"http"]) {
+                    [_image1 setImage:[UIImage imageNamed:@"ic_fanlianniu"]];
+                    [_image2 setImage:[UIImage imageNamed:@"ic_launcher_jjph"]];
+                    _image1.hidden=NO;
+                    _image2.hidden=NO;
+                    _image3.hidden=YES;
+                }else{
+                    [_image1 setImage:[UIImage imageNamed:@"ic_fanlianniu"]];
+                    [_image2 setImage:[UIImage imageNamed:@"ic_launcher_jjph"]];
+                    [_image3 setImage:[UIImage imageNamed:@"ic_bofanganniu"]];
+                    _image1.hidden=NO;
+                    _image2.hidden=NO;
+                    _image3.hidden=NO;
+                }
+            }
+        }
+    }
+    else if ([TSUser sharedUser].USERTYPE==TSVender) {
+        if (![MTVURL hasPrefix:@"http"]) {
+            _image1.hidden=YES;
+            _image2.hidden=YES;
+            _image3.hidden=YES;
+        }else{
+            [_image1 setImage:[UIImage imageNamed:@"ic_bofanganniu"]];
+            _image1.hidden=NO;
+            _image2.hidden=YES;
+            _image3.hidden=YES;
+        }
+    }
+    else  if ([TSUser sharedUser].USERTYPE==TSManager ||[TSUser sharedUser].USERTYPE==TSUnionClient){
+        if (![IsOTO isEqualToString:@"Y"]) {
+            if (![IsRebate isEqualToString:@"Y"]) {
+                if (!IsJian) {
+                    if (![MTVURL hasPrefix:@"http"]) {
+                        _image1.hidden=YES;
+                        _image2.hidden=YES;
+                        _image3.hidden=YES;
+                    }else{
+                        [_image1 setImage:[UIImage imageNamed:@"ic_bofanganniu"]];
+                        _image1.hidden=NO;
+                        _image2.hidden=YES;
+                        _image3.hidden=YES;
+                    }
+                }else{
+                    if (![MTVURL hasPrefix:@"http"]) {
+                        [_image1 setImage:[UIImage imageNamed:@"ic_launcher_jjph"]];
+                        _image1.hidden=NO;
+                        _image2.hidden=YES;
+                        _image3.hidden=YES;
+                    }else{
+                        [_image1 setImage:[UIImage imageNamed:@"ic_launcher_jjph"]];
+                        [_image2 setImage:[UIImage imageNamed:@"ic_bofanganniu"]];
+                        _image1.hidden=NO;
+                        _image2.hidden=NO;
+                        _image3.hidden=YES;
+                    }
+                }
+            }else{
+                if (!IsJian) {
+                    if (![MTVURL hasPrefix:@"http"]) {
+                        [_image1 setImage:[UIImage imageNamed:@"ic_fanlianniu"]];
+                        _image1.hidden=NO;
+                        _image2.hidden=YES;
+                        _image3.hidden=YES;
+                    }else{
+                        [_image1 setImage:[UIImage imageNamed:@"ic_fanlianniu"]];
+                        [_image2 setImage:[UIImage imageNamed:@"ic_bofanganniu"]];
+                        _image1.hidden=NO;
+                        _image2.hidden=NO;
+                        _image3.hidden=YES;
+                    }
+                }else{
+                    if (![MTVURL hasPrefix:@"http"]) {
+                        [_image1 setImage:[UIImage imageNamed:@"ic_fanlianniu"]];
+                        [_image2 setImage:[UIImage imageNamed:@"ic_launcher_jjph"]];
+                        _image1.hidden=NO;
+                        _image2.hidden=NO;
+                        _image3.hidden=YES;
+                    }else{
+                        [_image1 setImage:[UIImage imageNamed:@"ic_fanlianniu"]];
+                        [_image2 setImage:[UIImage imageNamed:@"ic_launcher_jjph"]];
+                        [_image3 setImage:[UIImage imageNamed:@"ic_bofanganniu"]];
+                        _image1.hidden=NO;
+                        _image2.hidden=NO;
+                        _image3.hidden=NO;
+                    }
+                }
+            }
+        }else{
+            if (!IsJian) {
+                if (![MTVURL hasPrefix:@"http"]) {
+                    [_image1 setImage:[UIImage imageNamed:@"ic_zhijianganniu"]];
+                    _image1.hidden=NO;
+                    _image2.hidden=YES;
+                    _image3.hidden=YES;
+                }else{
+                    [_image1 setImage:[UIImage imageNamed:@"ic_zhijianganniu"]];
+                    [_image2 setImage:[UIImage imageNamed:@"ic_bofanganniu"]];
+                    _image1.hidden=NO;
+                    _image2.hidden=NO;
+                    _image3.hidden=YES;
+                }
+            }else{
+                if (![MTVURL hasPrefix:@"http"]) {
+                    [_image1 setImage:[UIImage imageNamed:@"ic_zhijianganniu"]];
+                    [_image2 setImage:[UIImage imageNamed:@"ic_launcher_jjph"]];
+                    _image1.hidden=NO;
+                    _image2.hidden=NO;
+                    _image3.hidden=YES;
+                }else{
+                    [_image1 setImage:[UIImage imageNamed:@"ic_zhijianganniu"]];
+                    [_image2 setImage:[UIImage imageNamed:@"ic_launcher_jjph"]];
+                    [_image3 setImage:[UIImage imageNamed:@"ic_bofanganniu"]];
+                    _image1.hidden=NO;
+                    _image2.hidden=NO;
+                    _image3.hidden=NO;
+                }
+            }
+        }
+    }
+}
+
+
 - (void)setKanyangpost:(TSItemListPost *)kanyangpost
 {
 
@@ -52,65 +248,10 @@
     self.phoneNumber.text = _kanyangpost.Vipcode;
     self.itemname.text = _kanyangpost.ItemName;
     self.spec.text = [NSString stringWithFormat:@"规格:%@\t含量:%@",_kanyangpost.Spec,_kanyangpost.U_Neu_Content];
-    self.price.text = _kanyangpost.Price;
-    self.cardname.text=_kanyangpost.cardname;
-    if (![_kanyangpost.IsRebate isEqualToString:@"Y"]) {
-        if (![_kanyangpost.IsOTO isEqualToString:@"Y"]) {
-            if (![_kanyangpost.UMTVURL hasPrefix:@"http"]) {
-                _image1.hidden=YES;
-                _image2.hidden=YES;
-                _image3.hidden=YES;
-            }else{
-                [_image1 setImage:[UIImage imageNamed:@"ic_bofanganniu"]];
-                _image1.hidden=NO;
-                _image2.hidden=YES;
-                _image3.hidden=YES;
-            }
-        }else{
-            if (![_kanyangpost.UMTVURL hasPrefix:@"http"]) {
-                [_image1 setImage:[UIImage imageNamed:@"ic_zhijianganniu"]];
-                _image1.hidden=NO;
-                _image2.hidden=YES;
-                _image3.hidden=YES;
-            }else{
-                [_image1 setImage:[UIImage imageNamed:@"ic_zhijianganniu"]];
-                [_image2 setImage:[UIImage imageNamed:@"ic_bofanganniu"]];
-                _image1.hidden=NO;
-                _image2.hidden=NO;
-                _image3.hidden=YES;
-            }
-        }
-    }else{
-        if (![_kanyangpost.IsOTO isEqualToString:@"Y"]) {
-            if (![_kanyangpost.UMTVURL hasPrefix:@"http"]) {
-                [_image1 setImage:[UIImage imageNamed:@"ic_fanlianniu"]];
-                _image1.hidden=NO;
-                _image2.hidden=YES;
-                _image3.hidden=YES;
-            }else{
-                [_image1 setImage:[UIImage imageNamed:@"ic_fanlianniu"]];
-                [_image2 setImage:[UIImage imageNamed:@"ic_bofanganniu"]];
-                _image1.hidden=NO;
-                _image2.hidden=NO;
-                _image3.hidden=YES;
-            }
-        }else{
-            if (![_kanyangpost.UMTVURL hasPrefix:@"http"]) {
-                [_image1 setImage:[UIImage imageNamed:@"ic_fanlianniu"]];
-                [_image2 setImage:[UIImage imageNamed:@"ic_zhijianganniu"]];
-                _image1.hidden=NO;
-                _image2.hidden=NO;
-                _image3.hidden=YES;
-            }else{
-                [_image1 setImage:[UIImage imageNamed:@"ic_fanlianniu"]];
-                [_image2 setImage:[UIImage imageNamed:@"ic_zhijianganniu"]];
-                [_image3 setImage:[UIImage imageNamed:@"ic_bofanganniu"]];
-                _image1.hidden=NO;
-                _image2.hidden=NO;
-                _image3.hidden=NO;
-            }
-        }
-    }
+    //self.price.text = _kanyangpost.Price;
+    
+    [self setPriceTextWith:kanyangpost.Price costPrice:kanyangpost.costPrice oldPrice:kanyangpost.oldPrice stock:kanyangpost.stocksum];
+    [self setImageViewWithIsOTO:kanyangpost.IsOTO IsRebate:kanyangpost.IsRebate MTVURL:kanyangpost.UMTVURL JIAN:kanyangpost.oldPrice.floatValue>kanyangpost.Price.floatValue];
     
     [self.itemimage setImageWithURL:[NSURL URLWithString:_kanyangpost.U_Photo1] placeholderImage:[UIImage imageNamed:@"noImage"]];
     

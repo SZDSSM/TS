@@ -112,7 +112,7 @@
     
     [self _initKeyViewButton];
     
-    if ([TSUser sharedUser].USERTYPE==TSManager) {
+    if ([TSUser sharedUser].USERTYPE==TSUnionClient ||[TSUser sharedUser].USERTYPE==TSCommonClient) {
         [self _initBottomView];
     }
     [self setupRefresh];

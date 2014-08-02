@@ -9,7 +9,8 @@
 #import "TSMakeViewController.h"
 #import "TSResultViewController.h"
 #import "AFNetworking.h"
-
+#import "TSAppDoNetAPIClient.h"
+#import "MJRefresh.h"
 #import "CardShuaiXuanTableViewController.h"
 #import "SearchThridTableViewController.h"
 
@@ -59,46 +60,43 @@
 
 - (void)_initData
 {
-    NSString * touchurl = @"http://124.232.163.242/com.ds.ws/FOXHttpHandler/FoxGetRegionList.ashx";
-    NSString *URLTmp1 = [touchurl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];  //转码成UTF-8  否则可能会出现错误
-    touchurl = URLTmp1;
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString: touchurl]];
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-
-        NSString *requestTmp = [NSString stringWithString:operation.responseString];
-        requestTmp = [requestTmp stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
+    
+    [[TSAppDoNetAPIClient sharedClient] GET:@"FoxGetRegionList.ashx" parameters:@{} success:^(NSURLSessionDataTask *task, id responseObject) {
+        _array = [NSMutableArray arrayWithCapacity:40];
         
-        requestTmp = [requestTmp stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-        
-        requestTmp = [requestTmp stringByReplacingOccurrencesOfString:@"\t" withString:@""];
-        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-
-        //系统自带JSON解析
-        if (resData != nil) {
-            //将获取到的数据JSON解析到数组中
-            NSError *error;
-            self.DataDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingAllowFragments error:&error];
-            _array = [NSMutableArray arrayWithCapacity:40];
-
-            for (NSDictionary * dic in  [self.DataDic objectForKey:@"Region"]) {
-                [_array addObject:[dic objectForKey:@"descript"]];
-            }
-            [self.tableView reloadData];
+        for (NSDictionary * dic in  [responseObject objectForKey:@"Region"]) {
+            [_array addObject:[dic objectForKey:@"descript"]];
         }
-            else if(nil == resData){
-                UIAlertView *AlertView1=[[UIAlertView alloc]initWithTitle:@"提示" message:@"未获取到数据" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil];
-                [AlertView1 show];
-            }
-            
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//            NSLog(@"Failure: %@", error);
-            UIAlertView *AlertView1=[[UIAlertView alloc]initWithTitle:@"提示" message:@"未获取到数据" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil];
-            [AlertView1 show];
-        }];
-        [operation start];
+        [self.tableView reloadData];
+        
+        
+        
+        [self.tableView headerEndRefreshing];
+        
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        UIAlertView *AlertView1=[[UIAlertView alloc]initWithTitle:@"提示" message:@"未获取到数据" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil];
+        [AlertView1 show];
+        [self.tableView headerEndRefreshing];
+    }];
 }
 
+/**
+ *  集成刷新控件
+ */
+- (void)setupRefresh
+{
+    // 1.添加下拉花炮云商标语
+    [self.tableView addHeaderWithTarget:self action:@selector(headerRereshing)];
+    
+    [self.tableView headerBeginRefreshing];
+}
+
+#pragma mark 开始进入刷新状态
+- (void)headerRereshing
+{
+    [self _initData];
+}
 //-(void)dealloc
 //{
 //    if ([_SearchThridTableViewController.tableView.superview isEqual:[UIApplication sharedApplication].keyWindow] ) {
@@ -118,8 +116,7 @@
 
 - (void)_init
 {
-    [self _initData];
-    
+    [self setupRefresh];
     [self initSearchbar];
     
     

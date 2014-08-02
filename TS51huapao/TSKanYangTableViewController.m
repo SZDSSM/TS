@@ -65,9 +65,9 @@
                 _posts = [NSMutableArray arrayWithArray:posts];
             }
             [self.tableView reloadData];
-            [self.tableView headerEndRefreshing];
-            [self.tableView footerEndRefreshing];
         }
+        [self.tableView headerEndRefreshing];
+        [self.tableView footerEndRefreshing];
     }];
     [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
     

@@ -12,6 +12,8 @@
 
 @property (strong, nonatomic) NSString * CostPrice;
 
+@property (strong, nonatomic) NSString * oldPrice;
+
 @property (strong, nonatomic) NSString * Effect;
 
 @property (strong, nonatomic) NSString * IsEnsure;

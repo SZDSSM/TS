@@ -7,10 +7,13 @@
 //
 
 #import "TSMyComInfoTableViewController.h"
+#import "TSUser.h"
 
 @interface TSMyComInfoTableViewController ()
 
 @property (nonatomic, strong)NSMutableArray * itemArray;
+@property (nonatomic, strong)TSUser * user;
+
 
 @end
 
@@ -29,11 +32,40 @@
 {
     [super viewDidLoad];
     
-    //    _itemArray = [@[@"公司名字",@"公司地址",@"联系人",@"联系电话",@"手机"]mutableCopy];
-    
     self.tableView.allowsSelection = NO;
     
+    _user=[TSUser sharedUser];
     [self.tableView setTableFooterView:[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 5)]];
+    if ([[_user.CARD_CardName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length]==0) {
+        self.comname.text = @"暂无";
+    }else{
+        self.comname.text = _user.CARD_CardName;
+    }
+    if ([[_user.CARD_Phone1 stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length]==0) {
+        self.contectnumber.text = @"暂无";
+    }else{
+        self.contectnumber.text = _user.CARD_Phone1;
+    }
+    if ([[_user.CARD_Address stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length]==0) {
+        self.address.text = @"暂无";
+    }else{
+        self.address.text = _user.CARD_Address;
+    }
+    if ([[_user.CARD_CntctPrsn stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length]==0) {
+        self.contectperson.text = @"暂无";
+    }else{
+        self.contectperson.text = _user.CARD_CntctPrsn;
+    }
+    if ([[_user.CARD_CntctPrsnCellolar stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length]==0) {
+        self.phoneNumber.text = @"暂无";
+    }else{
+        self.phoneNumber.text = _user.CARD_CntctPrsnCellolar;
+    }
+    self.comname.adjustsFontSizeToFitWidth = YES;
+    self.contectnumber.adjustsFontSizeToFitWidth = YES;
+    self.address.adjustsFontSizeToFitWidth = YES;
+    self.contectperson.adjustsFontSizeToFitWidth = YES;
+    self.phoneNumber.adjustsFontSizeToFitWidth = YES;
     
     
 }
@@ -46,31 +78,5 @@
 
 #pragma mark - Table view data source
 
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-//{
-//    // Return the number of sections.
-//    return 1;
-//}
-
-//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-//{
-//    // Return the number of rows in the section.
-//    return [_itemArray count];
-//}
-//
-//
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reuseIdentifier"];
-//
-//    if (nil == cell) {
-//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"reuseIdentifier"];
-//    }
-//
-//    cell.textLabel.text = [_itemArray objectAtIndex:indexPath.row];
-//    cell.textLabel.textColor = [UIColor grayColor];
-//
-//    return cell;
-//}
 
 @end

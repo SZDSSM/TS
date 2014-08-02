@@ -58,40 +58,45 @@
 
 - (UIView *)_initheaderView
 {
+    UIView * view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 100)];
+    [view setBackgroundColor:[UIColor colorWithRed:250.0/255.0 green:250.0/255.0 blue:250.0/255.0 alpha:1.0]];
     
-        UIView * view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 100)];
-        [view setBackgroundColor:[UIColor colorWithRed:250.0/255.0 green:250.0/255.0 blue:250.0/255.0 alpha:1.0]];
-        
-        UILabel * label1 = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, ScreenWidth-40, 25)];
-        UILabel * label2 = [[UILabel alloc] initWithFrame:CGRectMake(20, 35, ScreenWidth-40, 25)];
-        UILabel * label3 = [[UILabel alloc] initWithFrame:CGRectMake(20, 60, ScreenWidth-40, 25)];
-        UILabel * linelabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 95, ScreenWidth, 1)];
-        
-        label1.textColor = [UIColor lightGrayColor];
-        label2.textColor = [UIColor lightGrayColor];
-        label3.textColor = [UIColor lightGrayColor];
-        linelabel.textColor = [UIColor lightGrayColor];
-        
-        
-        label1.font = [UIFont systemFontOfSize:15.0];
-        label2.font = [UIFont systemFontOfSize:15.0];
-        label3.font = [UIFont systemFontOfSize:15.0];
+    UILabel * label1 = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, ScreenWidth-40, 25)];
+    UILabel * label2 = [[UILabel alloc] initWithFrame:CGRectMake(20, 35, ScreenWidth-40, 25)];
+    UILabel * label3 = [[UILabel alloc] initWithFrame:CGRectMake(20, 60, ScreenWidth-40, 25)];
+    UILabel * linelabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 95, ScreenWidth, 1)];
     
-        label1.adjustsFontSizeToFitWidth = YES;
-        label2.adjustsFontSizeToFitWidth = YES;
-        label3.adjustsFontSizeToFitWidth = YES;
+    label1.textColor = [UIColor lightGrayColor];
+    label2.textColor = [UIColor lightGrayColor];
+    label3.textColor = [UIColor lightGrayColor];
+    linelabel.textColor = [UIColor lightGrayColor];
     
-        label1.text = [NSString stringWithFormat:@"公司名称:  %@",_lastpost.CardName];
-        label2.text = [NSString stringWithFormat:@"已返点总计:  ¥%@",_lastpost.U_RebateSUM];
-        label3.text = [NSString stringWithFormat:@"返点总计:  ¥%@",_lastpost.Rebate];
-        linelabel.text = @"------------------------------------------------------------------------------------------------------------------------------------------";
-        
-        [view addSubview:label1];
-        [view addSubview:label2];
-        [view addSubview:label3];
-        [view addSubview:linelabel];
-        
-        return view;
+    
+    label1.font = [UIFont systemFontOfSize:15.0];
+    label2.font = [UIFont systemFontOfSize:15.0];
+    label3.font = [UIFont systemFontOfSize:15.0];
+
+    label1.adjustsFontSizeToFitWidth = YES;
+    label2.adjustsFontSizeToFitWidth = YES;
+    label3.adjustsFontSizeToFitWidth = YES;
+
+    if (_lastpost!=nil) {
+        _CardName=_lastpost.CardName;
+        _U_RebateSUM=_lastpost.U_RebateSUM;
+        _Rebate=_lastpost.Rebate;
+    }
+    label1.text = [NSString stringWithFormat:@"公司名称:  %@",_CardName];
+    label2.text = [NSString stringWithFormat:@"已返点总计:  ¥%@",_U_RebateSUM];
+    label3.text = [NSString stringWithFormat:@"返点总计:  ¥%@",_Rebate];
+    
+    linelabel.text = @"------------------------------------------------------------------------------------------------------------------------------------------";
+    
+    [view addSubview:label1];
+    [view addSubview:label2];
+    [view addSubview:label3];
+    [view addSubview:linelabel];
+    
+    return view;
     
 }
 
@@ -122,9 +127,9 @@
                 _posts = posts;
             }
             [self.tableView reloadData];
-            [self.tableView headerEndRefreshing];
-            [self.tableView footerEndRefreshing];
         }
+        [self.tableView headerEndRefreshing];
+        [self.tableView footerEndRefreshing];
     }];
     [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
     
@@ -194,58 +199,14 @@
     }
     
     cell.dingdanpost = [_posts objectAtIndex:indexPath.row];
-    
+    cell.sender=self;
     return cell;
 }
 
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+    TSRebateMoreTableViewCell *cell=(TSRebateMoreTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    [cell pushtoItemDetailView];
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

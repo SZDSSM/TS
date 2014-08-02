@@ -122,7 +122,8 @@
     }
     cell.post = [self.posts objectAtIndex:indexPath.row];
     cell.sender=self;
-    cell.order.text = [NSString stringWithFormat:@"%d",indexPath.row+1];
+    cell.order.text = [NSString stringWithFormat:@"%ld",(long)indexPath.row+1];
+
     if (indexPath.row == 0) {
         cell.order.textColor = [UIColor redColor];
         cell.order.font = [UIFont italicSystemFontOfSize:35];

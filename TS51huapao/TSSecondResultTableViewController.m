@@ -129,10 +129,10 @@
 }
 
 
--(void)dealloc
-{
-    NSLog(@"dealloc::::TSSecondResultViewController");
-}
+//-(void)dealloc
+//{
+//    NSLog(@"dealloc::::TSSecondResultViewController");
+//}
 
 //searchar table 页面回调
 -(void)SearchButtonClicked:(NSString *)searchBartxt
@@ -164,7 +164,7 @@
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:5];
     if ( _itemname!=nil) {
         [dic setObject: _itemname forKey:@"itemname"];
-        NSLog(@"url%@",_itemname);
+//        NSLog(@"url%@",_itemname);
     }
     if (_searchtext != nil) {
         [dic setObject:_searchtext forKey:@"queryname"];
@@ -181,7 +181,7 @@
     if (_priceRange != nil) {
         [dic setObject:_priceRange forKey:@"priceRange"];
     }
-    [dic setObject:[NSString stringWithFormat:@"%u",_page] forKey:@"pageindex"];
+    [dic setObject:[NSString stringWithFormat:@"%lu",(unsigned long)_page] forKey:@"pageindex"];
     
     NSURLSessionDataTask * task = [TSGetItemListPost globalTimeGetRecommendInfoWithDictionary:dic Block:^(NSArray *posts,NSUInteger maxcount, NSError *error) {
         if (!error) {
@@ -281,8 +281,8 @@
 - (void)reload:(UIButton *)button
 {
     static  BOOL isDown = NO;
-    static int NowTap = 100;
-    static int LastTap = 100;
+    static NSUInteger NowTap = 100;
+    static NSUInteger LastTap = 100;
     
     
     for (int i = 0 ; i < 4; i++) {

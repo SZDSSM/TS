@@ -46,10 +46,10 @@
 - (void)getData
 {
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:5];
-    if ( _vipcode!=nil) {
-        [dic setObject:_vipcode forKey:@"vipcode"];
+    if ([TSUser sharedUser].USERTYPE==TSManager) {
+        [dic setObject:@"ALL" forKey:@"vipcode"];
     }else{
-        [dic setObject:@"13590166783" forKey:@"vipcode"];
+        [dic setObject:[TSUser sharedUser].vipcode forKey:@"vipcode"];
     }
     [dic setObject:[NSString stringWithFormat:@"%lu",(unsigned long)_page] forKey:@"pageindex"];
     
@@ -62,9 +62,9 @@
                 _posts = [NSMutableArray arrayWithArray:posts];
             }
             [self.tableView reloadData];
-            [self.tableView headerEndRefreshing];
-            [self.tableView footerEndRefreshing];
         }
+        [self.tableView headerEndRefreshing];
+        [self.tableView footerEndRefreshing];
     }];
     [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
 }

@@ -72,7 +72,7 @@
     
     //[self.subject1 setImageWithURL:[NSURL URLWithString: self.subjctRcmd1.imageURL] placeholderImage:nil];
 
-    //[self.subject1 setImageWithURL:[NSURL URLWithString:self.prdctRcmd1.imageURL] placeholderImage:[UIImage imageNamed:@""]];
+    //[self.subject1 setImageWithURL:[NSURL URLWithString:self.prdctRcmd1.imageURL] placeholderImage:[UIImage imageNamed:@"noImage"]];
     [self imageview:self.subject1 setImageWithURL:self.subjctRcmd1.imageURL];
     [self imageview:self.subject2 setImageWithURL:self.subjctRcmd2.imageURL];
     [self imageview:self.subject3 setImageWithURL:self.subjctRcmd3.imageURL];
@@ -138,67 +138,34 @@
 
 - (void)gettouch
 {
-   
-        NSString * touchurl = @"http://124.232.163.242/com.ds.ws/FOXHttpHandler/FoxGetRecommendList.ashx";
-
-        NSString *URLTmp1 = [touchurl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];  //转码成UTF-8  否则可能会出现错误
-        touchurl = URLTmp1;
-        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString: touchurl]];
-        AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-        [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-//            NSLog(@"Success: %@", operation.responseString);
-            NSString *requestTmp = [NSString stringWithString:operation.responseString];
-            requestTmp = [requestTmp stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
-            
-            requestTmp = [requestTmp stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-            
-            requestTmp = [requestTmp stringByReplacingOccurrencesOfString:@"\t" withString:@""];
-            NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-            //        NSLog(@"data:::::::%@",resData);
-            //系统自带JSON解析
-            if (resData != nil) {
-                //将获取到的数据JSON解析到数组中
-                NSError *error;
-                self.getDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingAllowFragments error:&error];
-//                self.array = [dic objectForKey:@"NewsDataIOS"];
-//                NSLog(@"dic:::%@",self.getDic);
-                self.labelarray = [self.getDic objectForKey:@"TnavigationLabels"];
-//                NSLog(@"arr:::%@",self.labelarray);
-                [self addLableButton];
-                self.telephoneNumeber = [self.getDic objectForKey:@"TservicePhone"];
-                NSUserDefaults * userdef = [NSUserDefaults standardUserDefaults];
-                [userdef setObject:self.telephoneNumeber forKey:Tele_Key];
-                [userdef synchronize];
-                
-                [self.prdctRcmd1 setRcmd:self.getDic withKey:@"prdctRcmd1"];
-                [self.prdctRcmd2 setRcmd:self.getDic withKey:@"prdctRcmd2"];
-                [self.prdctRcmd3 setRcmd:self.getDic withKey:@"prdctRcmd3"];
-                [self.subjctRcmd1 setRcmd:self.getDic withKey:@"subjctRcmd1"];
-                [self.subjctRcmd2 setRcmd:self.getDic withKey:@"subjctRcmd2"];
-                [self.subjctRcmd3 setRcmd:self.getDic withKey:@"subjctRcmd3"];
-//                NSLog(@"ooooo:%@",self.subjctRcmd3);
-                [self imageSet];
-                [self.tableView reloadData];
-                
-            }else if(nil == resData){
-                UIAlertView *AlertView1=[[UIAlertView alloc]initWithTitle:@"提示" message:@"未获取到数据" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil];
-                [AlertView1 show];
-               
-            }
-            
-            [self.tableView headerEndRefreshing];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//            NSLog(@"Failure: %@", error);
-            UIAlertView *AlertView1=[[UIAlertView alloc]initWithTitle:@"提示" message:@"未获取到数据" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil];
-            [AlertView1 show];
-            [self.tableView headerEndRefreshing];
-        }];
-        [operation start];
-//        NSLog(@"%lu",(unsigned long)[self.array count]);
-    
+    [[TSAppDoNetAPIClient sharedClient] GET:@"FoxGetRecommendList.ashx" parameters:@{} success:^(NSURLSessionDataTask *task, id responseObject) {
+        self.labelarray = [responseObject objectForKey:@"TnavigationLabels"];
+        [self addLableButton];
+        
+        self.telephoneNumeber = [responseObject objectForKey:@"TservicePhone"];
+        NSUserDefaults * userdef = [NSUserDefaults standardUserDefaults];
+        [userdef setObject:self.telephoneNumeber forKey:Tele_Key];
+        [userdef synchronize];
+        
+        [self.prdctRcmd1 setRcmd:responseObject withKey:@"prdctRcmd1"];
+        [self.prdctRcmd2 setRcmd:responseObject withKey:@"prdctRcmd2"];
+        [self.prdctRcmd3 setRcmd:responseObject withKey:@"prdctRcmd3"];
+        [self.subjctRcmd1 setRcmd:responseObject withKey:@"subjctRcmd1"];
+        [self.subjctRcmd2 setRcmd:responseObject withKey:@"subjctRcmd2"];
+        [self.subjctRcmd3 setRcmd:responseObject withKey:@"subjctRcmd3"];
+        
+        [self imageSet];
+        [self.tableView reloadData];
+        [self.tableView headerEndRefreshing];
+        
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        UIAlertView *AlertView1=[[UIAlertView alloc]initWithTitle:@"提示" message:@"未获取到数据" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil];
+        [AlertView1 show];
+        [self.tableView headerEndRefreshing];
+    }];
     
 }
-
 /**
  *  集成刷新控件
  */
@@ -229,7 +196,7 @@
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     imageView.backgroundColor = [UIColor whiteColor];
     [imageView setImageWithURLRequest:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:[url URLEncodedString]
-]]  placeholderImage:[UIImage imageNamed:@""]
+]]  placeholderImage:[UIImage imageNamed:@"noImage"]
         success:^(NSURLRequest *request,NSHTTPURLResponse *response, UIImage *image) {
             _imageView.image = image;
             [_imageView setNeedsDisplay];

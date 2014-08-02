@@ -16,6 +16,7 @@
 @property (nonatomic, strong) NSString * VendorPrice;
 @property (nonatomic, strong) NSString * Price;
 @property (nonatomic, strong) NSString * costPrice;
+@property (nonatomic, strong) NSString * oldPrice;
 @property (nonatomic, strong) NSString * U_Neu_Content;
 @property (nonatomic, strong) NSString * IsOTO;
 @property (nonatomic, strong) NSString * IsRebate;
